@@ -45,7 +45,7 @@ class AutoPaths(object):
         if key.startswith('_'): return self.__dict__[key]
         # Temporary items #
         if key == 'tmp_dir': return self.__dict__['_tmp_dir']
-        if key == 'tmp': return self.__dict__['tmp']
+        if key == 'tmp':     return self.__dict__['tmp']
         # Search #
         items = key.split('_')
         # Is it a directory ? #
@@ -129,12 +129,12 @@ class PathItems(object):
     def __repr__(self): return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
     def __init__(self, path, base_dir):
-        self.path = path
-        self.base_dir = base_dir
+        self.path           = path
+        self.base_dir       = base_dir
         self.dir, self.name = os.path.split(path)
-        self.name_items = self.pattern.split(self.name) if self.name else []
-        self.dir_items = self.pattern.split(self.dir) if self.dir else []
-        self.all_items = self.name_items + self.dir_items
+        self.name_items     = self.pattern.split(self.name) if self.name else []
+        self.dir_items      = self.pattern.split(self.dir)  if self.dir  else []
+        self.all_items      = self.name_items + self.dir_items
 
     def __contains__(self, i):
         return i in self.all_items

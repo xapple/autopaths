@@ -19,7 +19,7 @@ Here is an example usage of this object:
 
 As you can see, once you have created a FilePath, many useful methods are available. No more need for long `os.path` or `shutil` commands of which you can never remember the syntax.
 
-To see the complete list of utility methods and properties, look at the source code.
+To see the complete list of utility methods and properties, look at the source code. You can find lots of the common things you would need to do with file paths `f.make_executable()` etc etc.
 
 # DirectoryPath object
 
@@ -33,4 +33,17 @@ Similar to a file path object. Here is an example usage of this object:
 
 # AutoPaths object
 
-This part of the documentation should be written soon.
+You can use this class like this when making pipelines to quickly refer to a predefined file path with a simple attribute lookup. This example explains it:
+
+    class Sample(object):
+        all_paths = '''
+            /raw/raw.sff
+            /raw/raw.fastq
+            /clean/trim.fastq
+            /clean/clean.fastq'''
+
+        def __init__(self, base_dir):
+            self.p = AutoPaths(base_dir, self.all_paths)
+
+        def clean(self):
+            shutil.move(self.p.raw_sff, self.p.clean_fastq)
