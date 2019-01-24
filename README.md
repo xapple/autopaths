@@ -1,4 +1,4 @@
-# `autopaths` version 1.0.1
+# `autopaths` version 1.0.2
 
 `autopaths` is a python package for dealing with file paths and automation.
 

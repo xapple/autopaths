@@ -6,7 +6,8 @@ import glob, zipfile
 import autopaths
 
 # Third party modules #
-import sh
+if os.name == "posix": import sh
+if os.name == "nt":    import pbs
 
 ################################################################################
 class FilePath(str):
@@ -124,7 +125,8 @@ class FilePath(str):
     @property
     def count(self):
         """We are going to default to the number of lines."""
-        return int(sh.wc('-l', self.path).split()[0])
+        if os.name == "posix": return int(sh.wc('-l', self.path).split()[0])
+        if os.name == "nt":    return int(pbs.Command("find")('/c', '/v', '""', self.path))
 
     @property
     def size(self):
