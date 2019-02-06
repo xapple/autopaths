@@ -1,7 +1,20 @@
 # Built-in modules #
-import os, hashlib
+import os, hashlib, re
 
-################################################################################
+###############################################################################
+def natural_sort(item):
+    """
+    Sort strings that contain numbers correctly. Works in Python 2 and 3.
+
+    >>> l = ['v1.3.12', 'v1.3.3', 'v1.2.5', 'v1.2.15', 'v1.2.3', 'v1.2.1']
+    >>> l.sort(key=natural_sort)
+    >>> l.__repr__()
+    "['v1.2.1', 'v1.2.3', 'v1.2.5', 'v1.2.15', 'v1.3.3', 'v1.3.12']"
+    """
+    dre = re.compile(r'(\d+)')
+    return [int(s) if s.isdigit() else s.lower() for s in re.split(dre, item)]
+
+###############################################################################
 def prepend_to_file(path, data, bufsize=1<<15):
     """TODO:
     * Add a random string to the backup file.
@@ -24,12 +37,12 @@ def prepend_to_file(path, data, bufsize=1<<15):
     # Remove backup on success #
     os.remove(backupname)
 
-################################################################################
+###############################################################################
 def append_to_file(path, data):
     with open(path, "a") as handle:
         handle.write(data)
 
-################################################################################
+###############################################################################
 def md5sum(file_path, blocksize=65536):
     """Compute the md5 of a file. Pretty fast."""
     md5 = hashlib.md5()

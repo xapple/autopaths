@@ -1,6 +1,6 @@
 # Built-in modules #
 import os, tempfile, subprocess, shutil, codecs, gzip
-import glob, zipfile
+import glob, zipfile, datetime
 
 # Internal modules #
 import autopaths
@@ -160,13 +160,23 @@ class FilePath(str):
 
     @property
     def mdate(self):
-        """Return the modification date."""
+        """Return the modification date as a unix time."""
         return os.path.getmtime(self.path)
 
     @property
+    def mdate_iso(self):
+        """Return the modification date as a datetime iso object."""
+        return datetime.fromtimestamp(self.mdate).isoformat()
+
+    @property
     def cdate(self):
-        """Return the modification date."""
+        """Return the creation date."""
         return os.path.getctime(self.path)
+
+    @property
+    def cdate_iso(self):
+        """Return the creation date as a datetime iso object."""
+        return datetime.fromtimestamp(self.cdate).isoformat()
 
     @property
     def md5(self):
