@@ -1,4 +1,4 @@
-# `autopaths` version 1.0.4
+# `autopaths` version 1.0.5
 
 `autopaths` is a python package for dealing with file paths and automation.
 
@@ -6,7 +6,7 @@ It contains several submodules that are useful when building pipelines. See belo
 
 # FilePath object
 
-Here is an example usage of this object:
+Here are a few example usages of this object:
 
     from autopaths.file_path import FilePath
     f = FilePath("input/raw/reads_56.fastq")
@@ -16,6 +16,8 @@ Here is an example usage of this object:
     print(f.contains_binary)
     f.prepend('# This file was backed-up\n')
     f.gzip_to('backup/old_reads/reads_56.fastq')
+    f.move_to(f.parent)
+    f.make_executable()
 
 As you can see, once you have created a FilePath, many useful methods are available. No more need for long `os.path` or `shutil` commands of which you can never remember the syntax.
 

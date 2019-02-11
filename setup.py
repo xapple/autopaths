@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
         name             = 'autopaths',
-        version          = '1.0.4',
+        version          = '1.0.5',
         description      = 'autopaths is a python package for dealing with file paths and automation.',
         long_description = open('README.md').read(),
         license          = 'MIT',

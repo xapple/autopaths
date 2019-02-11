@@ -5,6 +5,10 @@ import glob, warnings
 # Internal modules #
 import autopaths
 
+# Constants #
+if os.name == "posix": sep = "/"
+if os.name == "nt":    sep = "\\"
+
 ################################################################################
 class DirectoryPath(str):
 
@@ -19,8 +23,12 @@ class DirectoryPath(str):
         if hasattr(path, 'path'): path = path.path
         # Expand the tilda #
         if "~" in path: path = os.path.expanduser(path)
+        # We will store the path with the OS specific separator #
+        # We will never mix both kinds of separators #
+        if os.name == "posix": path = path.replace("\\", sep)
+        if os.name == "nt":    path = path.replace("/",  sep)
         # Our standard is to end with a slash for directories #
-        if not path.endswith('/'): path += '/'
+        if not path.endswith(sep): path += sep
         # Return the result #
         return path
 
@@ -32,7 +40,9 @@ class DirectoryPath(str):
         self.path = self.clean_path(path)
 
     def __add__(self, other):
-        if other.endswith("/"): return DirectoryPath(self.path + other)
+        if os.name == "posix": other = other.replace("\\", sep)
+        if os.name == "nt":    other = other.replace("/",  sep)
+        if other.endswith(sep): return DirectoryPath(self.path + other)
         else:                   return autopaths.file_path.FilePath(self.path + other)
 
     def __iter__(self): return self.flat_contents
@@ -51,12 +61,12 @@ class DirectoryPath(str):
     @property
     def prefix_path(self):
         """The full path without the extension"""
-        return os.path.splitext(self.path)[0].rstrip('/')
+        return os.path.splitext(self.path)[0].rstrip(sep)
 
     @property
     def absolute_path(self):
         """The absolute path starting with a `/`"""
-        return os.path.abspath(self.path) + '/'
+        return os.path.abspath(self.path) + sep
 
     @property
     def directory(self):
@@ -115,7 +125,7 @@ class DirectoryPath(str):
     @property
     def is_symlink(self):
         """Is this directory a symbolic link to an other directory?"""
-        return os.path.islink(self.path.rstrip('/'))
+        return os.path.islink(self.path.rstrip(sep))
 
     @property
     def exists(self):
@@ -156,7 +166,7 @@ class DirectoryPath(str):
 
     def remove_when_symlink(self):
         if not self.exists: return False
-        os.remove(self.path.rstrip('/'))
+        os.remove(self.path.rstrip(sep))
         return True
 
     def create(self, safe=False, inherit=True):
@@ -183,11 +193,11 @@ class DirectoryPath(str):
         The destination is hence self.path and the source is *where*"""
         if not safe:
             self.remove()
-            return os.symlink(where, self.path.rstrip('/'))
+            return os.symlink(where, self.path.rstrip(sep))
         if safe:
             try: self.remove()
             except OSError: pass
-            try: os.symlink(where, self.path.rstrip('/'))
+            try: os.symlink(where, self.path.rstrip(sep))
             except OSError: warnings.warn("Symlink of %s to %s did not work" % (where, self))
 
     def copy(self, path):

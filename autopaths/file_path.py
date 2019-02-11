@@ -9,6 +9,10 @@ import autopaths
 if os.name == "posix": import sh
 if os.name == "nt":    import pbs
 
+# Constants #
+if os.name == "posix": sep = "/"
+if os.name == "nt":    sep = "\\"
+
 ################################################################################
 class FilePath(str):
     """I can never remember all those darn `os.path` commands, so I made a class
@@ -44,7 +48,9 @@ class FilePath(str):
         self.path = self.clean_path(path)
 
     def __add__(self, other):
-        if other.endswith("/"): return autopaths.dir_path.DirectoryPath(self.path + other)
+        if os.name == "posix": other = other.replace("\\", sep)
+        if os.name == "nt":    other = other.replace("/",  sep)
+        if other.endswith(sep): return autopaths.dir_path.DirectoryPath(self.path + other)
         else:                   return FilePath(self.path + other)
 
     def __sub__(self, directory):
@@ -61,6 +67,10 @@ class FilePath(str):
         if hasattr(path, 'path'): path = path.path
         # Expand tilda #
         if "~" in path: path = os.path.expanduser(path)
+        # We will store the path with the OS specific separator #
+        # We will never mix both kinds of separators #
+        if os.name == "posix": path = path.replace("\\", sep)
+        if os.name == "nt":    path = path.replace("/",  sep)
         # Expand star #
         if "*" in path:
             matches = glob.glob(path)
@@ -109,7 +119,7 @@ class FilePath(str):
         # Maybe we need to go the absolute path way #
         if not directory: directory = os.path.dirname(self.absolute_path)
         # Return #
-        return autopaths.dir_path.DirectoryPath(directory + '/')
+        return autopaths.dir_path.DirectoryPath(directory)
 
     @property
     def extension(self):
@@ -234,7 +244,7 @@ class FilePath(str):
 
     def copy(self, path):
         # Directory special case #
-        if path.endswith('/'): path += self.filename
+        if path.endswith(sep): path += self.filename
         # Normal case #
         shutil.copy2(self.path, path)
 
@@ -266,7 +276,7 @@ class FilePath(str):
     def move_to(self, path):
         """Move the file."""
         # Special directory case, keep the same name (put it inside) #
-        if path.endswith('/'): path = path + self.filename
+        if path.endswith(sep): path = path + self.filename
         # Normal case #
         assert not os.path.exists(path)
         shutil.move(self.path, path)
@@ -275,7 +285,7 @@ class FilePath(str):
 
     def rename(self, new_name):
         """Rename the file but leave it in the same directory."""
-        assert '/' not in new_name
+        assert sep not in new_name
         path = self.directory + new_name
         assert not os.path.exists(path)
         shutil.move(self.path, path)
@@ -303,7 +313,7 @@ class FilePath(str):
         """Create a link somewhere else pointing to this file.
         The destination is hence *path* and the source is self.path."""
         # If source is a file and the destination is a dir, put it inside #
-        if path.endswith('/'): path = path + self.filename
+        if path.endswith(sep): path = path + self.filename
         # Get source and destination #
         if absolute: source = self.absolute_path
         else:        source = self.path
@@ -350,7 +360,7 @@ class FilePath(str):
         # Single file #
         if single:
             member = z.infolist()[0]
-            tmpdir = tempfile.mkdtemp() + '/'
+            tmpdir = tempfile.mkdtemp() + sep
             z.extract(member, tmpdir)
             z.close()
             if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)

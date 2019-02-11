@@ -4,6 +4,10 @@ import os, tempfile, re
 # Internal modules #
 import autopaths
 
+# Constants #
+if os.name == "posix": sep = "/"
+if os.name == "nt":    sep = "\\"
+
 ################################################################################
 class AutoPaths(object):
     """
@@ -31,7 +35,7 @@ class AutoPaths(object):
         # Attributes #
         self._base_dir  = base_dir
         self._all_paths = all_paths
-        self._tmp_dir   = tempfile.gettempdir() + '/'
+        self._tmp_dir   = tempfile.gettempdir() + sep
         # Parse input #
         self._paths = [PathItems(p.lstrip(' '), base_dir) for p in all_paths.split('\n')]
 
@@ -107,14 +111,14 @@ class AutoPaths(object):
             raise Exception("Found several paths matching '%s'" % key)
         # Make the directory #
         result = result.pop()
-        directory = autopaths.fir_path.DirectoryPath(result.complete_dir)
+        directory = autopaths.dir_path.DirectoryPath(result.complete_dir)
         if not directory.exists: directory.create(safe=True)
         # Return #
         return directory
 
     @property
     def tmp_dir(self):
-        if not self._tmp_dir: self._tmp_dir = tempfile.mkdtemp() + '/'
+        if not self._tmp_dir: self._tmp_dir = tempfile.mkdtemp() + sep
         return self._tmp_dir
 
     @property
@@ -150,8 +154,8 @@ class PathItems(object):
 
     @property
     def complete_path(self):
-        return '/' + os.path.relpath(self.base_dir + self.path, '/')
+        return sep + os.path.relpath(self.base_dir + self.path, sep)
 
     @property
     def complete_dir(self):
-        return '/' + os.path.relpath(self.base_dir + self.dir, '/') + '/'
+        return sep + os.path.relpath(self.base_dir + self.dir, sep) + sep
