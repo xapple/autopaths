@@ -69,6 +69,12 @@ class DirectoryPath(str):
         return os.path.abspath(self.path) + sep
 
     @property
+    def escaped(self):
+        """The path with special characters escaped.
+        For instance a backslash becomes a double backslash."""
+        return self.path.replace("\\", "\\\\")
+
+    @property
     def directory(self):
         """The full path of the directory containing this one."""
         return DirectoryPath(os.path.dirname(os.path.dirname(self.path)))

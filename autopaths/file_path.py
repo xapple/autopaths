@@ -1,6 +1,6 @@
 # Built-in modules #
 import os, tempfile, subprocess, shutil, codecs, gzip
-import glob, zipfile, datetime
+import glob, zipfile, datetime, re
 
 # Internal modules #
 import autopaths
@@ -58,6 +58,17 @@ class FilePath(str):
         of the current file from that directory."""
         return os.path.relpath(self.path, directory)
 
+    def __enter__(self):
+        """Called when entering the 'with' statement (context manager)."""
+        return self
+
+    def __exit__(self, errtype, value, traceback):
+        """Called when exiting the 'with' statement.
+        This enables us to close the file or database properly, even when
+        exceptions are raised."""
+        self.close()
+
+    # ------------------------------ Class methods ----------------------------- #
     @classmethod
     def clean_path(cls, path):
         """Given a path, return a cleaned up version for initialization."""
@@ -80,6 +91,7 @@ class FilePath(str):
         # Return the result #
         return path
 
+    # ------------------------------ Properties ----------------------------- #
     @property
     def first(self):
         """Just the first line. Don't try this on binary files."""
@@ -112,6 +124,17 @@ class FilePath(str):
         return str(os.path.basename(self.path))
 
     @property
+    def extension(self):
+        """The extension with the leading period."""
+        return os.path.splitext(self.path)[1]
+
+    @property
+    def escaped(self):
+        """The path with special characters escaped.
+        For instance a backslash becomes a double backslash."""
+        return self.path.replace("\\", "\\\\")
+
+    @property
     def directory(self):
         """The directory containing this file."""
         # The built-in function #
@@ -120,11 +143,6 @@ class FilePath(str):
         if not directory: directory = os.path.dirname(self.absolute_path)
         # Return #
         return autopaths.dir_path.DirectoryPath(directory)
-
-    @property
-    def extension(self):
-        """The extension with the leading period."""
-        return os.path.splitext(self.path)[1]
 
     @property
     def count_bytes(self):
