@@ -1,10 +1,13 @@
-# `autopaths` version 1.0.5
+[![PyPI version](https://badge.fury.io/py/autopaths.svg)](https://badge.fury.io/py/autopaths)
+[![changelog](http://allmychanges.com/p/python/autopaths/badge/)](http://allmychanges.com/p/python/autopaths/?utm_source=badge)
+
+# `autopaths` version 1.0.6
 
 `autopaths` is a python package for dealing with file paths and automation.
 
 It contains several submodules that are useful when building pipelines. See below for examples and documentation.
 
-# FilePath object
+# `FilePath` object
 
 Here are a few example usages of this object:
 
@@ -23,7 +26,7 @@ As you can see, once you have created a FilePath, many useful methods are availa
 
 To see the complete list of utility methods and properties, look at the source code. You can find lots of the common things you would need to do with file paths `f.make_executable()` etc etc.
 
-# DirectoryPath object
+# `DirectoryPath` object
 
 Similar to a file path object. Here is an example usage of this object:
 
@@ -33,7 +36,7 @@ Similar to a file path object. Here is an example usage of this object:
     d.create_if_not_exists()
     f = d + 'new.fastq'
 
-# AutoPaths object
+# `AutoPaths` object
 
 You can use this class like this when making pipelines to quickly refer to a predefined file path with a simple attribute lookup. This example explains it:
 

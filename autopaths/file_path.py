@@ -1,6 +1,6 @@
 # Built-in modules #
 import os, tempfile, subprocess, shutil, codecs, gzip
-import glob, zipfile, datetime, re
+import glob, zipfile, datetime, re, codecs
 
 # Internal modules #
 import autopaths
@@ -135,6 +135,18 @@ class FilePath(str):
         return self.path.replace("\\", "\\\\")
 
     @property
+    def unix_style(self):
+        """The path with forward slashes and no disk drive."""
+        if self.path[1] == ':': path = self.path[2:]
+        else:                   path = self.path
+        return path.replace("\\", "/")
+
+    @property
+    def win_style(self):
+        """The path with backward slashes."""
+        return self.path.replace("/", "\\")
+
+    @property
     def directory(self):
         """The directory containing this file."""
         # The built-in function #
@@ -170,6 +182,11 @@ class FilePath(str):
     def contents(self):
         """The contents as a string."""
         with open(self.path, 'r') as handle: return handle.read()
+
+    @property
+    def contents_utf8(self):
+        """The contents as a unicode string."""
+        with codecs.open(self.path, encoding='utf8') as handle:return handle.read()
 
     @property
     def absolute_path(self):

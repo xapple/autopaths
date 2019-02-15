@@ -1,9 +1,7 @@
-b'This module needs Python 2.7.x'
-
 # Special variables #
-__version__ = '1.0.5'
+__version__ = '1.0.6'
 
-# This is done to avoid circular imports #
+# This is done to avoid circular import errors #
 import file_size
 import file_permissions
 import file_path
