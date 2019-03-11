@@ -33,6 +33,7 @@ class FilePath(str):
     def __list__(self):    return self.count
 
     def __iter__(self):
+        # Maybe no not overwrite iter() #
         with open(self.path, 'r') as handle:
             for line in handle: yield line
 
@@ -104,6 +105,16 @@ class FilePath(str):
         return os.path.lexists(self.path) # Returns True even for broken symbolic links
 
     @property
+    def is_symlink(self):
+        """Is this file a symbolic link to an other file?"""
+        if os.name == "posix": return os.path.islink(self.path)
+        if os.name == "nt":
+            import win32api
+            import win32con
+            num = win32con.FILE_ATTRIBUTE_REPARSE_POINT
+            return bool(win32api.GetFileAttributes(self.path) & num)
+
+    @property
     def prefix_path(self):
         """The full path without the (last) extension and trailing period."""
         return str(os.path.splitext(self.path)[0])
@@ -117,6 +128,11 @@ class FilePath(str):
     def short_prefix(self):
         """Just the filename without any extension or periods."""
         return self.filename.split('.')[0]
+
+    @property
+    def name(self):
+        """Shortcut for self.filename."""
+        return self.filename
 
     @property
     def filename(self):
@@ -260,11 +276,11 @@ class FilePath(str):
     def close(self):
         self.handle.close()
 
-    def write(self, content, encoding=None):
+    def write(self, content, encoding=None, mode='w'):
         if encoding is None:
-            with open(self.path, 'w') as handle: handle.write(content)
+            with open(self.path, mode) as handle: handle.write(content)
         else:
-            with codecs.open(self.path, 'w', encoding) as handle: handle.write(content)
+            with codecs.open(self.path, mode, encoding) as handle: handle.write(content)
 
     def writelines(self, content, encoding=None):
         if encoding is None:
@@ -278,6 +294,7 @@ class FilePath(str):
         return True
 
     def copy(self, path):
+        """Copy to this path."""
         # Directory special case #
         if path.endswith(sep): path += self.filename
         # Normal case #
@@ -308,6 +325,11 @@ class FilePath(str):
         for x in xrange(lines):
             yield content.next()
 
+    def tail(self, lines=20):
+        """Return the last few lines."""
+        from autopaths.common import tail
+        return tail(self.path, lines=lines)
+
     def move_to(self, path):
         """Move the file."""
         # Special directory case, keep the same name (put it inside) #
@@ -333,16 +355,9 @@ class FilePath(str):
         # Get source and destination #
         source      = path
         destination = self.path
-        # Do it #
-        if not safe:
-            if os.path.exists(destination): os.remove(destination)
-            os.symlink(source, destination)
-        # Do it safely #
-        if safe:
-            try: os.remove(destination)
-            except OSError: pass
-            try: os.symlink(source, destination)
-            except OSError: pass
+        # Windows doesn't have os.symlink #
+        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
+        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
 
     def link_to(self, path, safe=False, absolute=True):
         """Create a link somewhere else pointing to this file.
@@ -353,7 +368,12 @@ class FilePath(str):
         if absolute: source = self.absolute_path
         else:        source = self.path
         destination = path
-        # Do it #
+        # Windows doesn't have os.symlink #
+        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
+        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
+
+    def symlinks_on_linux(self, source, destination, safe):
+        # Do it unsafely #
         if not safe:
             if os.path.exists(destination): os.remove(destination)
             os.symlink(source, destination)
@@ -363,6 +383,11 @@ class FilePath(str):
             except OSError: pass
             try: os.symlink(source, destination)
             except OSError: pass
+
+    def symlinks_on_windows(self, source, destination, safe):
+        """Yes, source and destination need to be in the reverse order."""
+        import win32file
+        win32file.CreateSymbolicLink(destination, source, 0)
 
     def gzip_to(self, path=None):
         """Make a gzipped version of the file at a given path."""

@@ -50,3 +50,29 @@ def md5sum(file_path, blocksize=65536):
         for block in iter(lambda: f.read(blocksize), ""):
             md5.update(block)
     return md5.hexdigest()
+
+################################################################################
+def tail(path, lines=20):
+    with open(path, 'r') as f:
+        BUFSIZ = 1024
+        f.seek(0, 2)
+        num_bytes = f.tell()
+        size = lines + 1
+        block = -1
+        data = []
+        while size > 0 and num_bytes > 0:
+            if num_bytes - BUFSIZ > 0:
+                # Seek back one whole BUFSIZ
+                f.seek(block * BUFSIZ, 2)
+                # Read BUFFER
+                data.insert(0, f.read(BUFSIZ))
+            else:
+                # File too small, start from beginning
+                f.seek(0,0)
+                # Only read what was not read
+                data.insert(0, f.read(num_bytes))
+            lines_found = data[0].count('\n')
+            size -= lines_found
+            num_bytes -= BUFSIZ
+            block -= 1
+        return '\n'.join(''.join(data).splitlines()[-lines:])

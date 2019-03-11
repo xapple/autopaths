@@ -47,6 +47,8 @@ class DirectoryPath(str):
 
     def __iter__(self): return self.flat_contents
 
+    def __contains__(self, item): return item in [x.name for x in self.flat_contents]
+
     @property
     def p(self):
         if not hasattr(self, 'all_paths'):
@@ -77,7 +79,13 @@ class DirectoryPath(str):
     @property
     def directory(self):
         """The full path of the directory containing this one."""
-        return DirectoryPath(os.path.dirname(os.path.dirname(self.path)))
+        # The built-in function #
+        directory = os.path.dirname(os.path.dirname(self.path))
+        # Maybe we need to go the absolute path way #
+        if not directory:
+            directory = os.path.dirname(os.path.dirname(self.absolute_path))
+        # Return #
+        return autopaths.dir_path.DirectoryPath(directory)
 
     #-------------------------- Recursive contents ---------------------------#
     @property
@@ -115,6 +123,8 @@ class DirectoryPath(str):
         for root, dirs, files in os.walk(self.path):
             result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
             break
+        else:
+            result = []
         result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
         return result
 
@@ -124,6 +134,8 @@ class DirectoryPath(str):
         for root, dirs, files in os.walk(self.path):
             result = [DirectoryPath(os.path.join(root, d)) for d in dirs]
             break
+        else:
+            result = []
         result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
         return result
 
@@ -131,7 +143,12 @@ class DirectoryPath(str):
     @property
     def is_symlink(self):
         """Is this directory a symbolic link to an other directory?"""
-        return os.path.islink(self.path.rstrip(sep))
+        if os.name == "posix": return os.path.islink(self.path)
+        if os.name == "nt":
+            import win32api
+            import win32con
+            num = win32con.FILE_ATTRIBUTE_REPARSE_POINT
+            return bool(win32api.GetFileAttributes(self.path) & num)
 
     @property
     def exists(self):
@@ -156,7 +173,7 @@ class DirectoryPath(str):
     @property
     def size(self):
         """The total size in bytes of all file contents."""
-        return autopaths.file_path.FileSize(sum(f.count_bytes for f in self.files))
+        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
 
     #------------------------------- Methods ---------------------------------#
     def must_exist(self):
@@ -194,17 +211,42 @@ class DirectoryPath(str):
         shutil.make_archive(self.prefix_path , "zip", self.directory, self.name)
         if not keep_orig: self.remove()
 
-    def link_from(self, where, safe=False):
+    def link_from(self, path, safe=False):
         """Make a link here pointing to another directory somewhere else.
-        The destination is hence self.path and the source is *where*"""
+        The destination is hence self.path and the source is *path*."""
+        # Get source and destination #
+        source      = path.rstrip(sep)
+        destination = self.path.rstrip(sep)
+        # Windows doesn't have os.symlink #
+        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
+        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
+
+    def link_to(self, path, safe=False, absolute=True):
+        """Create a link somewhere else pointing to this directory.
+        The destination is hence *path* and the source is self.path."""
+        # Get source and destination #
+        source      = self.path.rstrip(sep)
+        destination = path.rstrip(sep)
+        # Windows doesn't have os.symlink #
+        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
+        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
+
+    def symlinks_on_linux(self, source, destination, safe):
+        # Do it unsafely #
         if not safe:
-            self.remove()
-            return os.symlink(where, self.path.rstrip(sep))
+            if os.path.exists(destination): os.remove(destination)
+            os.symlink(source, destination)
+        # Do it safely #
         if safe:
-            try: self.remove()
+            try: os.remove(destination)
             except OSError: pass
-            try: os.symlink(where, self.path.rstrip(sep))
-            except OSError: warnings.warn("Symlink of %s to %s did not work" % (where, self))
+            try: os.symlink(source, destination)
+            except OSError: pass
+
+    def symlinks_on_windows(self, source, destination, safe):
+        """Yes, source and destination need to be in the reverse order"""
+        import win32file
+        win32file.CreateSymbolicLink(destination, source, 1)
 
     def copy(self, path):
         assert not os.path.exists(path)

@@ -41,6 +41,7 @@ class AutoPaths(object):
 
     def __call__(self, key):    return self.__getattr__(key)
     def __getitem__(self, key): return self.__getattr__(key)
+    def get(self, key):         return self.__getattr__(key)
 
     def __getattr__(self, key):
         # Let built-ins pass through to object #
@@ -58,6 +59,7 @@ class AutoPaths(object):
             return self.search_for_dir(key, items)
         else:
             return self.search_for_file(key, items)
+
 
     def search_for_file(self, key, items):
         # Search #
