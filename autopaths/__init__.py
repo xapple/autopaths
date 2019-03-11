@@ -1,5 +1,5 @@
 # Special variables #
-__version__ = '1.0.9'
+__version__ = '1.1.0'
 
 # This is done to avoid circular import errors #
 import file_size
