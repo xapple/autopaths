@@ -1,5 +1,5 @@
 # Special variables #
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 # This is done to avoid circular import errors #
 from autopaths import file_size
