@@ -2,9 +2,9 @@
 __version__ = '1.1.0'
 
 # This is done to avoid circular import errors #
-import file_size
-import file_permissions
-import file_path
-import dir_path
-import common
-import auto_paths
+from autopaths import file_size
+from autopaths import file_permissions
+from autopaths import file_path
+from autopaths import dir_path
+from autopaths import common
+from autopaths import auto_paths

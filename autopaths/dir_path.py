@@ -175,6 +175,24 @@ class DirectoryPath(str):
         """The total size in bytes of all file contents."""
         return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
 
+    @property
+    def unix_style(self):
+        """The path with forward slashes and no disk drive."""
+        if self.path[1] == ':': path = self.path[2:]
+        else:                   path = self.path
+        return path.replace("\\", "/")
+
+    @property
+    def wsl_style(self):
+        """The path with forward slashes and a windows subsytem
+        for linux style leading disk drive."""
+        return "/mnt/c" + self.unix_style
+
+    @property
+    def win_style(self):
+        """The path with backward slashes."""
+        return self.path.replace("/", "\\")
+
     #------------------------------- Methods ---------------------------------#
     def must_exist(self):
         """Raise an exception if the directory doesn't exist."""

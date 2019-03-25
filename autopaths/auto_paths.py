@@ -60,7 +60,6 @@ class AutoPaths(object):
         else:
             return self.search_for_file(key, items)
 
-
     def search_for_file(self, key, items):
         # Search #
         matches = [set([p for p in self._paths if i in p]) for i in items]

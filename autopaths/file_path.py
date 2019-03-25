@@ -158,6 +158,12 @@ class FilePath(str):
         return path.replace("\\", "/")
 
     @property
+    def wsl_style(self):
+        """The path with forward slashes and a windows subsytem
+        for linux style leading disk drive."""
+        return "/mnt/c" + self.unix_style
+
+    @property
     def win_style(self):
         """The path with backward slashes."""
         return self.path.replace("/", "\\")
@@ -265,6 +271,10 @@ class FilePath(str):
         if not self.directory.exists: self.directory.create()
         self.open('w')
         return self
+
+    def touch(self):
+        """Just create an empty file if it does not exist."""
+        with open(self.path, 'a'): os.utime(self.path, None)
 
     def open(self, mode='r'):
         self.handle = open(self.path, mode)
