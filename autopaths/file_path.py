@@ -121,11 +121,6 @@ class FilePath(autopaths.base_path.BasePath):
         return autopaths.file_size.FileSize(self.count_bytes)
 
     @property
-    def permissions(self):
-        """Convenience object for dealing with permissions."""
-        return autopaths.file_permissions.FilePermissions(self.path)
-
-    @property
     def contents(self):
         """The contents as a string."""
         with open(self.path, 'r') as handle: return handle.read()
@@ -151,29 +146,13 @@ class FilePath(autopaths.base_path.BasePath):
         return FilePath(os.path.relpath(self.physical_path))
 
     @property
-    def mdate(self):
-        """Return the modification date as a unix time."""
-        return os.path.getmtime(self.path)
-
-    @property
-    def mdate_iso(self):
-        """Return the modification date as a datetime iso object."""
-        return datetime.fromtimestamp(self.mdate).isoformat()
-
-    @property
-    def cdate(self):
-        """Return the creation date."""
-        return os.path.getctime(self.path)
-
-    @property
-    def cdate_iso(self):
-        """Return the creation date as a datetime iso object."""
-        return datetime.fromtimestamp(self.cdate).isoformat()
-
-    @property
     def md5(self):
-        """Return the md5 checksum."""
-        return autopaths.common.md5sum(self.path)
+        """Compute the md5 of a file. Pretty fast."""
+        md5 = hashlib.md5()
+        with open(file_path, "rb") as f:
+            for block in iter(lambda: f.read(blocksize), ""):
+                md5.update(block)
+        return md5.hexdigest()
 
     @property
     def might_be_binary(self):
@@ -254,16 +233,40 @@ class FilePath(autopaths.base_path.BasePath):
         """Raise an exception if the path doesn't exist."""
         if not self.exists: raise Exception("The file path '%s' does not exist." % self.path)
 
-    def head(self, lines=10):
+    def head(self, num_lines=10):
         """Return the first few lines."""
-        content = FilePath.__iter__(self)
-        for x in xrange(lines):
-            yield content.next()
+        lines = iter(self)
+        for x in xrange(num_lines): yield lines.next()
 
     def tail(self, lines=20):
         """Return the last few lines."""
-        from autopaths.common import tail
-        return tail(self.path, lines=lines)
+        # Constant #
+        buffer_size = 1024
+        # Smart algorithm #
+        with open(self.path, 'r') as handle:
+            handle.seek(0, 2)
+            num_bytes = handle.tell()
+            size      = lines + 1
+            block     = -1
+            data      = []
+            # Loop #
+            while size > 0 and num_bytes > 0:
+                if num_bytes - buffer_size > 0:
+                    # Seek back one whole buffer_size #
+                    handle.seek(block * buffer_size, 2)
+                    # Read buffer #
+                    data.insert(0, handle.read(buffer_size))
+                else:
+                    # File too small, start from beginning #
+                    handle.seek(0,0)
+                    # Only read what was not read #
+                    data.insert(0, handle.read(num_bytes))
+                lines_found = data[0].count('\n')
+                size       -= lines_found
+                num_bytes  -= buffer_size
+                block      -= 1
+            # Return #
+            for line in ''.join(data).splitlines()[-lines:]: yield line
 
     def move_to(self, path):
         """Move the file."""
@@ -375,12 +378,30 @@ class FilePath(autopaths.base_path.BasePath):
         archive = tarfile.open(self.path, 'r:gz')
         archive.extractall(destination)
 
-    def append(self, what):
+    def append(self, data):
         """Append some text or an other file to the current file"""
-        if isinstance(what, FilePath): what = what.contents
-        autopaths.common.append_to_file(self.path, what)
+        if isinstance(data, FilePath): data = data.contents
+        with open(path, "a") as handle: handle.write(data)
 
-    def prepend(self, what):
-        """Append some text or an other file to the current file"""
-        if isinstance(what, FilePath): what = what.contents
-        autopaths.common.prepend_to_file(self.path, what)
+    def prepend(self, data, buffer_size=1 << 15):
+        """Prepend some text or an other file to the current file.
+        TODO:
+        * Add a random string to the backup file.
+        * Restore permissions after copy.
+        """
+        # Check there is something to prepend #
+        assert data
+        # Support passing other files #
+        if isinstance(data, FilePath): data = data.contents
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files #
+        # Note: output file's permissions lost #
+        with open(self) as in_handle:
+            with open(result_file, 'w') as out_handle:
+                while data:
+                    out_handle.write(data)
+                    data = in_handle.read(buffer_size)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)

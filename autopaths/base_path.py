@@ -94,3 +94,28 @@ class BasePath(str):
             import win32con
             num = win32con.FILE_ATTRIBUTE_REPARSE_POINT
             return bool(win32api.GetFileAttributes(self.path) & num)
+
+    @property
+    def permissions(self):
+        """Convenience object for dealing with permissions."""
+        return autopaths.file_permissions.FilePermissions(self.path)
+
+    @property
+    def mdate(self):
+        """Return the modification date as a unix time."""
+        return os.path.getmtime(self.path)
+
+    @property
+    def mdate_iso(self):
+        """Return the modification date as a datetime iso object."""
+        return datetime.fromtimestamp(self.mdate).isoformat()
+
+    @property
+    def cdate(self):
+        """Return the creation date."""
+        return os.path.getctime(self.path)
+
+    @property
+    def cdate_iso(self):
+        """Return the creation date as a datetime iso object."""
+        return datetime.fromtimestamp(self.cdate).isoformat()

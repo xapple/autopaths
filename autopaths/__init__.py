@@ -8,4 +8,5 @@ from autopaths import file_permissions
 from autopaths import base_path
 from autopaths import file_path
 from autopaths import dir_path
+from autopaths import tmp_path
 from autopaths import auto_paths

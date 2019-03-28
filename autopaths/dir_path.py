@@ -17,6 +17,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def __contains__(self, item): return item in [x.name for x in self.flat_contents]
 
+    # ------------------------------ Properties ----------------------------- #
     @property
     def p(self):
         if not hasattr(self, 'all_paths'):
@@ -48,6 +49,16 @@ class DirectoryPath(autopaths.base_path.BasePath):
             directory = os.path.dirname(os.path.dirname(self.absolute_path))
         # Return #
         return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def empty(self):
+        """Does the directory contain no files?"""
+        return len(list(self.flat_contents)) == 0
+
+    @property
+    def size(self):
+        """The total size in bytes of all file contents."""
+        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
 
     #-------------------------- Recursive contents ---------------------------#
     @property
@@ -100,27 +111,6 @@ class DirectoryPath(autopaths.base_path.BasePath):
             result = []
         result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
         return result
-
-    #-------------------------------- Other ----------------------------------#
-    @property
-    def empty(self):
-        """Does the directory contain no files?"""
-        return len(list(self.flat_contents)) == 0
-
-    @property
-    def permissions(self):
-        """Convenience object for dealing with permissions."""
-        return autopaths.file_permissions.FilePermissions(self.path)
-
-    @property
-    def mod_time(self):
-        """The modification time"""
-        return os.stat(self.path).st_mtime
-
-    @property
-    def size(self):
-        """The total size in bytes of all file contents."""
-        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
 
     #------------------------------- Methods ---------------------------------#
     def must_exist(self):
