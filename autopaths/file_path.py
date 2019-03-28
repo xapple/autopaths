@@ -208,7 +208,7 @@ class FilePath(autopaths.base_path.BasePath):
         return True
 
     def copy(self, path):
-        """Copy to this path."""
+        """Copy to a different path."""
         # Directory special case #
         if path.endswith(sep): path += self.filename
         # Normal case #
@@ -327,6 +327,7 @@ class FilePath(autopaths.base_path.BasePath):
         import win32file
         win32file.CreateSymbolicLink(destination, source, 0)
 
+    #------------------------------ Compression ------------------------------#
     def gzip_to(self, path=None):
         """Make a gzipped version of the file at a given path."""
         if path is None: path = self.path + ".gz"
@@ -378,6 +379,7 @@ class FilePath(autopaths.base_path.BasePath):
         archive = tarfile.open(self.path, 'r:gz')
         archive.extractall(destination)
 
+    #-------------------------------- Modify ---------------------------------#
     def append(self, data):
         """Append some text or an other file to the current file"""
         if isinstance(data, FilePath): data = data.contents
@@ -402,6 +404,19 @@ class FilePath(autopaths.base_path.BasePath):
                 while data:
                     out_handle.write(data)
                     data = in_handle.read(buffer_size)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_line(self, line_to_remove):
+        """Search the file for a given line, and if found, remove it."""
+        # Check there is something to remove #
+        assert line_to_remove
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files #
+        # Note: output file's permissions lost #
+        result_file.writelines(line for line in self if line != line_to_remove)
         # Switch the files around #
         self.remove()
         result_file.move_to(self)
