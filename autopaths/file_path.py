@@ -1,6 +1,5 @@
 # Built-in modules #
-import os, tempfile, subprocess, shutil, codecs, gzip
-import glob, zipfile, datetime, re, codecs
+import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, datetime
 
 # Internal modules #
 import autopaths
@@ -14,8 +13,11 @@ if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
 ################################################################################
-class FilePath(str):
-    """I can never remember all those darn `os.path` commands, so I made a class
+class FilePath(autopaths.base_path.BasePath):
+    """Represents a string to a file path and adds methods to interact with
+    files on disk.
+
+    I can never remember all those darn `os.path` commands, so I made a class
     that wraps them with an easier and more pythonic syntax.
 
         path = FilePath('/home/root/text.txt')
@@ -26,33 +28,18 @@ class FilePath(str):
     You can find lots of the common things you would need to do with file paths.
     Such as: path.make_executable() etc etc."""
 
-    def __repr__(self):    return '<%s object "%s">' % (self.__class__.__name__, self.path)
-
     def __nonzero__(self): return self.path != None and self.count_bytes != 0
 
     def __list__(self):    return self.count
 
     def __iter__(self):
-        # Maybe no not overwrite iter() #
+        # Maybe do not overwrite iter()? #
         with open(self.path, 'r') as handle:
             for line in handle: yield line
 
     def __len__(self):
         if self.path is None: return 0
         return self.count
-
-    def __new__(cls, path, *args, **kwargs):
-        """A FilePath is in fact a string."""
-        return str.__new__(cls, cls.clean_path(path))
-
-    def __init__(self, path):
-        self.path = self.clean_path(path)
-
-    def __add__(self, other):
-        if os.name == "posix": other = other.replace("\\", sep)
-        if os.name == "nt":    other = other.replace("/",  sep)
-        if other.endswith(sep): return autopaths.dir_path.DirectoryPath(self.path + other)
-        else:                   return FilePath(self.path + other)
 
     def __sub__(self, directory):
         """Subtract a directory from the current path to get the relative path
@@ -69,50 +56,12 @@ class FilePath(str):
         exceptions are raised."""
         self.close()
 
-    # ------------------------------ Class methods ----------------------------- #
-    @classmethod
-    def clean_path(cls, path):
-        """Given a path, return a cleaned up version for initialization."""
-        # Conserve None object style #
-        if path is None: return None
-        # Don't nest FilePaths or the like #
-        if hasattr(path, 'path'): path = path.path
-        # Expand tilda #
-        if "~" in path: path = os.path.expanduser(path)
-        # We will store the path with the OS specific separator #
-        # We will never mix both kinds of separators #
-        if os.name == "posix": path = path.replace("\\", sep)
-        if os.name == "nt":    path = path.replace("/",  sep)
-        # Expand star #
-        if "*" in path:
-            matches = glob.glob(path)
-            if len(matches) < 1: raise Exception("Found exactly no files matching '%s'" % path)
-            if len(matches) > 1: raise Exception("Found several files matching '%s'" % path)
-            path = matches[0]
-        # Return the result #
-        return path
-
     # ------------------------------ Properties ----------------------------- #
     @property
     def first(self):
         """Just the first line. Don't try this on binary files."""
         with open(self.path, 'r') as handle:
             for line in handle: return line
-
-    @property
-    def exists(self):
-        """Does it exist in the file system."""
-        return os.path.lexists(self.path) # Returns True even for broken symbolic links
-
-    @property
-    def is_symlink(self):
-        """Is this file a symbolic link to an other file?"""
-        if os.name == "posix": return os.path.islink(self.path)
-        if os.name == "nt":
-            import win32api
-            import win32con
-            num = win32con.FILE_ATTRIBUTE_REPARSE_POINT
-            return bool(win32api.GetFileAttributes(self.path) & num)
 
     @property
     def prefix_path(self):
@@ -143,30 +92,6 @@ class FilePath(str):
     def extension(self):
         """The extension with the leading period."""
         return os.path.splitext(self.path)[1]
-
-    @property
-    def escaped(self):
-        """The path with special characters escaped.
-        For instance a backslash becomes a double backslash."""
-        return self.path.replace("\\", "\\\\")
-
-    @property
-    def unix_style(self):
-        """The path with forward slashes and no disk drive."""
-        if self.path[1] == ':': path = self.path[2:]
-        else:                   path = self.path
-        return path.replace("\\", "/")
-
-    @property
-    def wsl_style(self):
-        """The path with forward slashes and a windows subsytem
-        for linux style leading disk drive."""
-        return "/mnt/c" + self.unix_style
-
-    @property
-    def win_style(self):
-        """The path with backward slashes."""
-        return self.path.replace("/", "\\")
 
     @property
     def directory(self):

@@ -1,10 +1,17 @@
+# Built-in modules #
+from math import log
+
 ################################################################################
 class FileSize(object):
     """
     Container for a size in bytes with a human readable representation
     Use it like this:
 
+        >>> from autopaths.file_size import FileSize
         >>> size = FileSize(123123123)
+        >>> print size
+        '123.1 MB'
+        >>> size = FileSize(123123123, system='binary')
         >>> print size
         '117.4 MiB'
     """
@@ -28,20 +35,16 @@ class FileSize(object):
         return self.size == other
 
     def __str__(self):
+        # Special cases #
         if self.size == 0: return '0 bytes'
-        from math import log
+        if self.size == 1: return '1 byte'
+        # Pick the right unit #
         unit = self.units[min(int(log(self.size, self.chunk)), len(self.units) - 1)]
-        return self.format(unit)
-
-    def format(self, unit):
-        # Input checking #
-        if unit not in self.units: raise Exception("Not a valid file size unit: '%s'" % unit)
-        # Special no plural case #
-        if self.size == 1 and unit == 'bytes': return '1 byte'
         # Compute #
-        exponent      = self.units.index(unit)
-        quotient      = float(self.size) / self.chunk**exponent
-        precision     = self.precisions[exponent]
-        format_string = '{:.%sf} {}' % (precision)
+        exponent  = self.units.index(unit)
+        quotient  = float(self.size) / self.chunk**exponent
+        precision = self.precisions[exponent]
+        template  = '{:.%sf} {}' % (precision)
+        string    =  template.format(quotient, unit)
         # Return a string #
-        return format_string.format(quotient, unit)
+        return string
