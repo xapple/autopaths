@@ -1,5 +1,5 @@
 # Special variables #
-__version__ = '1.1.5'
+__version__ = '1.1.6'
 
 # This is done to avoid circular import errors #
 from autopaths import common
