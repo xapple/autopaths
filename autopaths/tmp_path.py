@@ -7,7 +7,7 @@ from autopaths.dir_path  import DirectoryPath
 
 ################################################################################
 def new_temp_handle(**kwargs):
-    """A new temporary handle."""
+    """A new temporary handle ready to be written to."""
     handle = tempfile.NamedTemporaryFile(delete=False, **kwargs)
     return handle
 
@@ -21,7 +21,7 @@ def new_temp_path(**kwargs):
 
 ################################################################################
 def new_temp_file(**kwargs):
-    """A new temporary path."""
+    """A new temporary path as a FilePath object."""
     handle = tempfile.NamedTemporaryFile(delete=False, **kwargs)
     path   = handle.name
     handle.close()

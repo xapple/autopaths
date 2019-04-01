@@ -143,6 +143,14 @@ class DirectoryPath(autopaths.base_path.BasePath):
     def create_if_not_exists(self):
         if not self.exists: self.create()
 
+    def move_to(self, path):
+        """Move the directory."""
+        # Check #
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+
     def zip(self, keep_orig=False):
         """Make a zip archive of the directory"""
         shutil.make_archive(self.prefix_path , "zip", self.directory, self.name)
