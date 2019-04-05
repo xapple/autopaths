@@ -287,46 +287,6 @@ class FilePath(autopaths.base_path.BasePath):
         # Update the internal link #
         self.path = path
 
-    def link_from(self, path, safe=False):
-        """Make a link here pointing to another file somewhere else.
-        The destination is hence self.path and the source is *path*."""
-        # Get source and destination #
-        source      = path
-        destination = self.path
-        # Windows doesn't have os.symlink #
-        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
-        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
-
-    def link_to(self, path, safe=False, absolute=True):
-        """Create a link somewhere else pointing to this file.
-        The destination is hence *path* and the source is self.path."""
-        # If source is a file and the destination is a dir, put it inside #
-        if path.endswith(sep): path = path + self.filename
-        # Get source and destination #
-        if absolute: source = self.absolute_path
-        else:        source = self.path
-        destination = path
-        # Windows doesn't have os.symlink #
-        if os.name == "posix": self.symlinks_on_linux(  source, destination, safe)
-        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
-
-    def symlinks_on_linux(self, source, destination, safe):
-        # Do it unsafely #
-        if not safe:
-            if os.path.exists(destination): os.remove(destination)
-            os.symlink(source, destination)
-        # Do it safely #
-        if safe:
-            try: os.remove(destination)
-            except OSError: pass
-            try: os.symlink(source, destination)
-            except OSError: pass
-
-    def symlinks_on_windows(self, source, destination, safe):
-        """Yes, source and destination need to be in the reverse order."""
-        import win32file
-        win32file.CreateSymbolicLink(destination, source, 0)
-
     #------------------------------ Compression ------------------------------#
     def gzip_to(self, path=None):
         """Make a gzipped version of the file at a given path."""

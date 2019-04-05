@@ -119,3 +119,57 @@ class BasePath(str):
     def cdate_iso(self):
         """Return the creation date as a datetime iso object."""
         return datetime.fromtimestamp(self.cdate).isoformat()
+
+    #-------------------------------- Methods --------------------------------#
+    def link_from(self, path, safe=False, absolute=False):
+        """Make a link here pointing to another file/directory somewhere else.
+        The destination is hence self.path and the source is *path*."""
+        # Get source and destination #
+        from autopaths import Path
+        source      = Path(path)
+        destination = self.path
+        # Call method #
+        self._symlink(source, destination, safe, absolute)
+
+    def link_to(self, path, safe=False, absolute=False):
+        """Create a link somewhere else pointing to this file.
+        The destination is hence *path* and the source is self.path."""
+        # Get source and destination #
+        from autopaths import Path
+        source      = self.path
+        destination = Path(path)
+        # Call method #
+        self._symlink(source, destination, safe, absolute)
+
+    def _symlink(self, source, destination, safe, absolute):
+        # If source is a file and the destination is a dir, put it inside #
+        if os.path.isdir(destination) and not os.path.isdir(source):
+            destination = destination + source.filename
+        # Do we want absolute paths #
+        if absolute: source = source.absolute_path
+        # Strip trailing separators #
+        source      = source.rstrip(sep)
+        destination = destination.rstrip(sep)
+        # Windows doesn't have os.symlink #
+        if os.name == "posix": self.symlinks_on_linux(source, destination, safe)
+        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
+
+    def symlinks_on_linux(self, source, destination, safe):
+        # Do it unsafely #
+        if not safe:
+            if os.path.exists(destination): os.remove(destination)
+            os.symlink(source, destination)
+        # Do it safely #
+        if safe:
+            try: os.remove(destination)
+            except OSError: pass
+            try: os.symlink(source, destination)
+            except OSError: pass
+
+    def symlinks_on_windows(self, source, destination, safe):
+        """Yes, source and destination need to be in the reverse order"""
+        import win32file
+        if os.path.isdir(source):
+            return win32file.CreateSymbolicLink(destination, source, 1)
+        else:
+            return win32file.CreateSymbolicLink(destination, source, 0)
