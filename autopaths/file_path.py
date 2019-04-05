@@ -28,13 +28,11 @@ class FilePath(autopaths.base_path.BasePath):
     You can find lots of the common things you would need to do with file paths.
     Such as: path.make_executable() etc etc."""
 
-    def __nonzero__(self): return self.path != None and self.count_bytes != 0
-
-    def __list__(self):    return self.count
+    def __bool__(self): return self.path is not None and self.count_bytes != 0
+    __nonzero__ = __bool__
 
     def __iter__(self):
-        # Maybe do not overwrite iter()? #
-        with open(self.path, 'r') as handle:
+        with open(self.path, 'rb') as handle:
             for line in handle: yield line
 
     def __len__(self):
@@ -198,7 +196,7 @@ class FilePath(autopaths.base_path.BasePath):
 
     def writelines(self, content, encoding=None):
         if encoding is None:
-            with open(self.path, 'w') as handle: handle.writelines(content)
+            with open(self.path, 'wb') as handle: handle.writelines(content)
         else:
             with codecs.open(self.path, 'w', encoding) as handle: handle.writelines(content)
 
@@ -377,6 +375,20 @@ class FilePath(autopaths.base_path.BasePath):
         # Open input/output files #
         # Note: output file's permissions lost #
         result_file.writelines(line for line in self if line != line_to_remove)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_first_line(self):
+        """Remove the first line of the file.
+        Equivalent to sh.sed('-i', '1d', self.path)"""
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files #
+        # Note: output file's permissions lost #
+        all_lines = iter(self)
+        next(all_lines)
+        result_file.writelines(all_lines)
         # Switch the files around #
         self.remove()
         result_file.move_to(self)
