@@ -16,5 +16,7 @@ from autopaths import auto_paths
 
 ###############################################################################
 def Path(path):
-    if os.path.isdir(path): return dir_path.DirectoryPath(path)
-    else:                   return file_path.FilePath(path)
+    if os.path.isdir(path) or path.endswith('/'):
+        return dir_path.DirectoryPath(path)
+    else:
+        return file_path.FilePath(path)
