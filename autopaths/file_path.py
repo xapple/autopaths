@@ -392,3 +392,30 @@ class FilePath(autopaths.base_path.BasePath):
         # Switch the files around #
         self.remove()
         result_file.move_to(self)
+
+    def replace_line(self, line_to_remove, line_to_insert):
+        """Search the file for a given line, and if found, replace it with another line."""
+        # Check the line endings #
+        line_to_remove = line_to_remove.strip('\n')
+        line_to_insert = line_to_insert.strip('\n')
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                if line.strip() == line_to_remove: yield line_to_insert + '\n'
+                else:                              yield line
+        # Open input/output files #
+        # Note: output file's permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    #---------------------------- External tools -----------------------------#
+    def sed_replace(self, before, after):
+        if os.name == "posix":
+            return sh.sed('-i', 's/%s/%s/' % (before, after), self.path)
+        if os.name == "nt":
+            sed_cmd = 'sed -i "s/%s/%s/" %s' % (before, after, self.path)
+            return pbs.bash('-c', "'" + sed_cmd + "'" )

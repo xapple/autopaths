@@ -164,7 +164,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def copy(self, path):
         assert not os.path.exists(path)
-        shutil.copytree(self.path, path)
+        shutil.copytree(str(self.path), str(path))
 
     def glob(self, pattern):
         """Perform a glob search in this directory."""
