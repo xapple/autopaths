@@ -1,5 +1,5 @@
 # Special variables #
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 
 # Built in modules #
 import os
