@@ -29,4 +29,4 @@ def new_temp_file(**kwargs):
 
 ################################################################################
 def new_temp_dir(**kwargs):
-    return DirectoryPath(tempfile.mkdtemp() + '/')
+    return DirectoryPath(tempfile.mkdtemp(**kwargs) + '/')

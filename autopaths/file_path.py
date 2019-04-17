@@ -3,6 +3,7 @@ import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, datetime
 
 # Internal modules #
 import autopaths
+from autopaths.common import pad_extra_whitespace
 
 # Third party modules #
 if os.name == "posix": import sh
@@ -236,12 +237,12 @@ class FilePath(autopaths.base_path.BasePath):
         lines = iter(self)
         for x in xrange(num_lines): yield lines.next()
 
-    def tail(self, lines=20):
+    def tail(self, lines=20, encoding='utf-8'):
         """Return the last few lines."""
         # Constant #
         buffer_size = 1024
         # Smart algorithm #
-        with open(self.path, 'r') as handle:
+        with open(self.path, 'rb') as handle:
             handle.seek(0, 2)
             num_bytes = handle.tell()
             size      = lines + 1
@@ -251,20 +252,24 @@ class FilePath(autopaths.base_path.BasePath):
             while size > 0 and num_bytes > 0:
                 if num_bytes - buffer_size > 0:
                     # Seek back one whole buffer_size #
-                    handle.seek(block * buffer_size, 2)
+                    handle.seek(block * buffer_size, os.SEEK_END)
                     # Read buffer #
-                    data.insert(0, handle.read(buffer_size))
+                    data.insert(0, handle.read(buffer_size).decode(encoding))
                 else:
                     # File too small, start from beginning #
                     handle.seek(0,0)
                     # Only read what was not read #
-                    data.insert(0, handle.read(num_bytes))
+                    data.insert(0, handle.read(num_bytes).decode(encoding))
                 lines_found = data[0].count('\n')
                 size       -= lines_found
                 num_bytes  -= buffer_size
                 block      -= 1
             # Return #
             for line in ''.join(data).splitlines()[-lines:]: yield line
+
+    @property
+    def pretty_tail(self):
+        return "\n" + pad_extra_whitespace("\n".join(self.tail()), 4) + "\n"
 
     def move_to(self, path):
         """Move the file."""
