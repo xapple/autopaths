@@ -232,20 +232,24 @@ class FilePath(autopaths.base_path.BasePath):
         """Raise an exception if the path doesn't exist."""
         if not self.exists: raise Exception("The file path '%s' does not exist." % self.path)
 
-    def head(self, num_lines=10):
-        """Return the first few lines."""
+    def head(self, num_lines=20):
+        """Yield the first few lines."""
         lines = iter(self)
         for x in xrange(num_lines): yield lines.next()
 
-    def tail(self, lines=20, encoding='utf-8'):
-        """Return the last few lines."""
+    @property
+    def pretty_head(self):
+        return "\n" + pad_extra_whitespace("\n".join(self.head()), 4) + "\n"
+
+    def tail(self, num_lines=20, encoding='utf-8'):
+        """Yield the last few lines."""
         # Constant #
         buffer_size = 1024
         # Smart algorithm #
         with open(self.path, 'rb') as handle:
             handle.seek(0, 2)
             num_bytes = handle.tell()
-            size      = lines + 1
+            size      = num_lines + 1
             block     = -1
             data      = []
             # Loop #
@@ -265,7 +269,7 @@ class FilePath(autopaths.base_path.BasePath):
                 num_bytes  -= buffer_size
                 block      -= 1
             # Return #
-            for line in ''.join(data).splitlines()[-lines:]: yield line
+            for line in ''.join(data).splitlines()[-num_lines:]: yield line
 
     @property
     def pretty_tail(self):
