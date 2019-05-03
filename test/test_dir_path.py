@@ -6,7 +6,7 @@ Some simple tests for the autopaths package.
 
 You can run this file like this:
 
-  ipython -i -- ~/repos/autopaths/test/test_dir_path.py
+  ipython -i -- ~/repos/autopaths/test/test_symlink.py
 
 """
 
@@ -30,8 +30,10 @@ def test_list_files():
 
 def test_symlink():
     d = DirectoryPath(dummy_files)
-    lorem = d['lorem']
-    lorem.link_to(d + 'ipsum/')
+    source = d['lorem']
+    destin = d + 'ipsum/'
+    print(source, destin)
+    source.link_to(destin)
 
 ###############################################################################
 if __name__ == '__main__':
