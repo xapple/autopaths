@@ -30,14 +30,14 @@ class AutoPaths(object):
     def __repr__(self): return '<%s object on "%s">' % (self.__class__.__name__, self._base_dir)
 
     def __init__(self, base_dir, all_paths):
-        # Don't nest DirectoryPaths or the like #
+        # Don't nest Path objects or the like #
         if hasattr(base_dir, 'path'): base_dir = base_dir.path
         # Attributes #
         self._base_dir  = base_dir
         self._all_paths = all_paths
         self._tmp_dir   = tempfile.gettempdir() + sep
         # Parse input #
-        self._paths = [PathItems(p.lstrip(' '), base_dir) for p in all_paths.split('\n')]
+        self._paths = [PathItems(p.strip(' '), base_dir) for p in all_paths.split('\n')]
 
     def __call__(self, key):    return self.__getattr__(key)
     def __getitem__(self, key): return self.__getattr__(key)
