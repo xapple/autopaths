@@ -124,10 +124,10 @@ class DirectoryPath(autopaths.base_path.BasePath):
         if not os.path.isdir(self.path):
             raise Exception("The directory path '%s' does not exist." % self.path)
 
-    def remove(self):
+    def remove(self, safe=True):
         if not self.exists: return False
         if self.is_symlink: return self.remove_when_symlink()
-        shutil.rmtree(self.path, ignore_errors=True)
+        shutil.rmtree(self.path, ignore_errors=safe)
         return True
 
     def remove_when_symlink(self):

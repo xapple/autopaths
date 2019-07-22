@@ -38,6 +38,7 @@ class AutoPaths(object):
         self._tmp_dir   = tempfile.gettempdir() + sep
         # Parse input #
         self._paths = [PathItems(p.strip(' '), base_dir) for p in all_paths.split('\n')]
+        #TODO: filter empty PathItems instances
 
     def __call__(self, key):    return self.__getattr__(key)
     def __getitem__(self, key): return self.__getattr__(key)
