@@ -15,7 +15,7 @@ if os.name == "nt":    sep = "\\"
 
 ################################################################################
 class FilePath(autopaths.base_path.BasePath):
-    """Represents a string to a file path and adds methods to interact with
+    """Holds a string pointing to a file path and adds methods to interact with
     files on disk.
 
     I can never remember all those darn `os.path` commands, so I made a class
@@ -242,7 +242,7 @@ class FilePath(autopaths.base_path.BasePath):
         return "\n" + pad_extra_whitespace("\n".join(self.head()), 4) + "\n"
 
     def tail(self, num_lines=20, encoding='utf-8'):
-        """Yield the last few lines."""
+        """Yield the last few lines of the file."""
         # Constant #
         buffer_size = 1024
         # Smart algorithm #
@@ -276,7 +276,7 @@ class FilePath(autopaths.base_path.BasePath):
         return "\n" + pad_extra_whitespace("\n".join(self.tail()), 4) + "\n"
 
     def move_to(self, path):
-        """Move the file."""
+        """Move the file to a new location."""
         # Special directory case, keep the same name (put it inside) #
         if path.endswith(sep): path = path + self.filename
         # Normal case #
@@ -340,11 +340,20 @@ class FilePath(autopaths.base_path.BasePath):
         """Make a targzipped version of the file at a given path."""
         pass
 
-    def untargz_to(self, destination=None, inplace=False):
-        """Make an untargzipped version of the file at a given path"""
+    def untargz_to(self, destination=None):
+        """Make an untargzipped version of the file at a given path."""
         import tarfile
         archive = tarfile.open(self.path, 'r:gz')
         archive.extractall(destination)
+
+    def tar_to(self, path=None):
+        """Make a tared version of the file at a given path."""
+        pass
+
+    def untar_to(self, destination=None):
+        """Make an untared version of the file at a given path."""
+        import tarfile
+        with tarfile.open(self.path) as archive: archive.extractall(destination)
 
     #-------------------------------- Modify ---------------------------------#
     def append(self, data):
