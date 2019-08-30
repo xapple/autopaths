@@ -37,8 +37,8 @@ class AutoPaths(object):
         self._all_paths = all_paths
         self._tmp_dir   = tempfile.gettempdir() + sep
         # Parse input #
-        self._paths = [PathItems(p.strip(' '), base_dir) for p in all_paths.split('\n')]
-        #TODO: filter empty PathItems instances
+        self._paths = [p for p in all_paths.split('\n') if p.strip(' ')]
+        self._paths = [PathItems(p.strip(' '), base_dir) for p in self._paths]
 
     def __call__(self, key):    return self.__getattr__(key)
     def __getitem__(self, key): return self.__getattr__(key)
@@ -60,6 +60,10 @@ class AutoPaths(object):
             return self.search_for_dir(key, items)
         else:
             return self.search_for_file(key, items)
+
+    def __iter__(self):
+        """Yield all the paths we have stored."""
+        for path in self._paths: yield autopaths.Path(path.complete_path)
 
     def search_for_file(self, key, items):
         # Search #
