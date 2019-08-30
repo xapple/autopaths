@@ -42,7 +42,7 @@ class BasePath(str):
         return path
 
     def __new__(cls, path, *args, **kwargs):
-        """A Path object is in fact a string"""
+        """A Path object is in fact a string."""
         return str.__new__(cls, cls.clean_path(path))
 
     def __init__(self, path):

@@ -1,5 +1,5 @@
 # Built-in modules #
-import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, datetime
+import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, hashlib
 
 # Internal modules #
 import autopaths
@@ -148,8 +148,8 @@ class FilePath(autopaths.base_path.BasePath):
     def md5(self):
         """Compute the md5 of a file. Pretty fast."""
         md5 = hashlib.md5()
-        with open(file_path, "rb") as f:
-            for block in iter(lambda: f.read(blocksize), ""):
+        with open(self.path, "rb") as f:
+            for block in iter(lambda: f.read(4096), b""):
                 md5.update(block)
         return md5.hexdigest()
 
