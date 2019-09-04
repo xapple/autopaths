@@ -13,6 +13,11 @@ if os.name == "nt":    import pbs
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
+# Python 2 compatibility #
+import six
+if six.PY2:
+    from io import open
+
 ################################################################################
 class FilePath(autopaths.base_path.BasePath):
     """Holds a string pointing to a file path and adds methods to interact with
@@ -33,7 +38,7 @@ class FilePath(autopaths.base_path.BasePath):
     __nonzero__ = __bool__
 
     def __iter__(self):
-        with open(self.path, 'rb') as handle:
+        with open(self.path, 'r', encoding='utf-8') as handle:
             for line in handle: yield line
 
     def __len__(self):
@@ -127,7 +132,7 @@ class FilePath(autopaths.base_path.BasePath):
     @property
     def contents_utf8(self):
         """The contents as a unicode string."""
-        with codecs.open(self.path, encoding='utf8') as handle:return handle.read()
+        with open(self.path, encoding='utf8') as handle:return handle.read()
 
     @property
     def absolute_path(self):
@@ -167,7 +172,7 @@ class FilePath(autopaths.base_path.BasePath):
 
     #-------------------------------- Methods --------------------------------#
     def read(self, encoding=None):
-        with codecs.open(self.path, 'r', encoding) as handle: content = handle.read()
+        with open(self.path, 'r', encoding) as handle: content = handle.read()
         return content
 
     def create(self):
@@ -189,17 +194,17 @@ class FilePath(autopaths.base_path.BasePath):
     def close(self):
         self.handle.close()
 
-    def write(self, content, encoding=None, mode='w'):
+    def write(self, content, encoding='utf-8', mode='w'):
         if encoding is None:
             with open(self.path, mode) as handle: handle.write(content)
         else:
-            with codecs.open(self.path, mode, encoding) as handle: handle.write(content)
+            with open(self.path, mode, encoding=encoding) as handle: handle.write(content)
 
-    def writelines(self, content, encoding=None):
+    def writelines(self, content, encoding='utf-8', mode='w'):
         if encoding is None:
-            with open(self.path, 'wb') as handle: handle.writelines(content)
+            with open(self.path, mode) as handle: handle.writelines(content)
         else:
-            with codecs.open(self.path, 'w', encoding) as handle: handle.writelines(content)
+            with open(self.path, mode, encoding=encoding) as handle: handle.writelines(content)
 
     def remove(self):
         if not self.exists: return False
@@ -357,9 +362,9 @@ class FilePath(autopaths.base_path.BasePath):
 
     #-------------------------------- Modify ---------------------------------#
     def append(self, data):
-        """Append some text or an other file to the current file"""
+        """Append some text or an other file to the current file."""
         if isinstance(data, FilePath): data = data.contents
-        with open(path, "a") as handle: handle.write(data)
+        with open(self.path, "a") as handle: handle.write(data)
 
     def prepend(self, data, buffer_size=1 << 15):
         """Prepend some text or an other file to the current file.
@@ -373,8 +378,7 @@ class FilePath(autopaths.base_path.BasePath):
         if isinstance(data, FilePath): data = data.contents
         # Create a new file #
         result_file = autopaths.tmp_path.new_temp_file()
-        # Open input/output files #
-        # Note: output file's permissions lost #
+        # Open input/output files, note: output file's permissions lost #
         with open(self) as in_handle:
             with open(result_file, 'w') as out_handle:
                 while data:
@@ -390,8 +394,7 @@ class FilePath(autopaths.base_path.BasePath):
         assert line_to_remove
         # Create a new file #
         result_file = autopaths.tmp_path.new_temp_file()
-        # Open input/output files #
-        # Note: output file's permissions lost #
+        # Open input/output files, note: output file's permissions lost #
         result_file.writelines(line for line in self if line != line_to_remove)
         # Switch the files around #
         self.remove()
@@ -402,8 +405,7 @@ class FilePath(autopaths.base_path.BasePath):
         Equivalent to sh.sed('-i', '1d', self.path)"""
         # Create a new file #
         result_file = autopaths.tmp_path.new_temp_file()
-        # Open input/output files #
-        # Note: output file's permissions lost #
+        # Open input/output files, note: output file's permissions lost #
         all_lines = iter(self)
         next(all_lines)
         result_file.writelines(all_lines)
@@ -412,7 +414,8 @@ class FilePath(autopaths.base_path.BasePath):
         result_file.move_to(self)
 
     def replace_line(self, line_to_remove, line_to_insert):
-        """Search the file for a given line, and if found, replace it with another line."""
+        """Search the file for a given line, and if found,
+        replace it with another line."""
         # Check the line endings #
         line_to_remove = line_to_remove.strip('\n')
         line_to_insert = line_to_insert.strip('\n')
@@ -423,8 +426,22 @@ class FilePath(autopaths.base_path.BasePath):
             for line in self:
                 if line.strip() == line_to_remove: yield line_to_insert + '\n'
                 else:                              yield line
-        # Open input/output files #
-        # Note: output file's permissions lost #
+        # Open input/output files, note: output file's permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def replace_word(self, word_to_find, replacement_word):
+        """Search the file for a given word, and if found,
+        replace every occurrence of it with another word."""
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                yield line.replace(word_to_find, replacement_word)
+        # Open input/output files, note: output file's permissions lost #
         result_file.writelines(new_lines())
         # Switch the files around #
         self.remove()
