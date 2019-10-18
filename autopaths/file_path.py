@@ -194,13 +194,13 @@ class FilePath(autopaths.base_path.BasePath):
     def close(self):
         self.handle.close()
 
-    def write(self, content, encoding='utf-8', mode='w'):
+    def write(self, content, encoding=None, mode='w'):
         if encoding is None:
             with open(self.path, mode) as handle: handle.write(content)
         else:
             with open(self.path, mode, encoding=encoding) as handle: handle.write(content)
 
-    def writelines(self, content, encoding='utf-8', mode='w'):
+    def writelines(self, content, encoding=None, mode='w'):
         if encoding is None:
             with open(self.path, mode) as handle: handle.writelines(content)
         else:
