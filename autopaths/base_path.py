@@ -56,6 +56,11 @@ class BasePath(str):
 
     # ------------------------------ Properties ----------------------------- #
     @property
+    def short_prefix(self):
+        """Just the filename without any extension or periods."""
+        return self.name.split('.')[0]
+
+    @property
     def escaped(self):
         """The path with special characters escaped.
         For instance a backslash becomes a double backslash."""

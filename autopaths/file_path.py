@@ -78,11 +78,6 @@ class FilePath(autopaths.base_path.BasePath):
         return str(os.path.basename(self.prefix_path))
 
     @property
-    def short_prefix(self):
-        """Just the filename without any extension or periods."""
-        return self.filename.split('.')[0]
-
-    @property
     def name(self):
         """Shortcut for self.filename."""
         return self.filename
