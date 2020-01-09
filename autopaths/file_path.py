@@ -20,7 +20,8 @@ if six.PY2:
 
 ################################################################################
 class FilePath(autopaths.base_path.BasePath):
-    """Holds a string pointing to a file path and adds methods to interact with
+    """
+    Holds a string pointing to a file path and adds methods to interact with
     files on disk.
 
     I can never remember all those darn `os.path` commands, so I made a class
@@ -32,7 +33,8 @@ class FilePath(autopaths.base_path.BasePath):
         print path.filename
 
     You can find lots of the common things you would need to do with file paths.
-    Such as: path.make_executable() etc etc."""
+    Such as: path.make_executable() etc etc.
+    """
 
     def __bool__(self): return self.path is not None and self.count_bytes != 0
     __nonzero__ = __bool__
@@ -165,6 +167,11 @@ class FilePath(autopaths.base_path.BasePath):
         from binaryornot.helpers import is_binary_string
         return is_binary_string(self.contents)
 
+    @property
+    def magic_number(self):
+        """Return the first four bytes of the file."""
+        with open(self.path, 'rb') as f: return f.read(4)
+
     #-------------------------------- Methods --------------------------------#
     def read(self, encoding=None):
         with open(self.path, 'r', encoding) as handle: content = handle.read()
@@ -235,7 +242,7 @@ class FilePath(autopaths.base_path.BasePath):
     def head(self, num_lines=20):
         """Yield the first few lines."""
         lines = iter(self)
-        for x in xrange(num_lines): yield lines.next()
+        for _ in range(num_lines): yield next(lines)
 
     @property
     def pretty_head(self):
