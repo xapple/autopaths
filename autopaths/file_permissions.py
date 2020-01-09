@@ -13,6 +13,11 @@ class FilePermissions(object):
         """The permission bits as an octal integer."""
         return os.stat(self.path).st_mode & 0o0777
 
+    @property
+    def is_executable(self):
+        """Can you execute this file?"""
+        return os.access(self.path, os.X_OK)
+
     def make_executable(self):
         return os.chmod(self.path, os.stat(self.path).st_mode | stat.S_IEXEC)
 
