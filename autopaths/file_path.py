@@ -282,11 +282,12 @@ class FilePath(autopaths.base_path.BasePath):
     def pretty_tail(self):
         return "\n" + pad_extra_whitespace("\n".join(self.tail()), 4) + "\n"
 
-    def move_to(self, path):
+    def move_to(self, path, overwrite=False):
         """Move the file to a new location."""
         # Special directory case, keep the same name (put it inside) #
         if path.endswith(sep): path = path + self.filename
         # Normal case #
+        if os.path.exists(path) and overwrite: os.remove(path)
         assert not os.path.exists(path)
         shutil.move(self.path, path)
         # Update the internal link #
@@ -323,8 +324,10 @@ class FilePath(autopaths.base_path.BasePath):
         pass
 
     def unzip_to(self, destination=None, inplace=False, single=True):
-        """Unzip a standard zip file. Can specify the destination of the
-        uncompressed file, or just set inplace=True to delete the original."""
+        """
+        Unzip a standard zip file. Can specify the destination of the
+        uncompressed file, or just set inplace=True to delete the original.
+        """
         # Check #
         assert zipfile.is_zipfile(self.path)
         # Load #
