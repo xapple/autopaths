@@ -47,7 +47,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     @property
     def directory(self):
-        """The full path of the directory containing this one."""
+        """The full path of the directory containing this one (parent dir)."""
         # The built-in function #
         directory = os.path.dirname(os.path.dirname(self.path))
         # Maybe we need to go the absolute path way #
@@ -175,3 +175,11 @@ class DirectoryPath(autopaths.base_path.BasePath):
         """Find a file in this directory."""
         f = glob.glob(self.path + pattern)[0]
         return autopaths.file_path.FilePath(f)
+
+    def unnest(self):
+        """
+        Move all contents (files and directories) of this directory
+        to its parent directory, and remove this directory.
+        """
+        for item in self.flat_contents: item.move_to(self.directory)
+        self.remove()
