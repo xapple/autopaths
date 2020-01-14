@@ -183,3 +183,15 @@ class DirectoryPath(autopaths.base_path.BasePath):
         """
         for item in self.flat_contents: item.move_to(self.directory)
         self.remove()
+
+    def zip_to(self, path=None):
+        """Make a zipped version of the directory at a given path."""
+        # Case where path is None #
+        if path is None: path = self.directory + self.name + ".zip"
+        # The method adds .zip so let's remove it #
+        if path.endswith('.zip'): path_no_ext = path.prefix_path
+        else:                     path_no_ext = path
+        # Compress #
+        shutil.make_archive(path_no_ext, 'zip', self.path)
+        # Return #
+        return path_no_ext
