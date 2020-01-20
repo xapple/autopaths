@@ -5,6 +5,7 @@ setup(
         version          = '1.3.3',
         description      = 'autopaths is a python package for dealing with file paths and automation.',
         long_description = open('README.md').read(),
+        long_description_content_type = 'text/markdown',
         license          = 'MIT',
         url              = 'http://github.com/xapple/autopaths/',
         author           = 'Lucas Sinclair',
