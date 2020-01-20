@@ -146,6 +146,10 @@ class FilePath(autopaths.base_path.BasePath):
         """The relative path when compared with current directory."""
         return FilePath(os.path.relpath(self.physical_path))
 
+    def rel_path_from(self, path):
+        """The relative path when compared to the given path."""
+        return FilePath(os.path.relpath(self.path, path))
+
     @property
     def md5(self):
         """Compute the md5 of a file. Pretty fast."""
