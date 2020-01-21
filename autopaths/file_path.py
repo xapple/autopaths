@@ -176,6 +176,12 @@ class FilePath(autopaths.base_path.BasePath):
         """Return the first four bytes of the file."""
         with open(self.path, 'rb') as f: return f.read(4)
 
+    @property
+    def lines(self):
+        """Get all lines in a list with \n striped."""
+        with open(self.path, 'r', encoding='utf-8') as handle:
+            return [line.strip('\n') for line in handle]
+
     #-------------------------------- Methods --------------------------------#
     def read(self, encoding=None):
         with open(self.path, 'r', encoding) as handle: content = handle.read()
