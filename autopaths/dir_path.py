@@ -13,6 +13,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
     """Holds a string pointing to a directory path and adds methods to interact with
     directories."""
 
+    def __len__(self): return len(list(self.flat_contents))
+
     def __iter__(self): return self.flat_contents
 
     def __contains__(self, item): return item in [x.name for x in self.flat_contents]
