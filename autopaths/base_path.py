@@ -10,8 +10,10 @@ if os.name == "nt":    sep = "\\"
 
 ################################################################################
 class BasePath(str):
-    """This object contains methods that are common to both FilePath objects
-    and DirectoryPath objects."""
+    """
+    This object contains methods that are common to both FilePath objects
+    and DirectoryPath objects.
+    """
 
     def __repr__(self): return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
@@ -62,8 +64,10 @@ class BasePath(str):
 
     @property
     def escaped(self):
-        """The path with special characters escaped.
-        For instance a backslash becomes a double backslash."""
+        """
+        The path with special characters escaped.
+        For instance a backslash becomes a double backslash.
+        """
         return self.path.replace("\\", "\\\\")
 
     @property
@@ -75,8 +79,10 @@ class BasePath(str):
 
     @property
     def wsl_style(self):
-        """The path with forward slashes and a windows subsytem
-        for linux style leading disk drive."""
+        """
+        The path with forward slashes and a windows subsytem
+        for linux style leading disk drive.
+        """
         return "/mnt/c" + self.unix_style
 
     @property
@@ -86,8 +92,10 @@ class BasePath(str):
 
     @property
     def exists(self):
-        """Does it exist in the file system?
-        Returns True even for broken symbolic links."""
+        """
+        Does it exist in the file system?
+        Returns True even for broken symbolic links.
+        """
         return os.path.lexists(self.path)
 
     @property
@@ -127,8 +135,10 @@ class BasePath(str):
 
     #-------------------------------- Methods --------------------------------#
     def link_from(self, path, safe=False, absolute=False):
-        """Make a link here pointing to another file/directory somewhere else.
-        The destination is hence self.path and the source is *path*."""
+        """
+        Make a link here pointing to another file/directory somewhere else.
+        The destination is hence self.path and the source is *path*.
+        """
         # Get source and destination #
         from autopaths import Path
         source      = Path(path)
@@ -137,8 +147,10 @@ class BasePath(str):
         self._symlink(source, destination, safe, absolute)
 
     def link_to(self, path, safe=False, absolute=False):
-        """Create a link somewhere else pointing to this file.
-        The destination is hence *path* and the source is self.path."""
+        """
+        Create a link somewhere else pointing to this file.
+        The destination is hence *path* and the source is self.path.
+        """
         # Get source and destination #
         from autopaths import Path
         source      = self.path

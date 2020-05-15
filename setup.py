@@ -10,6 +10,5 @@ setup(
         url              = 'http://github.com/xapple/autopaths/',
         author           = 'Lucas Sinclair',
         author_email     = 'lucas.sinclair@me.com',
-        install_requires = ['sh'],
         packages         = ['autopaths'],
     )

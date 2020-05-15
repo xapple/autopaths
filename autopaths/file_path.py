@@ -5,10 +5,6 @@ import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, hashlib
 import autopaths
 from autopaths.common import pad_extra_whitespace
 
-# Third party modules #
-if os.name == "posix": import sh
-if os.name == "nt":    import pbs
-
 # Constants #
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
@@ -48,8 +44,10 @@ class FilePath(autopaths.base_path.BasePath):
         return self.count
 
     def __sub__(self, directory):
-        """Subtract a directory from the current path to get the relative path
-        of the current file from that directory."""
+        """
+        Subtract a directory from the current path to get the relative path
+        of the current file from that directory.
+        """
         return os.path.relpath(self.path, directory)
 
     def __enter__(self):
@@ -57,9 +55,11 @@ class FilePath(autopaths.base_path.BasePath):
         return self
 
     def __exit__(self, errtype, value, traceback):
-        """Called when exiting the 'with' statement.
+        """
+        Called when exiting the 'with' statement.
         This enables us to close the file or database properly, even when
-        exceptions are raised."""
+        exceptions are raised.
+        """
         self.close()
 
     # ------------------------------ Properties ----------------------------- #
@@ -113,6 +113,10 @@ class FilePath(autopaths.base_path.BasePath):
     @property
     def count(self):
         """We are going to default to the number of lines."""
+        # Third party modules #
+        if os.name == "posix": import sh
+        if os.name == "nt":    import pbs
+        # Count lines #
         if os.name == "posix": return int(sh.wc('-l', self.path).split()[0])
         if os.name == "nt":    return int(pbs.Command("find")('/c', '/v', '""', self.path))
 
@@ -382,7 +386,8 @@ class FilePath(autopaths.base_path.BasePath):
         with open(self.path, "a") as handle: handle.write(data)
 
     def prepend(self, data, buffer_size=1 << 15):
-        """Prepend some text or an other file to the current file.
+        """
+        Prepend some text or an other file to the current file.
         TODO:
         * Add a random string to the backup file.
         * Restore permissions after copy.
@@ -416,8 +421,10 @@ class FilePath(autopaths.base_path.BasePath):
         result_file.move_to(self)
 
     def remove_first_line(self):
-        """Remove the first line of the file.
-        Equivalent to sh.sed('-i', '1d', self.path)"""
+        """
+        Remove the first line of the file.
+        Equivalent to sh.sed('-i', '1d', self.path)
+        """
         # Create a new file #
         result_file = autopaths.tmp_path.new_temp_file()
         # Open input/output files, note: output file's permissions lost #
@@ -429,8 +436,10 @@ class FilePath(autopaths.base_path.BasePath):
         result_file.move_to(self)
 
     def replace_line(self, line_to_remove, line_to_insert):
-        """Search the file for a given line, and if found,
-        replace it with another line."""
+        """
+        Search the file for a given line, and if found,
+        replace it with another line.
+        """
         # Check the line endings #
         line_to_remove = line_to_remove.strip('\n')
         line_to_insert = line_to_insert.strip('\n')
@@ -448,8 +457,10 @@ class FilePath(autopaths.base_path.BasePath):
         result_file.move_to(self)
 
     def replace_word(self, word_to_find, replacement_word):
-        """Search the file for a given word, and if found,
-        replace every occurrence of it with another word."""
+        """
+        Search the file for a given word, and if found,
+        replace every occurrence of it with another word.
+        """
         # Create a new file #
         result_file = autopaths.tmp_path.new_temp_file()
         # Generate the lines #
@@ -465,7 +476,9 @@ class FilePath(autopaths.base_path.BasePath):
     #---------------------------- External tools -----------------------------#
     def sed_replace(self, before, after):
         if os.name == "posix":
+            import sh
             return sh.sed('-i', 's/%s/%s/' % (before, after), self.path)
         if os.name == "nt":
+            import pbs
             sed_cmd = 'sed -i "s/%s/%s/" %s' % (before, after, self.path)
             return pbs.bash('-c', "'" + sed_cmd + "'" )

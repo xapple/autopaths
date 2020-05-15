@@ -10,8 +10,10 @@ if os.name == "nt":    sep = "\\"
 
 ################################################################################
 class DirectoryPath(autopaths.base_path.BasePath):
-    """Holds a string pointing to a directory path and adds methods to interact with
-    directories."""
+    """
+    Holds a string pointing to a directory path and adds methods to interact with
+    directories.
+    """
 
     def __len__(self): return len(list(self.flat_contents))
 
