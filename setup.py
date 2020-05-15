@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
         name             = 'autopaths',
-        version          = '1.3.7',
+        version          = '1.3.8',
         description      = 'autopaths is a python package for dealing with file paths and automation.',
         long_description = open('README.md').read(),
         long_description_content_type = 'text/markdown',
