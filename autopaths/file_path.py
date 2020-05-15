@@ -1,5 +1,5 @@
 # Built-in modules #
-import os, tempfile, subprocess, shutil, codecs, gzip, zipfile, hashlib
+import os, tempfile, subprocess, shutil, gzip, zipfile, hashlib
 
 # Internal modules #
 import autopaths

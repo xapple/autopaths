@@ -1,5 +1,5 @@
 # Built-in modules #
-import os, hashlib, re
+import re
 
 ###############################################################################
 def natural_sort(item):

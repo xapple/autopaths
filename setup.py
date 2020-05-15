@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
         name             = 'autopaths',
@@ -10,5 +10,6 @@ setup(
         url              = 'http://github.com/xapple/autopaths/',
         author           = 'Lucas Sinclair',
         author_email     = 'lucas.sinclair@me.com',
-        packages         = ['autopaths'],
+        packages         = find_packages(),
+        install_requires = ['six'],
     )
