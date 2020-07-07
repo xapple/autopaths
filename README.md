@@ -57,8 +57,8 @@ You can use this class like this when making pipelines to quickly refer to a pre
 
 More documentation is available at:
 
-<http://xapple.github.io/autopaths/>
+<http://xapple.github.io/autopaths/autopaths>
 
 This documentation is simply generated with:
 
-    $ pdoc --html --output-dir docs autopaths
+    $ pdoc --html --output-dir docs --force autopaths
