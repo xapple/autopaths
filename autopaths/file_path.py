@@ -124,10 +124,10 @@ class FilePath(autopaths.base_path.BasePath):
         """We are going to default to the number of lines."""
         # Third party modules #
         if os.name == "posix": import sh
-        if os.name == "nt":    import pbs
+        if os.name == "nt":    import pbs3
         # Count lines #
         if os.name == "posix": return int(sh.wc('-l', self.path).split()[0])
-        if os.name == "nt":    return int(pbs.Command("find")('/c', '/v', '""', self.path))
+        if os.name == "nt":    return int(pbs3.Command("find")('/c', '/v', '""', self.path))
 
     @property
     def size(self):
@@ -522,6 +522,6 @@ class FilePath(autopaths.base_path.BasePath):
             import sh
             return sh.sed('-i', 's/%s/%s/' % (before, after), self.path)
         if os.name == "nt":
-            import pbs
+            import pbs3
             sed_cmd = 'sed -i "s/%s/%s/" %s' % (before, after, self.path)
-            return pbs.bash('-c', "'" + sed_cmd + "'" )
+            return pbs3.bash('-c', "'" + sed_cmd + "'" )

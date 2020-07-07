@@ -7,7 +7,6 @@ Some simple tests for the autopaths package.
 You can run this file like this:
 
   ipython -i -- ~/repos/autopaths/test/test_symlink.py
-
 """
 
 # Built-in modules #

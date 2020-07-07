@@ -157,10 +157,10 @@ class FilePath(autopaths.base_path.BasePath):
         &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
         # Third party modules #
         if os.name == &#34;posix&#34;: import sh
-        if os.name == &#34;nt&#34;:    import pbs
+        if os.name == &#34;nt&#34;:    import pbs3
         # Count lines #
         if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
-        if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
+        if os.name == &#34;nt&#34;:    return int(pbs3.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
 
     @property
     def size(self):
@@ -555,9 +555,9 @@ class FilePath(autopaths.base_path.BasePath):
             import sh
             return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
         if os.name == &#34;nt&#34;:
-            import pbs
+            import pbs3
             sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
-            return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+            return pbs3.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
 </details>
 </section>
 <section>
@@ -689,10 +689,10 @@ Such as: path.make_executable() etc etc.</p></div>
         &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
         # Third party modules #
         if os.name == &#34;posix&#34;: import sh
-        if os.name == &#34;nt&#34;:    import pbs
+        if os.name == &#34;nt&#34;:    import pbs3
         # Count lines #
         if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
-        if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
+        if os.name == &#34;nt&#34;:    return int(pbs3.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
 
     @property
     def size(self):
@@ -1087,9 +1087,9 @@ Such as: path.make_executable() etc etc.</p></div>
             import sh
             return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
         if os.name == &#34;nt&#34;:
-            import pbs
+            import pbs3
             sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
-            return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+            return pbs3.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1163,10 +1163,10 @@ def count(self):
     &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
     # Third party modules #
     if os.name == &#34;posix&#34;: import sh
-    if os.name == &#34;nt&#34;:    import pbs
+    if os.name == &#34;nt&#34;:    import pbs3
     # Count lines #
     if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
-    if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))</code></pre>
+    if os.name == &#34;nt&#34;:    return int(pbs3.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))</code></pre>
 </details>
 </dd>
 <dt id="autopaths.file_path.FilePath.count_bytes"><code class="name">var <span class="ident">count_bytes</span></code></dt>
@@ -1844,9 +1844,9 @@ replace every occurrence of it with another word.</p></div>
         import sh
         return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
     if os.name == &#34;nt&#34;:
-        import pbs
+        import pbs3
         sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
-        return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+        return pbs3.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
 </details>
 </dd>
 <dt id="autopaths.file_path.FilePath.tail"><code class="name flex">
