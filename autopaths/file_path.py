@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+"""
+
 # Built-in modules #
 import os, tempfile, subprocess, shutil, gzip, zipfile, hashlib
 
@@ -298,14 +307,20 @@ class FilePath(autopaths.base_path.BasePath):
 
     def move_to(self, path, overwrite=False):
         """Move the file to a new location."""
+        # Parse the path #
+        path = autopaths.Path(path)
         # Special directory case, keep the same name (put it inside) #
         if path.endswith(sep): path = path + self.filename
+        # Check that the directory exists #
+        path.directory.create_if_not_exists()
         # Normal case #
         if os.path.exists(path) and overwrite: os.remove(path)
         assert not os.path.exists(path)
         shutil.move(self.path, path)
         # Update the internal link #
         self.path = path
+        # Return #
+        return path
 
     def rename(self, new_name):
         """Rename the file but leave it in the same directory."""
@@ -319,29 +334,37 @@ class FilePath(autopaths.base_path.BasePath):
     #------------------------------ Compression ------------------------------#
     def gzip_to(self, path=None):
         """Make a gzipped version of the file at a given path."""
+        # Case where path is not specified #
         if path is None: path = self.path + ".gz"
+        # Do it #
         with open(self.path, 'rb') as orig_file:
             with gzip.open(path, 'wb') as new_file:
                 new_file.writelines(orig_file)
+        # Return #
         return FilePath(path)
 
     def ungzip_to(self, path=None, mode='w'):
         """Make an unzipped version of the file at a given path."""
-        if path is None: path = self.path[:3]
+        # Case where path is not specified #
+        if path is None: path = self.path[:-3]
+        # Do it #
         with gzip.open(self, 'rb') as orig_file:
             with open(path, mode) as new_file:
                 new_file.writelines(orig_file)
+        # Return #
         return FilePath(path)
 
     def zip_to(self, path=None):
         """Make a zipped version of the file at a given path."""
         pass
 
-    def unzip_to(self, destination=None, inplace=False, single=True):
+    def unzip_to(self, path=None, inplace=False, single=True):
         """
         Unzip a standard zip file. Can specify the destination of the
         uncompressed file, or just set inplace=True to delete the original.
         """
+        # Parse the path #
+        path = autopaths.Path(path)
         # Check #
         assert zipfile.is_zipfile(self.path)
         # Load #
@@ -354,30 +377,50 @@ class FilePath(autopaths.base_path.BasePath):
             z.extract(member, tmpdir)
             z.close()
             if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)
-            else:       shutil.move(tmpdir + member.filename, destination)
+            else:       shutil.move(tmpdir+member.filename, path)
         # Multifile - no security, dangerous - Will use CWD if dest is None!! #
         # If a file starts with an absolute path, will overwrite your files anywhere #
         if not single:
-            z.extractall(destination)
+            z.extractall(path)
+            return autopaths.dir_path.DirectoryPath(path)
+        # Return #
+        return FilePath(path)
 
     def targz_to(self, path=None):
         """Make a targzipped version of the file at a given path."""
         pass
 
-    def untargz_to(self, destination=None):
+    def untargz_to(self, path=None):
         """Make an untargzipped version of the file at a given path."""
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith('.tgz'):    path = self.path[:-4]
+            elif self.path.endswith('.tar.gz'): path = self.path[:-7]
+            else: path = self.path + '.untargz'
+        # Do it #
         import tarfile
-        archive = tarfile.open(self.path, 'r:gz')
-        archive.extractall(destination)
+        with tarfile.open(self.path, 'r:gz') as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + '/')
 
     def tar_to(self, path=None):
         """Make a tared version of the file at a given path."""
         pass
 
-    def untar_to(self, destination=None):
+    def untar_to(self, path=None):
         """Make an untared version of the file at a given path."""
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith('.tgz'):    path = self.path[:-4]
+            elif self.path.endswith('.tar.gz'): path = self.path[:-7]
+            else: path = self.path + '.untargz'
+        # Do it #
         import tarfile
-        with tarfile.open(self.path) as archive: archive.extractall(destination)
+        with tarfile.open(self.path) as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + '/')
 
     #-------------------------------- Modify ---------------------------------#
     def append(self, data):

@@ -1,5 +1,4 @@
 [![PyPI version](https://badge.fury.io/py/autopaths.svg)](https://badge.fury.io/py/autopaths)
-[![changelog](http://allmychanges.com/p/python/autopaths/badge/)](http://allmychanges.com/p/python/autopaths/?utm_source=badge)
 
 # `autopaths` version 1.4.1
 
@@ -7,7 +6,7 @@
 
 It contains several submodules that are useful when building pipelines. See below for examples and documentation.
 
-# `FilePath` object
+## `FilePath` object
 
 Here are a few example usages of this object:
 
@@ -20,13 +19,12 @@ Here are a few example usages of this object:
     f.prepend('# This file was backed-up\n')
     f.gzip_to('backup/old_reads/reads_56.fastq')
     f.move_to(f.parent)
-    f.make_executable()
 
 As you can see, once you have created a FilePath, many useful methods are available. No more need for long `os.path` or `shutil` commands of which you can never remember the syntax.
 
-To see the complete list of utility methods and properties, look at the source code. You can find lots of the common things you would need to do with file paths `f.make_executable()` etc etc.
+To see the complete list of utility methods and properties, look at the source code. You can find lots of the common things you would need to do with file paths such as `f.make_executable()` etc etc right at your fingertips.
 
-# `DirectoryPath` object
+## `DirectoryPath` object
 
 Similar to a file path object. Here is an example usage of this object:
 
@@ -36,19 +34,31 @@ Similar to a file path object. Here is an example usage of this object:
     d.create_if_not_exists()
     f = d + 'new.fastq'
 
-# `AutoPaths` object
+## `AutoPaths` object
 
 You can use this class like this when making pipelines to quickly refer to a predefined file path with a simple attribute lookup. This example explains it:
 
     class Sample(object):
-        all_paths = '''
-            /raw/raw.sff
-            /raw/raw.fastq
-            /clean/trim.fastq
-            /clean/clean.fastq'''
+        all_paths = """
+                    /raw/raw.sff
+                    /raw/raw.fastq
+                    /clean/trim.fastq
+                    /clean/clean.fastq
+                    """
 
         def __init__(self, base_dir):
+            from autopaths.auto_paths import AutoPaths
             self.p = AutoPaths(base_dir, self.all_paths)
 
         def clean(self):
             shutil.move(self.p.raw_sff, self.p.clean_fastq)
+
+# Extra documentation 
+
+More documentation is available at:
+
+<http://xapple.github.io/autopaths/>
+
+This documentation is simply generated with:
+
+    $ pdoc --html --output-dir docs autopaths

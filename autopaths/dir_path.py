@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+"""
+
 # Built-in modules #
 import os, shutil, glob
 
@@ -59,6 +68,17 @@ class DirectoryPath(autopaths.base_path.BasePath):
             directory = os.path.dirname(os.path.dirname(self.absolute_path))
         # Return #
         return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def sub_directory(self):
+        """
+        The path to the directory that is contained inside this directory.
+        Assuming that the current directory has only one child.
+        """
+        # Check there is only one #
+        assert len(self.flat_directories) == 1
+        # Return #
+        return self.flat_directories[0]
 
     @property
     def empty(self):

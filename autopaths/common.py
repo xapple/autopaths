@@ -1,10 +1,19 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+"""
+
 # Built-in modules #
 import re
 
 ###############################################################################
 def natural_sort(item):
     """
-    Sort strings that contain numbers correctly. Works in Python 2 and 3.
+    Sort strings that contain numbers correctly.
 
     >>> l = ['v1.3.12', 'v1.3.3', 'v1.2.5', 'v1.2.15', 'v1.2.3', 'v1.2.1']
     >>> l.sort(key=natural_sort)

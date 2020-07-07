@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+"""
+
 # Built-in modules #
 from math import log
 
@@ -22,10 +31,10 @@ class FileSize(object):
         # Record the size #
         self.size = size
         # Pick the system used #
-        if system is 'binary':
+        if system == 'binary':
             self.chunk = 1024
             self.units = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB']
-        elif system is 'decimal':
+        elif system == 'decimal':
             self.chunk = 1000
             self.units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB']
         else:

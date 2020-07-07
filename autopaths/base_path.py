@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+"""
+
 # Built-in modules #
 import os, glob
 
@@ -69,6 +78,13 @@ class BasePath(str):
         For instance a backslash becomes a double backslash.
         """
         return self.path.replace("\\", "\\\\")
+
+    @property
+    def with_tilda(self):
+        """The path with the home directory substituted with a tilda."""
+        home = os.path.expanduser('~')
+        if self.path.startswith(home): return self.path.replace(home, '~', 1)
+        return self.path
 
     @property
     def unix_style(self):
