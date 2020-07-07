@@ -1,0 +1,2201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>autopaths.file_path API documentation</title>
+<meta name="description" content="Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>autopaths.file_path</code></h1>
+</header>
+<section id="section-intro">
+<p>Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+&#34;&#34;&#34;
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+&#34;&#34;&#34;
+
+# Built-in modules #
+import os, tempfile, subprocess, shutil, gzip, zipfile, hashlib
+
+# Internal modules #
+import autopaths
+from autopaths.common import pad_extra_whitespace
+
+# Constants #
+if os.name == &#34;posix&#34;: sep = &#34;/&#34;
+if os.name == &#34;nt&#34;:    sep = &#34;\\&#34;
+
+# Python 2 compatibility #
+import six
+if six.PY2:
+    from io import open
+
+################################################################################
+class FilePath(autopaths.base_path.BasePath):
+    &#34;&#34;&#34;
+    Holds a string pointing to a file path and adds methods to interact with
+    files on disk.
+
+    I can never remember all those darn `os.path` commands, so I made a class
+    that wraps them with an easier and more pythonic syntax.
+
+        path = FilePath(&#39;/home/root/text.txt&#39;)
+        print path.extension
+        print path.directory
+        print path.filename
+
+    You can find lots of the common things you would need to do with file paths.
+    Such as: path.make_executable() etc etc.
+    &#34;&#34;&#34;
+
+    def __bool__(self): return self.path is not None and self.count_bytes != 0
+    __nonzero__ = __bool__
+
+    def __iter__(self):
+        with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
+            for line in handle: yield line
+
+    def __len__(self):
+        if self.path is None: return 0
+        return self.count
+
+    def __sub__(self, directory):
+        &#34;&#34;&#34;
+        Subtract a directory from the current path to get the relative path
+        of the current file from that directory.
+        &#34;&#34;&#34;
+        return os.path.relpath(self.path, directory)
+
+    def __enter__(self):
+        &#34;&#34;&#34;Called when entering the &#39;with&#39; statement (context manager).&#34;&#34;&#34;
+        return self
+
+    def __exit__(self, errtype, value, traceback):
+        &#34;&#34;&#34;
+        Called when exiting the &#39;with&#39; statement.
+        This enables us to close the file or database properly, even when
+        exceptions are raised.
+        &#34;&#34;&#34;
+        self.close()
+
+    # ------------------------------ Properties ----------------------------- #
+    @property
+    def first(self):
+        &#34;&#34;&#34;Just the first line. Don&#39;t try this on binary files.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;) as handle:
+            for line in handle: return line
+
+    @property
+    def prefix_path(self):
+        &#34;&#34;&#34;The full path without the (last) extension and trailing period.&#34;&#34;&#34;
+        return str(os.path.splitext(self.path)[0])
+
+    @property
+    def prefix(self):
+        &#34;&#34;&#34;Just the filename without the (last) extension and trailing period.&#34;&#34;&#34;
+        return str(os.path.basename(self.prefix_path))
+
+    @property
+    def name(self):
+        &#34;&#34;&#34;Shortcut for self.filename.&#34;&#34;&#34;
+        return self.filename
+
+    @property
+    def filename(self):
+        &#34;&#34;&#34;Just the filename with the extension.&#34;&#34;&#34;
+        return str(os.path.basename(self.path))
+
+    @property
+    def extension(self):
+        &#34;&#34;&#34;The extension with the leading period.&#34;&#34;&#34;
+        return os.path.splitext(self.path)[1]
+
+    @property
+    def directory(self):
+        &#34;&#34;&#34;The directory containing this file.&#34;&#34;&#34;
+        # The built-in function #
+        directory = os.path.dirname(self.path)
+        # Maybe we need to go the absolute path way #
+        if not directory: directory = os.path.dirname(self.absolute_path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def count_bytes(self):
+        &#34;&#34;&#34;The number of bytes.&#34;&#34;&#34;
+        if not self.exists: return 0
+        return os.path.getsize(self.path)
+
+    @property
+    def count(self):
+        &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
+        # Third party modules #
+        if os.name == &#34;posix&#34;: import sh
+        if os.name == &#34;nt&#34;:    import pbs
+        # Count lines #
+        if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
+        if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
+
+    @property
+    def size(self):
+        &#34;&#34;&#34;Human readable file size.&#34;&#34;&#34;
+        return autopaths.file_size.FileSize(self.count_bytes)
+
+    @property
+    def contents(self):
+        &#34;&#34;&#34;The contents as a string.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;) as handle: return handle.read()
+
+    @property
+    def contents_utf8(self):
+        &#34;&#34;&#34;The contents as a unicode string.&#34;&#34;&#34;
+        with open(self.path, encoding=&#39;utf8&#39;) as handle:return handle.read()
+
+    @property
+    def absolute_path(self):
+        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+        return FilePath(os.path.abspath(self.path))
+
+    @property
+    def physical_path(self):
+        &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
+        return FilePath(os.path.realpath(self.path))
+
+    @property
+    def relative_path(self):
+        &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
+        return FilePath(os.path.relpath(self.physical_path))
+
+    def rel_path_from(self, path):
+        &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
+        return FilePath(os.path.relpath(self.path, path))
+
+    @property
+    def md5(self):
+        &#34;&#34;&#34;Compute the md5 of a file. Pretty fast.&#34;&#34;&#34;
+        md5 = hashlib.md5()
+        with open(self.path, &#34;rb&#34;) as f:
+            for block in iter(lambda: f.read(4096), b&#34;&#34;):
+                md5.update(block)
+        return md5.hexdigest()
+
+    @property
+    def might_be_binary(self):
+        &#34;&#34;&#34;Try to quickly guess if the file is binary.&#34;&#34;&#34;
+        from binaryornot.check import is_binary
+        return is_binary(self.path)
+
+    @property
+    def contains_binary(self):
+        &#34;&#34;&#34;Return True if the file contains binary characters.&#34;&#34;&#34;
+        from binaryornot.helpers import is_binary_string
+        return is_binary_string(self.contents)
+
+    @property
+    def magic_number(self):
+        &#34;&#34;&#34;Return the first four bytes of the file.&#34;&#34;&#34;
+        with open(self.path, &#39;rb&#39;) as f: return f.read(4)
+
+    @property
+    def lines(self):
+        &#34;&#34;&#34;Get all lines in a list with \n striped.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
+            return [line.strip(&#39;\n&#39;) for line in handle]
+
+    #-------------------------------- Methods --------------------------------#
+    def read(self, encoding=None):
+        with open(self.path, &#39;r&#39;, encoding) as handle: content = handle.read()
+        return content
+
+    def create(self):
+        if not self.directory.exists: self.directory.create()
+        self.open(&#39;w&#39;)
+        return self
+
+    def touch(self):
+        &#34;&#34;&#34;Just create an empty file if it does not exist.&#34;&#34;&#34;
+        with open(self.path, &#39;a&#39;): os.utime(self.path, None)
+
+    def open(self, mode=&#39;r&#39;):
+        self.handle = open(self.path, mode)
+        return self.handle
+
+    def add_str(self, string):
+        self.handle.write(string)
+
+    def close(self):
+        self.handle.close()
+
+    def write(self, content, encoding=None, mode=&#39;w&#39;):
+        if encoding is None:
+            with open(self.path, mode) as handle: handle.write(content)
+        else:
+            with open(self.path, mode, encoding=encoding) as handle: handle.write(content)
+
+    def writelines(self, content, encoding=None, mode=&#39;w&#39;):
+        if encoding is None:
+            with open(self.path, mode) as handle: handle.writelines(content)
+        else:
+            with open(self.path, mode, encoding=encoding) as handle: handle.writelines(content)
+
+    def remove(self):
+        if not self.exists: return False
+        os.remove(self.path)
+        return True
+
+    def copy(self, path):
+        &#34;&#34;&#34;Copy to a different path.&#34;&#34;&#34;
+        # Directory special case #
+        if path.endswith(sep): path += self.filename
+        # Normal case #
+        shutil.copy2(self.path, path)
+
+    def execute(self):
+        return subprocess.call([self.path])
+
+    def replace_extension(self, new_extension=&#39;txt&#39;):
+        &#34;&#34;&#34;Return a new path with the extension swapped out.&#34;&#34;&#34;
+        return FilePath(os.path.splitext(self.path)[0] + &#39;.&#39; + new_extension)
+
+    def new_name_insert(self, string):
+        &#34;&#34;&#34;Return a new name by appending a string before the extension.&#34;&#34;&#34;
+        return self.prefix_path + &#34;.&#34; + string + self.extension
+
+    def make_directory(self):
+        &#34;&#34;&#34;Create the directory the file is supposed to be in if it does not exist.&#34;&#34;&#34;
+        if not self.directory.exists: self.directory.create()
+
+    def must_exist(self):
+        &#34;&#34;&#34;Raise an exception if the path doesn&#39;t exist.&#34;&#34;&#34;
+        if not self.exists: raise Exception(&#34;The file path &#39;%s&#39; does not exist.&#34; % self.path)
+
+    def head(self, num_lines=20):
+        &#34;&#34;&#34;Yield the first few lines.&#34;&#34;&#34;
+        lines = iter(self)
+        for _ in range(num_lines): yield next(lines)
+
+    @property
+    def pretty_head(self):
+        return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.head()), 4) + &#34;\n&#34;
+
+    def tail(self, num_lines=20, encoding=&#39;utf-8&#39;):
+        &#34;&#34;&#34;Yield the last few lines of the file.&#34;&#34;&#34;
+        # Constant #
+        buffer_size = 1024
+        # Smart algorithm #
+        with open(self.path, &#39;rb&#39;) as handle:
+            handle.seek(0, 2)
+            num_bytes = handle.tell()
+            size      = num_lines + 1
+            block     = -1
+            data      = []
+            # Loop #
+            while size &gt; 0 and num_bytes &gt; 0:
+                if num_bytes - buffer_size &gt; 0:
+                    # Seek back one whole buffer_size #
+                    handle.seek(block * buffer_size, os.SEEK_END)
+                    # Read buffer #
+                    data.insert(0, handle.read(buffer_size).decode(encoding))
+                else:
+                    # File too small, start from beginning #
+                    handle.seek(0,0)
+                    # Only read what was not read #
+                    data.insert(0, handle.read(num_bytes).decode(encoding))
+                lines_found = data[0].count(&#39;\n&#39;)
+                size       -= lines_found
+                num_bytes  -= buffer_size
+                block      -= 1
+            # Return #
+            for line in &#39;&#39;.join(data).splitlines()[-num_lines:]: yield line
+
+    @property
+    def pretty_tail(self):
+        return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.tail()), 4) + &#34;\n&#34;
+
+    def move_to(self, path, overwrite=False):
+        &#34;&#34;&#34;Move the file to a new location.&#34;&#34;&#34;
+        # Parse the path #
+        path = autopaths.Path(path)
+        # Special directory case, keep the same name (put it inside) #
+        if path.endswith(sep): path = path + self.filename
+        # Check that the directory exists #
+        path.directory.create_if_not_exists()
+        # Normal case #
+        if os.path.exists(path) and overwrite: os.remove(path)
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+        # Return #
+        return path
+
+    def rename(self, new_name):
+        &#34;&#34;&#34;Rename the file but leave it in the same directory.&#34;&#34;&#34;
+        assert sep not in new_name
+        path = self.directory + new_name
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+
+    #------------------------------ Compression ------------------------------#
+    def gzip_to(self, path=None):
+        &#34;&#34;&#34;Make a gzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None: path = self.path + &#34;.gz&#34;
+        # Do it #
+        with open(self.path, &#39;rb&#39;) as orig_file:
+            with gzip.open(path, &#39;wb&#39;) as new_file:
+                new_file.writelines(orig_file)
+        # Return #
+        return FilePath(path)
+
+    def ungzip_to(self, path=None, mode=&#39;w&#39;):
+        &#34;&#34;&#34;Make an unzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None: path = self.path[:-3]
+        # Do it #
+        with gzip.open(self, &#39;rb&#39;) as orig_file:
+            with open(path, mode) as new_file:
+                new_file.writelines(orig_file)
+        # Return #
+        return FilePath(path)
+
+    def zip_to(self, path=None):
+        &#34;&#34;&#34;Make a zipped version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def unzip_to(self, path=None, inplace=False, single=True):
+        &#34;&#34;&#34;
+        Unzip a standard zip file. Can specify the destination of the
+        uncompressed file, or just set inplace=True to delete the original.
+        &#34;&#34;&#34;
+        # Parse the path #
+        path = autopaths.Path(path)
+        # Check #
+        assert zipfile.is_zipfile(self.path)
+        # Load #
+        z = zipfile.ZipFile(self.path)
+        if single or inplace: assert len(z.infolist()) == 1
+        # Single file #
+        if single:
+            member = z.infolist()[0]
+            tmpdir = tempfile.mkdtemp() + sep
+            z.extract(member, tmpdir)
+            z.close()
+            if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)
+            else:       shutil.move(tmpdir+member.filename, path)
+        # Multifile - no security, dangerous - Will use CWD if dest is None!! #
+        # If a file starts with an absolute path, will overwrite your files anywhere #
+        if not single:
+            z.extractall(path)
+            return autopaths.dir_path.DirectoryPath(path)
+        # Return #
+        return FilePath(path)
+
+    def targz_to(self, path=None):
+        &#34;&#34;&#34;Make a targzipped version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def untargz_to(self, path=None):
+        &#34;&#34;&#34;Make an untargzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+            elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+            else: path = self.path + &#39;.untargz&#39;
+        # Do it #
+        import tarfile
+        with tarfile.open(self.path, &#39;r:gz&#39;) as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)
+
+    def tar_to(self, path=None):
+        &#34;&#34;&#34;Make a tared version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def untar_to(self, path=None):
+        &#34;&#34;&#34;Make an untared version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+            elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+            else: path = self.path + &#39;.untargz&#39;
+        # Do it #
+        import tarfile
+        with tarfile.open(self.path) as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)
+
+    #-------------------------------- Modify ---------------------------------#
+    def append(self, data):
+        &#34;&#34;&#34;Append some text or an other file to the current file.&#34;&#34;&#34;
+        if isinstance(data, FilePath): data = data.contents
+        with open(self.path, &#34;a&#34;) as handle: handle.write(data)
+
+    def prepend(self, data, buffer_size=1 &lt;&lt; 15):
+        &#34;&#34;&#34;
+        Prepend some text or an other file to the current file.
+        TODO:
+        * Add a random string to the backup file.
+        * Restore permissions after copy.
+        &#34;&#34;&#34;
+        # Check there is something to prepend #
+        assert data
+        # Support passing other files #
+        if isinstance(data, FilePath): data = data.contents
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        with open(self) as in_handle:
+            with open(result_file, &#39;w&#39;) as out_handle:
+                while data:
+                    out_handle.write(data)
+                    data = in_handle.read(buffer_size)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_line(self, line_to_remove):
+        &#34;&#34;&#34;Search the file for a given line, and if found, remove it.&#34;&#34;&#34;
+        # Check there is something to remove #
+        assert line_to_remove
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(line for line in self if line != line_to_remove)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_first_line(self):
+        &#34;&#34;&#34;
+        Remove the first line of the file.
+        Equivalent to sh.sed(&#39;-i&#39;, &#39;1d&#39;, self.path)
+        &#34;&#34;&#34;
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        all_lines = iter(self)
+        next(all_lines)
+        result_file.writelines(all_lines)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def replace_line(self, line_to_remove, line_to_insert):
+        &#34;&#34;&#34;
+        Search the file for a given line, and if found,
+        replace it with another line.
+        &#34;&#34;&#34;
+        # Check the line endings #
+        line_to_remove = line_to_remove.strip(&#39;\n&#39;)
+        line_to_insert = line_to_insert.strip(&#39;\n&#39;)
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                if line.strip() == line_to_remove: yield line_to_insert + &#39;\n&#39;
+                else:                              yield line
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def replace_word(self, word_to_find, replacement_word):
+        &#34;&#34;&#34;
+        Search the file for a given word, and if found,
+        replace every occurrence of it with another word.
+        &#34;&#34;&#34;
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                yield line.replace(word_to_find, replacement_word)
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    #---------------------------- External tools -----------------------------#
+    def sed_replace(self, before, after):
+        if os.name == &#34;posix&#34;:
+            import sh
+            return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
+        if os.name == &#34;nt&#34;:
+            import pbs
+            sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
+            return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="autopaths.file_path.FilePath"><code class="flex name class">
+<span>class <span class="ident">FilePath</span></span>
+<span>(</span><span>path, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Holds a string pointing to a file path and adds methods to interact with
+files on disk.</p>
+<p>I can never remember all those darn <code>os.path</code> commands, so I made a class
+that wraps them with an easier and more pythonic syntax.</p>
+<pre><code>path = FilePath('/home/root/text.txt')
+print path.extension
+print path.directory
+print path.filename
+</code></pre>
+<p>You can find lots of the common things you would need to do with file paths.
+Such as: path.make_executable() etc etc.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FilePath(autopaths.base_path.BasePath):
+    &#34;&#34;&#34;
+    Holds a string pointing to a file path and adds methods to interact with
+    files on disk.
+
+    I can never remember all those darn `os.path` commands, so I made a class
+    that wraps them with an easier and more pythonic syntax.
+
+        path = FilePath(&#39;/home/root/text.txt&#39;)
+        print path.extension
+        print path.directory
+        print path.filename
+
+    You can find lots of the common things you would need to do with file paths.
+    Such as: path.make_executable() etc etc.
+    &#34;&#34;&#34;
+
+    def __bool__(self): return self.path is not None and self.count_bytes != 0
+    __nonzero__ = __bool__
+
+    def __iter__(self):
+        with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
+            for line in handle: yield line
+
+    def __len__(self):
+        if self.path is None: return 0
+        return self.count
+
+    def __sub__(self, directory):
+        &#34;&#34;&#34;
+        Subtract a directory from the current path to get the relative path
+        of the current file from that directory.
+        &#34;&#34;&#34;
+        return os.path.relpath(self.path, directory)
+
+    def __enter__(self):
+        &#34;&#34;&#34;Called when entering the &#39;with&#39; statement (context manager).&#34;&#34;&#34;
+        return self
+
+    def __exit__(self, errtype, value, traceback):
+        &#34;&#34;&#34;
+        Called when exiting the &#39;with&#39; statement.
+        This enables us to close the file or database properly, even when
+        exceptions are raised.
+        &#34;&#34;&#34;
+        self.close()
+
+    # ------------------------------ Properties ----------------------------- #
+    @property
+    def first(self):
+        &#34;&#34;&#34;Just the first line. Don&#39;t try this on binary files.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;) as handle:
+            for line in handle: return line
+
+    @property
+    def prefix_path(self):
+        &#34;&#34;&#34;The full path without the (last) extension and trailing period.&#34;&#34;&#34;
+        return str(os.path.splitext(self.path)[0])
+
+    @property
+    def prefix(self):
+        &#34;&#34;&#34;Just the filename without the (last) extension and trailing period.&#34;&#34;&#34;
+        return str(os.path.basename(self.prefix_path))
+
+    @property
+    def name(self):
+        &#34;&#34;&#34;Shortcut for self.filename.&#34;&#34;&#34;
+        return self.filename
+
+    @property
+    def filename(self):
+        &#34;&#34;&#34;Just the filename with the extension.&#34;&#34;&#34;
+        return str(os.path.basename(self.path))
+
+    @property
+    def extension(self):
+        &#34;&#34;&#34;The extension with the leading period.&#34;&#34;&#34;
+        return os.path.splitext(self.path)[1]
+
+    @property
+    def directory(self):
+        &#34;&#34;&#34;The directory containing this file.&#34;&#34;&#34;
+        # The built-in function #
+        directory = os.path.dirname(self.path)
+        # Maybe we need to go the absolute path way #
+        if not directory: directory = os.path.dirname(self.absolute_path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def count_bytes(self):
+        &#34;&#34;&#34;The number of bytes.&#34;&#34;&#34;
+        if not self.exists: return 0
+        return os.path.getsize(self.path)
+
+    @property
+    def count(self):
+        &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
+        # Third party modules #
+        if os.name == &#34;posix&#34;: import sh
+        if os.name == &#34;nt&#34;:    import pbs
+        # Count lines #
+        if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
+        if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))
+
+    @property
+    def size(self):
+        &#34;&#34;&#34;Human readable file size.&#34;&#34;&#34;
+        return autopaths.file_size.FileSize(self.count_bytes)
+
+    @property
+    def contents(self):
+        &#34;&#34;&#34;The contents as a string.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;) as handle: return handle.read()
+
+    @property
+    def contents_utf8(self):
+        &#34;&#34;&#34;The contents as a unicode string.&#34;&#34;&#34;
+        with open(self.path, encoding=&#39;utf8&#39;) as handle:return handle.read()
+
+    @property
+    def absolute_path(self):
+        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+        return FilePath(os.path.abspath(self.path))
+
+    @property
+    def physical_path(self):
+        &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
+        return FilePath(os.path.realpath(self.path))
+
+    @property
+    def relative_path(self):
+        &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
+        return FilePath(os.path.relpath(self.physical_path))
+
+    def rel_path_from(self, path):
+        &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
+        return FilePath(os.path.relpath(self.path, path))
+
+    @property
+    def md5(self):
+        &#34;&#34;&#34;Compute the md5 of a file. Pretty fast.&#34;&#34;&#34;
+        md5 = hashlib.md5()
+        with open(self.path, &#34;rb&#34;) as f:
+            for block in iter(lambda: f.read(4096), b&#34;&#34;):
+                md5.update(block)
+        return md5.hexdigest()
+
+    @property
+    def might_be_binary(self):
+        &#34;&#34;&#34;Try to quickly guess if the file is binary.&#34;&#34;&#34;
+        from binaryornot.check import is_binary
+        return is_binary(self.path)
+
+    @property
+    def contains_binary(self):
+        &#34;&#34;&#34;Return True if the file contains binary characters.&#34;&#34;&#34;
+        from binaryornot.helpers import is_binary_string
+        return is_binary_string(self.contents)
+
+    @property
+    def magic_number(self):
+        &#34;&#34;&#34;Return the first four bytes of the file.&#34;&#34;&#34;
+        with open(self.path, &#39;rb&#39;) as f: return f.read(4)
+
+    @property
+    def lines(self):
+        &#34;&#34;&#34;Get all lines in a list with \n striped.&#34;&#34;&#34;
+        with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
+            return [line.strip(&#39;\n&#39;) for line in handle]
+
+    #-------------------------------- Methods --------------------------------#
+    def read(self, encoding=None):
+        with open(self.path, &#39;r&#39;, encoding) as handle: content = handle.read()
+        return content
+
+    def create(self):
+        if not self.directory.exists: self.directory.create()
+        self.open(&#39;w&#39;)
+        return self
+
+    def touch(self):
+        &#34;&#34;&#34;Just create an empty file if it does not exist.&#34;&#34;&#34;
+        with open(self.path, &#39;a&#39;): os.utime(self.path, None)
+
+    def open(self, mode=&#39;r&#39;):
+        self.handle = open(self.path, mode)
+        return self.handle
+
+    def add_str(self, string):
+        self.handle.write(string)
+
+    def close(self):
+        self.handle.close()
+
+    def write(self, content, encoding=None, mode=&#39;w&#39;):
+        if encoding is None:
+            with open(self.path, mode) as handle: handle.write(content)
+        else:
+            with open(self.path, mode, encoding=encoding) as handle: handle.write(content)
+
+    def writelines(self, content, encoding=None, mode=&#39;w&#39;):
+        if encoding is None:
+            with open(self.path, mode) as handle: handle.writelines(content)
+        else:
+            with open(self.path, mode, encoding=encoding) as handle: handle.writelines(content)
+
+    def remove(self):
+        if not self.exists: return False
+        os.remove(self.path)
+        return True
+
+    def copy(self, path):
+        &#34;&#34;&#34;Copy to a different path.&#34;&#34;&#34;
+        # Directory special case #
+        if path.endswith(sep): path += self.filename
+        # Normal case #
+        shutil.copy2(self.path, path)
+
+    def execute(self):
+        return subprocess.call([self.path])
+
+    def replace_extension(self, new_extension=&#39;txt&#39;):
+        &#34;&#34;&#34;Return a new path with the extension swapped out.&#34;&#34;&#34;
+        return FilePath(os.path.splitext(self.path)[0] + &#39;.&#39; + new_extension)
+
+    def new_name_insert(self, string):
+        &#34;&#34;&#34;Return a new name by appending a string before the extension.&#34;&#34;&#34;
+        return self.prefix_path + &#34;.&#34; + string + self.extension
+
+    def make_directory(self):
+        &#34;&#34;&#34;Create the directory the file is supposed to be in if it does not exist.&#34;&#34;&#34;
+        if not self.directory.exists: self.directory.create()
+
+    def must_exist(self):
+        &#34;&#34;&#34;Raise an exception if the path doesn&#39;t exist.&#34;&#34;&#34;
+        if not self.exists: raise Exception(&#34;The file path &#39;%s&#39; does not exist.&#34; % self.path)
+
+    def head(self, num_lines=20):
+        &#34;&#34;&#34;Yield the first few lines.&#34;&#34;&#34;
+        lines = iter(self)
+        for _ in range(num_lines): yield next(lines)
+
+    @property
+    def pretty_head(self):
+        return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.head()), 4) + &#34;\n&#34;
+
+    def tail(self, num_lines=20, encoding=&#39;utf-8&#39;):
+        &#34;&#34;&#34;Yield the last few lines of the file.&#34;&#34;&#34;
+        # Constant #
+        buffer_size = 1024
+        # Smart algorithm #
+        with open(self.path, &#39;rb&#39;) as handle:
+            handle.seek(0, 2)
+            num_bytes = handle.tell()
+            size      = num_lines + 1
+            block     = -1
+            data      = []
+            # Loop #
+            while size &gt; 0 and num_bytes &gt; 0:
+                if num_bytes - buffer_size &gt; 0:
+                    # Seek back one whole buffer_size #
+                    handle.seek(block * buffer_size, os.SEEK_END)
+                    # Read buffer #
+                    data.insert(0, handle.read(buffer_size).decode(encoding))
+                else:
+                    # File too small, start from beginning #
+                    handle.seek(0,0)
+                    # Only read what was not read #
+                    data.insert(0, handle.read(num_bytes).decode(encoding))
+                lines_found = data[0].count(&#39;\n&#39;)
+                size       -= lines_found
+                num_bytes  -= buffer_size
+                block      -= 1
+            # Return #
+            for line in &#39;&#39;.join(data).splitlines()[-num_lines:]: yield line
+
+    @property
+    def pretty_tail(self):
+        return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.tail()), 4) + &#34;\n&#34;
+
+    def move_to(self, path, overwrite=False):
+        &#34;&#34;&#34;Move the file to a new location.&#34;&#34;&#34;
+        # Parse the path #
+        path = autopaths.Path(path)
+        # Special directory case, keep the same name (put it inside) #
+        if path.endswith(sep): path = path + self.filename
+        # Check that the directory exists #
+        path.directory.create_if_not_exists()
+        # Normal case #
+        if os.path.exists(path) and overwrite: os.remove(path)
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+        # Return #
+        return path
+
+    def rename(self, new_name):
+        &#34;&#34;&#34;Rename the file but leave it in the same directory.&#34;&#34;&#34;
+        assert sep not in new_name
+        path = self.directory + new_name
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+
+    #------------------------------ Compression ------------------------------#
+    def gzip_to(self, path=None):
+        &#34;&#34;&#34;Make a gzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None: path = self.path + &#34;.gz&#34;
+        # Do it #
+        with open(self.path, &#39;rb&#39;) as orig_file:
+            with gzip.open(path, &#39;wb&#39;) as new_file:
+                new_file.writelines(orig_file)
+        # Return #
+        return FilePath(path)
+
+    def ungzip_to(self, path=None, mode=&#39;w&#39;):
+        &#34;&#34;&#34;Make an unzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None: path = self.path[:-3]
+        # Do it #
+        with gzip.open(self, &#39;rb&#39;) as orig_file:
+            with open(path, mode) as new_file:
+                new_file.writelines(orig_file)
+        # Return #
+        return FilePath(path)
+
+    def zip_to(self, path=None):
+        &#34;&#34;&#34;Make a zipped version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def unzip_to(self, path=None, inplace=False, single=True):
+        &#34;&#34;&#34;
+        Unzip a standard zip file. Can specify the destination of the
+        uncompressed file, or just set inplace=True to delete the original.
+        &#34;&#34;&#34;
+        # Parse the path #
+        path = autopaths.Path(path)
+        # Check #
+        assert zipfile.is_zipfile(self.path)
+        # Load #
+        z = zipfile.ZipFile(self.path)
+        if single or inplace: assert len(z.infolist()) == 1
+        # Single file #
+        if single:
+            member = z.infolist()[0]
+            tmpdir = tempfile.mkdtemp() + sep
+            z.extract(member, tmpdir)
+            z.close()
+            if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)
+            else:       shutil.move(tmpdir+member.filename, path)
+        # Multifile - no security, dangerous - Will use CWD if dest is None!! #
+        # If a file starts with an absolute path, will overwrite your files anywhere #
+        if not single:
+            z.extractall(path)
+            return autopaths.dir_path.DirectoryPath(path)
+        # Return #
+        return FilePath(path)
+
+    def targz_to(self, path=None):
+        &#34;&#34;&#34;Make a targzipped version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def untargz_to(self, path=None):
+        &#34;&#34;&#34;Make an untargzipped version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+            elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+            else: path = self.path + &#39;.untargz&#39;
+        # Do it #
+        import tarfile
+        with tarfile.open(self.path, &#39;r:gz&#39;) as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)
+
+    def tar_to(self, path=None):
+        &#34;&#34;&#34;Make a tared version of the file at a given path.&#34;&#34;&#34;
+        pass
+
+    def untar_to(self, path=None):
+        &#34;&#34;&#34;Make an untared version of the file at a given path.&#34;&#34;&#34;
+        # Case where path is not specified #
+        if path is None:
+            if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+            elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+            else: path = self.path + &#39;.untargz&#39;
+        # Do it #
+        import tarfile
+        with tarfile.open(self.path) as archive:
+            archive.extractall(path)
+        # Return #
+        return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)
+
+    #-------------------------------- Modify ---------------------------------#
+    def append(self, data):
+        &#34;&#34;&#34;Append some text or an other file to the current file.&#34;&#34;&#34;
+        if isinstance(data, FilePath): data = data.contents
+        with open(self.path, &#34;a&#34;) as handle: handle.write(data)
+
+    def prepend(self, data, buffer_size=1 &lt;&lt; 15):
+        &#34;&#34;&#34;
+        Prepend some text or an other file to the current file.
+        TODO:
+        * Add a random string to the backup file.
+        * Restore permissions after copy.
+        &#34;&#34;&#34;
+        # Check there is something to prepend #
+        assert data
+        # Support passing other files #
+        if isinstance(data, FilePath): data = data.contents
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        with open(self) as in_handle:
+            with open(result_file, &#39;w&#39;) as out_handle:
+                while data:
+                    out_handle.write(data)
+                    data = in_handle.read(buffer_size)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_line(self, line_to_remove):
+        &#34;&#34;&#34;Search the file for a given line, and if found, remove it.&#34;&#34;&#34;
+        # Check there is something to remove #
+        assert line_to_remove
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(line for line in self if line != line_to_remove)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def remove_first_line(self):
+        &#34;&#34;&#34;
+        Remove the first line of the file.
+        Equivalent to sh.sed(&#39;-i&#39;, &#39;1d&#39;, self.path)
+        &#34;&#34;&#34;
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Open input/output files, note: output file&#39;s permissions lost #
+        all_lines = iter(self)
+        next(all_lines)
+        result_file.writelines(all_lines)
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def replace_line(self, line_to_remove, line_to_insert):
+        &#34;&#34;&#34;
+        Search the file for a given line, and if found,
+        replace it with another line.
+        &#34;&#34;&#34;
+        # Check the line endings #
+        line_to_remove = line_to_remove.strip(&#39;\n&#39;)
+        line_to_insert = line_to_insert.strip(&#39;\n&#39;)
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                if line.strip() == line_to_remove: yield line_to_insert + &#39;\n&#39;
+                else:                              yield line
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    def replace_word(self, word_to_find, replacement_word):
+        &#34;&#34;&#34;
+        Search the file for a given word, and if found,
+        replace every occurrence of it with another word.
+        &#34;&#34;&#34;
+        # Create a new file #
+        result_file = autopaths.tmp_path.new_temp_file()
+        # Generate the lines #
+        def new_lines():
+            for line in self:
+                yield line.replace(word_to_find, replacement_word)
+        # Open input/output files, note: output file&#39;s permissions lost #
+        result_file.writelines(new_lines())
+        # Switch the files around #
+        self.remove()
+        result_file.move_to(self)
+
+    #---------------------------- External tools -----------------------------#
+    def sed_replace(self, before, after):
+        if os.name == &#34;posix&#34;:
+            import sh
+            return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
+        if os.name == &#34;nt&#34;:
+            import pbs
+            sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
+            return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="autopaths.base_path.BasePath" href="base_path.html#autopaths.base_path.BasePath">BasePath</a></li>
+<li>builtins.str</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="autopaths.file_path.FilePath.absolute_path"><code class="name">var <span class="ident">absolute_path</span></code></dt>
+<dd>
+<div class="desc"><p>The absolute path starting with a <code>/</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def absolute_path(self):
+    &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+    return FilePath(os.path.abspath(self.path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.contains_binary"><code class="name">var <span class="ident">contains_binary</span></code></dt>
+<dd>
+<div class="desc"><p>Return True if the file contains binary characters.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def contains_binary(self):
+    &#34;&#34;&#34;Return True if the file contains binary characters.&#34;&#34;&#34;
+    from binaryornot.helpers import is_binary_string
+    return is_binary_string(self.contents)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.contents"><code class="name">var <span class="ident">contents</span></code></dt>
+<dd>
+<div class="desc"><p>The contents as a string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def contents(self):
+    &#34;&#34;&#34;The contents as a string.&#34;&#34;&#34;
+    with open(self.path, &#39;r&#39;) as handle: return handle.read()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.contents_utf8"><code class="name">var <span class="ident">contents_utf8</span></code></dt>
+<dd>
+<div class="desc"><p>The contents as a unicode string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def contents_utf8(self):
+    &#34;&#34;&#34;The contents as a unicode string.&#34;&#34;&#34;
+    with open(self.path, encoding=&#39;utf8&#39;) as handle:return handle.read()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.count"><code class="name">var <span class="ident">count</span></code></dt>
+<dd>
+<div class="desc"><p>We are going to default to the number of lines.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def count(self):
+    &#34;&#34;&#34;We are going to default to the number of lines.&#34;&#34;&#34;
+    # Third party modules #
+    if os.name == &#34;posix&#34;: import sh
+    if os.name == &#34;nt&#34;:    import pbs
+    # Count lines #
+    if os.name == &#34;posix&#34;: return int(sh.wc(&#39;-l&#39;, self.path).split()[0])
+    if os.name == &#34;nt&#34;:    return int(pbs.Command(&#34;find&#34;)(&#39;/c&#39;, &#39;/v&#39;, &#39;&#34;&#34;&#39;, self.path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.count_bytes"><code class="name">var <span class="ident">count_bytes</span></code></dt>
+<dd>
+<div class="desc"><p>The number of bytes.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def count_bytes(self):
+    &#34;&#34;&#34;The number of bytes.&#34;&#34;&#34;
+    if not self.exists: return 0
+    return os.path.getsize(self.path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.directory"><code class="name">var <span class="ident">directory</span></code></dt>
+<dd>
+<div class="desc"><p>The directory containing this file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def directory(self):
+    &#34;&#34;&#34;The directory containing this file.&#34;&#34;&#34;
+    # The built-in function #
+    directory = os.path.dirname(self.path)
+    # Maybe we need to go the absolute path way #
+    if not directory: directory = os.path.dirname(self.absolute_path)
+    # Return #
+    return autopaths.dir_path.DirectoryPath(directory)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.extension"><code class="name">var <span class="ident">extension</span></code></dt>
+<dd>
+<div class="desc"><p>The extension with the leading period.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def extension(self):
+    &#34;&#34;&#34;The extension with the leading period.&#34;&#34;&#34;
+    return os.path.splitext(self.path)[1]</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.filename"><code class="name">var <span class="ident">filename</span></code></dt>
+<dd>
+<div class="desc"><p>Just the filename with the extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def filename(self):
+    &#34;&#34;&#34;Just the filename with the extension.&#34;&#34;&#34;
+    return str(os.path.basename(self.path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.first"><code class="name">var <span class="ident">first</span></code></dt>
+<dd>
+<div class="desc"><p>Just the first line. Don't try this on binary files.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def first(self):
+    &#34;&#34;&#34;Just the first line. Don&#39;t try this on binary files.&#34;&#34;&#34;
+    with open(self.path, &#39;r&#39;) as handle:
+        for line in handle: return line</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.lines"><code class="name">var <span class="ident">lines</span></code></dt>
+<dd>
+<div class="desc"><p>Get all lines in a list with
+striped.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def lines(self):
+    &#34;&#34;&#34;Get all lines in a list with \n striped.&#34;&#34;&#34;
+    with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
+        return [line.strip(&#39;\n&#39;) for line in handle]</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.magic_number"><code class="name">var <span class="ident">magic_number</span></code></dt>
+<dd>
+<div class="desc"><p>Return the first four bytes of the file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def magic_number(self):
+    &#34;&#34;&#34;Return the first four bytes of the file.&#34;&#34;&#34;
+    with open(self.path, &#39;rb&#39;) as f: return f.read(4)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.md5"><code class="name">var <span class="ident">md5</span></code></dt>
+<dd>
+<div class="desc"><p>Compute the md5 of a file. Pretty fast.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def md5(self):
+    &#34;&#34;&#34;Compute the md5 of a file. Pretty fast.&#34;&#34;&#34;
+    md5 = hashlib.md5()
+    with open(self.path, &#34;rb&#34;) as f:
+        for block in iter(lambda: f.read(4096), b&#34;&#34;):
+            md5.update(block)
+    return md5.hexdigest()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.might_be_binary"><code class="name">var <span class="ident">might_be_binary</span></code></dt>
+<dd>
+<div class="desc"><p>Try to quickly guess if the file is binary.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def might_be_binary(self):
+    &#34;&#34;&#34;Try to quickly guess if the file is binary.&#34;&#34;&#34;
+    from binaryornot.check import is_binary
+    return is_binary(self.path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<div class="desc"><p>Shortcut for self.filename.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self):
+    &#34;&#34;&#34;Shortcut for self.filename.&#34;&#34;&#34;
+    return self.filename</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.physical_path"><code class="name">var <span class="ident">physical_path</span></code></dt>
+<dd>
+<div class="desc"><p>The physical path like in <code>pwd -P</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def physical_path(self):
+    &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
+    return FilePath(os.path.realpath(self.path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.prefix"><code class="name">var <span class="ident">prefix</span></code></dt>
+<dd>
+<div class="desc"><p>Just the filename without the (last) extension and trailing period.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def prefix(self):
+    &#34;&#34;&#34;Just the filename without the (last) extension and trailing period.&#34;&#34;&#34;
+    return str(os.path.basename(self.prefix_path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.prefix_path"><code class="name">var <span class="ident">prefix_path</span></code></dt>
+<dd>
+<div class="desc"><p>The full path without the (last) extension and trailing period.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def prefix_path(self):
+    &#34;&#34;&#34;The full path without the (last) extension and trailing period.&#34;&#34;&#34;
+    return str(os.path.splitext(self.path)[0])</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.pretty_head"><code class="name">var <span class="ident">pretty_head</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pretty_head(self):
+    return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.head()), 4) + &#34;\n&#34;</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.pretty_tail"><code class="name">var <span class="ident">pretty_tail</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pretty_tail(self):
+    return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.tail()), 4) + &#34;\n&#34;</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.relative_path"><code class="name">var <span class="ident">relative_path</span></code></dt>
+<dd>
+<div class="desc"><p>The relative path when compared with current directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def relative_path(self):
+    &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
+    return FilePath(os.path.relpath(self.physical_path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.size"><code class="name">var <span class="ident">size</span></code></dt>
+<dd>
+<div class="desc"><p>Human readable file size.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def size(self):
+    &#34;&#34;&#34;Human readable file size.&#34;&#34;&#34;
+    return autopaths.file_size.FileSize(self.count_bytes)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="autopaths.file_path.FilePath.add_str"><code class="name flex">
+<span>def <span class="ident">add_str</span></span>(<span>self, string)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_str(self, string):
+    self.handle.write(string)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.append"><code class="name flex">
+<span>def <span class="ident">append</span></span>(<span>self, data)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Append some text or an other file to the current file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def append(self, data):
+    &#34;&#34;&#34;Append some text or an other file to the current file.&#34;&#34;&#34;
+    if isinstance(data, FilePath): data = data.contents
+    with open(self.path, &#34;a&#34;) as handle: handle.write(data)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    self.handle.close()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.copy"><code class="name flex">
+<span>def <span class="ident">copy</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Copy to a different path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def copy(self, path):
+    &#34;&#34;&#34;Copy to a different path.&#34;&#34;&#34;
+    # Directory special case #
+    if path.endswith(sep): path += self.filename
+    # Normal case #
+    shutil.copy2(self.path, path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create(self):
+    if not self.directory.exists: self.directory.create()
+    self.open(&#39;w&#39;)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.execute"><code class="name flex">
+<span>def <span class="ident">execute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute(self):
+    return subprocess.call([self.path])</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.gzip_to"><code class="name flex">
+<span>def <span class="ident">gzip_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a gzipped version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gzip_to(self, path=None):
+    &#34;&#34;&#34;Make a gzipped version of the file at a given path.&#34;&#34;&#34;
+    # Case where path is not specified #
+    if path is None: path = self.path + &#34;.gz&#34;
+    # Do it #
+    with open(self.path, &#39;rb&#39;) as orig_file:
+        with gzip.open(path, &#39;wb&#39;) as new_file:
+            new_file.writelines(orig_file)
+    # Return #
+    return FilePath(path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.head"><code class="name flex">
+<span>def <span class="ident">head</span></span>(<span>self, num_lines=20)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Yield the first few lines.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def head(self, num_lines=20):
+    &#34;&#34;&#34;Yield the first few lines.&#34;&#34;&#34;
+    lines = iter(self)
+    for _ in range(num_lines): yield next(lines)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.make_directory"><code class="name flex">
+<span>def <span class="ident">make_directory</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create the directory the file is supposed to be in if it does not exist.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_directory(self):
+    &#34;&#34;&#34;Create the directory the file is supposed to be in if it does not exist.&#34;&#34;&#34;
+    if not self.directory.exists: self.directory.create()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.move_to"><code class="name flex">
+<span>def <span class="ident">move_to</span></span>(<span>self, path, overwrite=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Move the file to a new location.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_to(self, path, overwrite=False):
+    &#34;&#34;&#34;Move the file to a new location.&#34;&#34;&#34;
+    # Parse the path #
+    path = autopaths.Path(path)
+    # Special directory case, keep the same name (put it inside) #
+    if path.endswith(sep): path = path + self.filename
+    # Check that the directory exists #
+    path.directory.create_if_not_exists()
+    # Normal case #
+    if os.path.exists(path) and overwrite: os.remove(path)
+    assert not os.path.exists(path)
+    shutil.move(self.path, path)
+    # Update the internal link #
+    self.path = path
+    # Return #
+    return path</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.must_exist"><code class="name flex">
+<span>def <span class="ident">must_exist</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raise an exception if the path doesn't exist.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def must_exist(self):
+    &#34;&#34;&#34;Raise an exception if the path doesn&#39;t exist.&#34;&#34;&#34;
+    if not self.exists: raise Exception(&#34;The file path &#39;%s&#39; does not exist.&#34; % self.path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.new_name_insert"><code class="name flex">
+<span>def <span class="ident">new_name_insert</span></span>(<span>self, string)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return a new name by appending a string before the extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def new_name_insert(self, string):
+    &#34;&#34;&#34;Return a new name by appending a string before the extension.&#34;&#34;&#34;
+    return self.prefix_path + &#34;.&#34; + string + self.extension</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.open"><code class="name flex">
+<span>def <span class="ident">open</span></span>(<span>self, mode='r')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open(self, mode=&#39;r&#39;):
+    self.handle = open(self.path, mode)
+    return self.handle</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.prepend"><code class="name flex">
+<span>def <span class="ident">prepend</span></span>(<span>self, data, buffer_size=32768)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prepend some text or an other file to the current file.
+TODO:
+* Add a random string to the backup file.
+* Restore permissions after copy.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepend(self, data, buffer_size=1 &lt;&lt; 15):
+    &#34;&#34;&#34;
+    Prepend some text or an other file to the current file.
+    TODO:
+    * Add a random string to the backup file.
+    * Restore permissions after copy.
+    &#34;&#34;&#34;
+    # Check there is something to prepend #
+    assert data
+    # Support passing other files #
+    if isinstance(data, FilePath): data = data.contents
+    # Create a new file #
+    result_file = autopaths.tmp_path.new_temp_file()
+    # Open input/output files, note: output file&#39;s permissions lost #
+    with open(self) as in_handle:
+        with open(result_file, &#39;w&#39;) as out_handle:
+            while data:
+                out_handle.write(data)
+                data = in_handle.read(buffer_size)
+    # Switch the files around #
+    self.remove()
+    result_file.move_to(self)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.read"><code class="name flex">
+<span>def <span class="ident">read</span></span>(<span>self, encoding=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read(self, encoding=None):
+    with open(self.path, &#39;r&#39;, encoding) as handle: content = handle.read()
+    return content</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.rel_path_from"><code class="name flex">
+<span>def <span class="ident">rel_path_from</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The relative path when compared to the given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rel_path_from(self, path):
+    &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
+    return FilePath(os.path.relpath(self.path, path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self):
+    if not self.exists: return False
+    os.remove(self.path)
+    return True</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.remove_first_line"><code class="name flex">
+<span>def <span class="ident">remove_first_line</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Remove the first line of the file.
+Equivalent to sh.sed('-i', '1d', self.path)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_first_line(self):
+    &#34;&#34;&#34;
+    Remove the first line of the file.
+    Equivalent to sh.sed(&#39;-i&#39;, &#39;1d&#39;, self.path)
+    &#34;&#34;&#34;
+    # Create a new file #
+    result_file = autopaths.tmp_path.new_temp_file()
+    # Open input/output files, note: output file&#39;s permissions lost #
+    all_lines = iter(self)
+    next(all_lines)
+    result_file.writelines(all_lines)
+    # Switch the files around #
+    self.remove()
+    result_file.move_to(self)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.remove_line"><code class="name flex">
+<span>def <span class="ident">remove_line</span></span>(<span>self, line_to_remove)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Search the file for a given line, and if found, remove it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_line(self, line_to_remove):
+    &#34;&#34;&#34;Search the file for a given line, and if found, remove it.&#34;&#34;&#34;
+    # Check there is something to remove #
+    assert line_to_remove
+    # Create a new file #
+    result_file = autopaths.tmp_path.new_temp_file()
+    # Open input/output files, note: output file&#39;s permissions lost #
+    result_file.writelines(line for line in self if line != line_to_remove)
+    # Switch the files around #
+    self.remove()
+    result_file.move_to(self)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.rename"><code class="name flex">
+<span>def <span class="ident">rename</span></span>(<span>self, new_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Rename the file but leave it in the same directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rename(self, new_name):
+    &#34;&#34;&#34;Rename the file but leave it in the same directory.&#34;&#34;&#34;
+    assert sep not in new_name
+    path = self.directory + new_name
+    assert not os.path.exists(path)
+    shutil.move(self.path, path)
+    # Update the internal link #
+    self.path = path</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.replace_extension"><code class="name flex">
+<span>def <span class="ident">replace_extension</span></span>(<span>self, new_extension='txt')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return a new path with the extension swapped out.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def replace_extension(self, new_extension=&#39;txt&#39;):
+    &#34;&#34;&#34;Return a new path with the extension swapped out.&#34;&#34;&#34;
+    return FilePath(os.path.splitext(self.path)[0] + &#39;.&#39; + new_extension)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.replace_line"><code class="name flex">
+<span>def <span class="ident">replace_line</span></span>(<span>self, line_to_remove, line_to_insert)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Search the file for a given line, and if found,
+replace it with another line.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def replace_line(self, line_to_remove, line_to_insert):
+    &#34;&#34;&#34;
+    Search the file for a given line, and if found,
+    replace it with another line.
+    &#34;&#34;&#34;
+    # Check the line endings #
+    line_to_remove = line_to_remove.strip(&#39;\n&#39;)
+    line_to_insert = line_to_insert.strip(&#39;\n&#39;)
+    # Create a new file #
+    result_file = autopaths.tmp_path.new_temp_file()
+    # Generate the lines #
+    def new_lines():
+        for line in self:
+            if line.strip() == line_to_remove: yield line_to_insert + &#39;\n&#39;
+            else:                              yield line
+    # Open input/output files, note: output file&#39;s permissions lost #
+    result_file.writelines(new_lines())
+    # Switch the files around #
+    self.remove()
+    result_file.move_to(self)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.replace_word"><code class="name flex">
+<span>def <span class="ident">replace_word</span></span>(<span>self, word_to_find, replacement_word)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Search the file for a given word, and if found,
+replace every occurrence of it with another word.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def replace_word(self, word_to_find, replacement_word):
+    &#34;&#34;&#34;
+    Search the file for a given word, and if found,
+    replace every occurrence of it with another word.
+    &#34;&#34;&#34;
+    # Create a new file #
+    result_file = autopaths.tmp_path.new_temp_file()
+    # Generate the lines #
+    def new_lines():
+        for line in self:
+            yield line.replace(word_to_find, replacement_word)
+    # Open input/output files, note: output file&#39;s permissions lost #
+    result_file.writelines(new_lines())
+    # Switch the files around #
+    self.remove()
+    result_file.move_to(self)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.sed_replace"><code class="name flex">
+<span>def <span class="ident">sed_replace</span></span>(<span>self, before, after)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sed_replace(self, before, after):
+    if os.name == &#34;posix&#34;:
+        import sh
+        return sh.sed(&#39;-i&#39;, &#39;s/%s/%s/&#39; % (before, after), self.path)
+    if os.name == &#34;nt&#34;:
+        import pbs
+        sed_cmd = &#39;sed -i &#34;s/%s/%s/&#34; %s&#39; % (before, after, self.path)
+        return pbs.bash(&#39;-c&#39;, &#34;&#39;&#34; + sed_cmd + &#34;&#39;&#34; )</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.tail"><code class="name flex">
+<span>def <span class="ident">tail</span></span>(<span>self, num_lines=20, encoding='utf-8')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Yield the last few lines of the file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tail(self, num_lines=20, encoding=&#39;utf-8&#39;):
+    &#34;&#34;&#34;Yield the last few lines of the file.&#34;&#34;&#34;
+    # Constant #
+    buffer_size = 1024
+    # Smart algorithm #
+    with open(self.path, &#39;rb&#39;) as handle:
+        handle.seek(0, 2)
+        num_bytes = handle.tell()
+        size      = num_lines + 1
+        block     = -1
+        data      = []
+        # Loop #
+        while size &gt; 0 and num_bytes &gt; 0:
+            if num_bytes - buffer_size &gt; 0:
+                # Seek back one whole buffer_size #
+                handle.seek(block * buffer_size, os.SEEK_END)
+                # Read buffer #
+                data.insert(0, handle.read(buffer_size).decode(encoding))
+            else:
+                # File too small, start from beginning #
+                handle.seek(0,0)
+                # Only read what was not read #
+                data.insert(0, handle.read(num_bytes).decode(encoding))
+            lines_found = data[0].count(&#39;\n&#39;)
+            size       -= lines_found
+            num_bytes  -= buffer_size
+            block      -= 1
+        # Return #
+        for line in &#39;&#39;.join(data).splitlines()[-num_lines:]: yield line</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.tar_to"><code class="name flex">
+<span>def <span class="ident">tar_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a tared version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tar_to(self, path=None):
+    &#34;&#34;&#34;Make a tared version of the file at a given path.&#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.targz_to"><code class="name flex">
+<span>def <span class="ident">targz_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a targzipped version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def targz_to(self, path=None):
+    &#34;&#34;&#34;Make a targzipped version of the file at a given path.&#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.touch"><code class="name flex">
+<span>def <span class="ident">touch</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Just create an empty file if it does not exist.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def touch(self):
+    &#34;&#34;&#34;Just create an empty file if it does not exist.&#34;&#34;&#34;
+    with open(self.path, &#39;a&#39;): os.utime(self.path, None)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.ungzip_to"><code class="name flex">
+<span>def <span class="ident">ungzip_to</span></span>(<span>self, path=None, mode='w')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make an unzipped version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ungzip_to(self, path=None, mode=&#39;w&#39;):
+    &#34;&#34;&#34;Make an unzipped version of the file at a given path.&#34;&#34;&#34;
+    # Case where path is not specified #
+    if path is None: path = self.path[:-3]
+    # Do it #
+    with gzip.open(self, &#39;rb&#39;) as orig_file:
+        with open(path, mode) as new_file:
+            new_file.writelines(orig_file)
+    # Return #
+    return FilePath(path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.untar_to"><code class="name flex">
+<span>def <span class="ident">untar_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make an untared version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def untar_to(self, path=None):
+    &#34;&#34;&#34;Make an untared version of the file at a given path.&#34;&#34;&#34;
+    # Case where path is not specified #
+    if path is None:
+        if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+        elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+        else: path = self.path + &#39;.untargz&#39;
+    # Do it #
+    import tarfile
+    with tarfile.open(self.path) as archive:
+        archive.extractall(path)
+    # Return #
+    return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.untargz_to"><code class="name flex">
+<span>def <span class="ident">untargz_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make an untargzipped version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def untargz_to(self, path=None):
+    &#34;&#34;&#34;Make an untargzipped version of the file at a given path.&#34;&#34;&#34;
+    # Case where path is not specified #
+    if path is None:
+        if   self.path.endswith(&#39;.tgz&#39;):    path = self.path[:-4]
+        elif self.path.endswith(&#39;.tar.gz&#39;): path = self.path[:-7]
+        else: path = self.path + &#39;.untargz&#39;
+    # Do it #
+    import tarfile
+    with tarfile.open(self.path, &#39;r:gz&#39;) as archive:
+        archive.extractall(path)
+    # Return #
+    return autopaths.dir_path.DirectoryPath(path + &#39;/&#39;)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.unzip_to"><code class="name flex">
+<span>def <span class="ident">unzip_to</span></span>(<span>self, path=None, inplace=False, single=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Unzip a standard zip file. Can specify the destination of the
+uncompressed file, or just set inplace=True to delete the original.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unzip_to(self, path=None, inplace=False, single=True):
+    &#34;&#34;&#34;
+    Unzip a standard zip file. Can specify the destination of the
+    uncompressed file, or just set inplace=True to delete the original.
+    &#34;&#34;&#34;
+    # Parse the path #
+    path = autopaths.Path(path)
+    # Check #
+    assert zipfile.is_zipfile(self.path)
+    # Load #
+    z = zipfile.ZipFile(self.path)
+    if single or inplace: assert len(z.infolist()) == 1
+    # Single file #
+    if single:
+        member = z.infolist()[0]
+        tmpdir = tempfile.mkdtemp() + sep
+        z.extract(member, tmpdir)
+        z.close()
+        if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)
+        else:       shutil.move(tmpdir+member.filename, path)
+    # Multifile - no security, dangerous - Will use CWD if dest is None!! #
+    # If a file starts with an absolute path, will overwrite your files anywhere #
+    if not single:
+        z.extractall(path)
+        return autopaths.dir_path.DirectoryPath(path)
+    # Return #
+    return FilePath(path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.write"><code class="name flex">
+<span>def <span class="ident">write</span></span>(<span>self, content, encoding=None, mode='w')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def write(self, content, encoding=None, mode=&#39;w&#39;):
+    if encoding is None:
+        with open(self.path, mode) as handle: handle.write(content)
+    else:
+        with open(self.path, mode, encoding=encoding) as handle: handle.write(content)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.writelines"><code class="name flex">
+<span>def <span class="ident">writelines</span></span>(<span>self, content, encoding=None, mode='w')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writelines(self, content, encoding=None, mode=&#39;w&#39;):
+    if encoding is None:
+        with open(self.path, mode) as handle: handle.writelines(content)
+    else:
+        with open(self.path, mode, encoding=encoding) as handle: handle.writelines(content)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.zip_to"><code class="name flex">
+<span>def <span class="ident">zip_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a zipped version of the file at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def zip_to(self, path=None):
+    &#34;&#34;&#34;Make a zipped version of the file at a given path.&#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="autopaths.base_path.BasePath" href="base_path.html#autopaths.base_path.BasePath">BasePath</a></b></code>:
+<ul class="hlist">
+<li><code><a title="autopaths.base_path.BasePath.cdate" href="base_path.html#autopaths.base_path.BasePath.cdate">cdate</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.cdate_iso" href="base_path.html#autopaths.base_path.BasePath.cdate_iso">cdate_iso</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.clean_path" href="base_path.html#autopaths.base_path.BasePath.clean_path">clean_path</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.escaped" href="base_path.html#autopaths.base_path.BasePath.escaped">escaped</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.exists" href="base_path.html#autopaths.base_path.BasePath.exists">exists</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.is_symlink" href="base_path.html#autopaths.base_path.BasePath.is_symlink">is_symlink</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.link_from" href="base_path.html#autopaths.base_path.BasePath.link_from">link_from</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.link_to" href="base_path.html#autopaths.base_path.BasePath.link_to">link_to</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.mdate" href="base_path.html#autopaths.base_path.BasePath.mdate">mdate</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.mdate_iso" href="base_path.html#autopaths.base_path.BasePath.mdate_iso">mdate_iso</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.permissions" href="base_path.html#autopaths.base_path.BasePath.permissions">permissions</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.short_prefix" href="base_path.html#autopaths.base_path.BasePath.short_prefix">short_prefix</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.symlinks_on_windows" href="base_path.html#autopaths.base_path.BasePath.symlinks_on_windows">symlinks_on_windows</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.unix_style" href="base_path.html#autopaths.base_path.BasePath.unix_style">unix_style</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.win_style" href="base_path.html#autopaths.base_path.BasePath.win_style">win_style</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.with_tilda" href="base_path.html#autopaths.base_path.BasePath.with_tilda">with_tilda</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.wsl_style" href="base_path.html#autopaths.base_path.BasePath.wsl_style">wsl_style</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="autopaths" href="index.html">autopaths</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="autopaths.file_path.FilePath" href="#autopaths.file_path.FilePath">FilePath</a></code></h4>
+<ul class="two-column">
+<li><code><a title="autopaths.file_path.FilePath.absolute_path" href="#autopaths.file_path.FilePath.absolute_path">absolute_path</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.add_str" href="#autopaths.file_path.FilePath.add_str">add_str</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.append" href="#autopaths.file_path.FilePath.append">append</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.close" href="#autopaths.file_path.FilePath.close">close</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.contains_binary" href="#autopaths.file_path.FilePath.contains_binary">contains_binary</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.contents" href="#autopaths.file_path.FilePath.contents">contents</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.contents_utf8" href="#autopaths.file_path.FilePath.contents_utf8">contents_utf8</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.copy" href="#autopaths.file_path.FilePath.copy">copy</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.count" href="#autopaths.file_path.FilePath.count">count</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.count_bytes" href="#autopaths.file_path.FilePath.count_bytes">count_bytes</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.create" href="#autopaths.file_path.FilePath.create">create</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.directory" href="#autopaths.file_path.FilePath.directory">directory</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.execute" href="#autopaths.file_path.FilePath.execute">execute</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.extension" href="#autopaths.file_path.FilePath.extension">extension</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.filename" href="#autopaths.file_path.FilePath.filename">filename</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.first" href="#autopaths.file_path.FilePath.first">first</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.gzip_to" href="#autopaths.file_path.FilePath.gzip_to">gzip_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.head" href="#autopaths.file_path.FilePath.head">head</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.lines" href="#autopaths.file_path.FilePath.lines">lines</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.magic_number" href="#autopaths.file_path.FilePath.magic_number">magic_number</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.make_directory" href="#autopaths.file_path.FilePath.make_directory">make_directory</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.md5" href="#autopaths.file_path.FilePath.md5">md5</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.might_be_binary" href="#autopaths.file_path.FilePath.might_be_binary">might_be_binary</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.move_to" href="#autopaths.file_path.FilePath.move_to">move_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.must_exist" href="#autopaths.file_path.FilePath.must_exist">must_exist</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.name" href="#autopaths.file_path.FilePath.name">name</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.new_name_insert" href="#autopaths.file_path.FilePath.new_name_insert">new_name_insert</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.open" href="#autopaths.file_path.FilePath.open">open</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.physical_path" href="#autopaths.file_path.FilePath.physical_path">physical_path</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.prefix" href="#autopaths.file_path.FilePath.prefix">prefix</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.prefix_path" href="#autopaths.file_path.FilePath.prefix_path">prefix_path</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.prepend" href="#autopaths.file_path.FilePath.prepend">prepend</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.pretty_head" href="#autopaths.file_path.FilePath.pretty_head">pretty_head</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.pretty_tail" href="#autopaths.file_path.FilePath.pretty_tail">pretty_tail</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.read" href="#autopaths.file_path.FilePath.read">read</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.rel_path_from" href="#autopaths.file_path.FilePath.rel_path_from">rel_path_from</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.relative_path" href="#autopaths.file_path.FilePath.relative_path">relative_path</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.remove" href="#autopaths.file_path.FilePath.remove">remove</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.remove_first_line" href="#autopaths.file_path.FilePath.remove_first_line">remove_first_line</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.remove_line" href="#autopaths.file_path.FilePath.remove_line">remove_line</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.rename" href="#autopaths.file_path.FilePath.rename">rename</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.replace_extension" href="#autopaths.file_path.FilePath.replace_extension">replace_extension</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.replace_line" href="#autopaths.file_path.FilePath.replace_line">replace_line</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.replace_word" href="#autopaths.file_path.FilePath.replace_word">replace_word</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.sed_replace" href="#autopaths.file_path.FilePath.sed_replace">sed_replace</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.size" href="#autopaths.file_path.FilePath.size">size</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.tail" href="#autopaths.file_path.FilePath.tail">tail</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.tar_to" href="#autopaths.file_path.FilePath.tar_to">tar_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.targz_to" href="#autopaths.file_path.FilePath.targz_to">targz_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.touch" href="#autopaths.file_path.FilePath.touch">touch</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.ungzip_to" href="#autopaths.file_path.FilePath.ungzip_to">ungzip_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.untar_to" href="#autopaths.file_path.FilePath.untar_to">untar_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.untargz_to" href="#autopaths.file_path.FilePath.untargz_to">untargz_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.unzip_to" href="#autopaths.file_path.FilePath.unzip_to">unzip_to</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.write" href="#autopaths.file_path.FilePath.write">write</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.writelines" href="#autopaths.file_path.FilePath.writelines">writelines</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.zip_to" href="#autopaths.file_path.FilePath.zip_to">zip_to</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

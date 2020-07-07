@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>autopaths.dir_path API documentation</title>
+<meta name="description" content="Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>autopaths.dir_path</code></h1>
+</header>
+<section id="section-intro">
+<p>Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+&#34;&#34;&#34;
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+&#34;&#34;&#34;
+
+# Built-in modules #
+import os, shutil, glob
+
+# Internal modules #
+import autopaths
+
+# Constants #
+if os.name == &#34;posix&#34;: sep = &#34;/&#34;
+if os.name == &#34;nt&#34;:    sep = &#34;\\&#34;
+
+################################################################################
+class DirectoryPath(autopaths.base_path.BasePath):
+    &#34;&#34;&#34;
+    Holds a string pointing to a directory path and adds methods to interact with
+    directories.
+    &#34;&#34;&#34;
+
+    def __len__(self): return len(list(self.flat_contents))
+
+    def __iter__(self): return self.flat_contents
+
+    def __contains__(self, item): return item in [x.name for x in self.flat_contents]
+
+    def __getitem__(self, item):
+        for path in self.flat_contents:
+            if path.name == item:
+                return path
+        raise KeyError(&#34;Couldn&#39;t find &#39;%s&#39; in &#39;%s&#39;&#34; % (item, self.path))
+
+    # ------------------------------ Properties ----------------------------- #
+    @property
+    def p(self):
+        if not hasattr(self, &#39;all_paths&#39;):
+            raise Exception(&#34;You need to define &#39;all_paths&#39; to use this function&#34;)
+        return autopaths.auto_paths.AutoPaths(self.path, self.all_paths)
+
+    @property
+    def name(self):
+        &#34;&#34;&#34;Just the directory name.&#34;&#34;&#34;
+        return os.path.basename(os.path.dirname(self.path))
+
+    @property
+    def prefix_path(self):
+        &#34;&#34;&#34;The full path without the extension.&#34;&#34;&#34;
+        return os.path.splitext(self.path)[0].rstrip(sep)
+
+    @property
+    def absolute_path(self):
+        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+        return os.path.abspath(self.path) + sep
+
+    @property
+    def directory(self):
+        &#34;&#34;&#34;The full path of the directory containing this one (parent dir).&#34;&#34;&#34;
+        # The built-in function #
+        directory = os.path.dirname(os.path.dirname(self.path))
+        # Maybe we need to go the absolute path way #
+        if not directory:
+            directory = os.path.dirname(os.path.dirname(self.absolute_path))
+        # Return #
+        return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def sub_directory(self):
+        &#34;&#34;&#34;
+        The path to the directory that is contained inside this directory.
+        Assuming that the current directory has only one child.
+        &#34;&#34;&#34;
+        # Check there is only one #
+        assert len(self.flat_directories) == 1
+        # Return #
+        return self.flat_directories[0]
+
+    @property
+    def empty(self):
+        &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
+        return len(list(self.flat_contents)) == 0
+
+    @property
+    def size(self):
+        &#34;&#34;&#34;The total size in bytes of all file contents.&#34;&#34;&#34;
+        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
+
+    #-------------------------- Recursive contents ---------------------------#
+    @property
+    def contents(self):
+        &#34;&#34;&#34;The files and directories in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+
+    @property
+    def files(self):
+        &#34;&#34;&#34;The files in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+
+    @property
+    def directories(self):
+        &#34;&#34;&#34;The directories in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for d in dirs: yield DirectoryPath(os.path.join(root, d))
+
+    #----------------------------- Flat contents -----------------------------#
+    @property
+    def flat_contents(self):
+        &#34;&#34;&#34;The files and directories in this directory non-recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+            break
+
+    @property
+    def flat_files(self):
+        &#34;&#34;&#34;The files in this directory non-recursively, and sorted.
+        #TODO: check for permission denied in directory.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
+            break
+        else:
+            result = []
+        result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+        return result
+
+    @property
+    def flat_directories(self):
+        &#34;&#34;&#34;The directories in this directory non-recursively, and sorted.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            result = [DirectoryPath(os.path.join(root, d)) for d in dirs]
+            break
+        else:
+            result = []
+        result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+        return result
+
+    #------------------------------- Methods ---------------------------------#
+    def must_exist(self):
+        &#34;&#34;&#34;Raise an exception if the directory doesn&#39;t exist.&#34;&#34;&#34;
+        if not os.path.isdir(self.path):
+            raise Exception(&#34;The directory path &#39;%s&#39; does not exist.&#34; % self.path)
+
+    def remove(self, safe=True):
+        if not self.exists: return False
+        if self.is_symlink: return self.remove_when_symlink()
+        shutil.rmtree(self.path, ignore_errors=safe)
+        return True
+
+    def remove_when_symlink(self):
+        if not self.exists: return False
+        os.remove(self.path.rstrip(sep))
+        return True
+
+    def create(self, safe=False, inherit=True):
+        # Create it #
+        if not safe:
+            os.makedirs(self.path)
+            if inherit: os.chmod(self.path, self.directory.permissions.number)
+        if safe:
+            try:
+                os.makedirs(self.path)
+                if inherit: os.chmod(self.path, self.directory.permissions.number)
+            except OSError: pass
+
+    def create_if_not_exists(self):
+        if not self.exists: self.create()
+
+    def move_to(self, path):
+        &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+        # Check #
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+
+    def zip(self, keep_orig=False):
+        &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
+        shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
+        if not keep_orig: self.remove()
+
+    def copy(self, path):
+        assert not os.path.exists(path)
+        shutil.copytree(str(self.path), str(path))
+
+    def glob(self, pattern):
+        &#34;&#34;&#34;Perform a glob search in this directory.&#34;&#34;&#34;
+        files = glob.glob(self.path + pattern)
+        return map(autopaths.file_path.FilePath, files)
+
+    def find(self, pattern):
+        &#34;&#34;&#34;Find a file in this directory.&#34;&#34;&#34;
+        f = glob.glob(self.path + pattern)[0]
+        return autopaths.file_path.FilePath(f)
+
+    def unnest(self):
+        &#34;&#34;&#34;
+        Move all contents (files and directories) of this directory
+        to its parent directory, and remove this directory.
+        &#34;&#34;&#34;
+        for item in self.flat_contents: item.move_to(self.directory)
+        self.remove()
+
+    def zip_to(self, path=None):
+        &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
+        # Case where path is None #
+        if path is None: path = self.directory + self.name + &#34;.zip&#34;
+        # The method adds .zip so let&#39;s remove it #
+        if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
+        else:                     path_no_ext = path
+        # Compress #
+        shutil.make_archive(path_no_ext, &#39;zip&#39;, self.path)
+        # Return #
+        return path_no_ext</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="autopaths.dir_path.DirectoryPath"><code class="flex name class">
+<span>class <span class="ident">DirectoryPath</span></span>
+<span>(</span><span>path, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Holds a string pointing to a directory path and adds methods to interact with
+directories.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DirectoryPath(autopaths.base_path.BasePath):
+    &#34;&#34;&#34;
+    Holds a string pointing to a directory path and adds methods to interact with
+    directories.
+    &#34;&#34;&#34;
+
+    def __len__(self): return len(list(self.flat_contents))
+
+    def __iter__(self): return self.flat_contents
+
+    def __contains__(self, item): return item in [x.name for x in self.flat_contents]
+
+    def __getitem__(self, item):
+        for path in self.flat_contents:
+            if path.name == item:
+                return path
+        raise KeyError(&#34;Couldn&#39;t find &#39;%s&#39; in &#39;%s&#39;&#34; % (item, self.path))
+
+    # ------------------------------ Properties ----------------------------- #
+    @property
+    def p(self):
+        if not hasattr(self, &#39;all_paths&#39;):
+            raise Exception(&#34;You need to define &#39;all_paths&#39; to use this function&#34;)
+        return autopaths.auto_paths.AutoPaths(self.path, self.all_paths)
+
+    @property
+    def name(self):
+        &#34;&#34;&#34;Just the directory name.&#34;&#34;&#34;
+        return os.path.basename(os.path.dirname(self.path))
+
+    @property
+    def prefix_path(self):
+        &#34;&#34;&#34;The full path without the extension.&#34;&#34;&#34;
+        return os.path.splitext(self.path)[0].rstrip(sep)
+
+    @property
+    def absolute_path(self):
+        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+        return os.path.abspath(self.path) + sep
+
+    @property
+    def directory(self):
+        &#34;&#34;&#34;The full path of the directory containing this one (parent dir).&#34;&#34;&#34;
+        # The built-in function #
+        directory = os.path.dirname(os.path.dirname(self.path))
+        # Maybe we need to go the absolute path way #
+        if not directory:
+            directory = os.path.dirname(os.path.dirname(self.absolute_path))
+        # Return #
+        return autopaths.dir_path.DirectoryPath(directory)
+
+    @property
+    def sub_directory(self):
+        &#34;&#34;&#34;
+        The path to the directory that is contained inside this directory.
+        Assuming that the current directory has only one child.
+        &#34;&#34;&#34;
+        # Check there is only one #
+        assert len(self.flat_directories) == 1
+        # Return #
+        return self.flat_directories[0]
+
+    @property
+    def empty(self):
+        &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
+        return len(list(self.flat_contents)) == 0
+
+    @property
+    def size(self):
+        &#34;&#34;&#34;The total size in bytes of all file contents.&#34;&#34;&#34;
+        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
+
+    #-------------------------- Recursive contents ---------------------------#
+    @property
+    def contents(self):
+        &#34;&#34;&#34;The files and directories in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+
+    @property
+    def files(self):
+        &#34;&#34;&#34;The files in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+
+    @property
+    def directories(self):
+        &#34;&#34;&#34;The directories in this directory, recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path, topdown=False):
+            for d in dirs: yield DirectoryPath(os.path.join(root, d))
+
+    #----------------------------- Flat contents -----------------------------#
+    @property
+    def flat_contents(self):
+        &#34;&#34;&#34;The files and directories in this directory non-recursively.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+            break
+
+    @property
+    def flat_files(self):
+        &#34;&#34;&#34;The files in this directory non-recursively, and sorted.
+        #TODO: check for permission denied in directory.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
+            break
+        else:
+            result = []
+        result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+        return result
+
+    @property
+    def flat_directories(self):
+        &#34;&#34;&#34;The directories in this directory non-recursively, and sorted.&#34;&#34;&#34;
+        for root, dirs, files in os.walk(self.path):
+            result = [DirectoryPath(os.path.join(root, d)) for d in dirs]
+            break
+        else:
+            result = []
+        result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+        return result
+
+    #------------------------------- Methods ---------------------------------#
+    def must_exist(self):
+        &#34;&#34;&#34;Raise an exception if the directory doesn&#39;t exist.&#34;&#34;&#34;
+        if not os.path.isdir(self.path):
+            raise Exception(&#34;The directory path &#39;%s&#39; does not exist.&#34; % self.path)
+
+    def remove(self, safe=True):
+        if not self.exists: return False
+        if self.is_symlink: return self.remove_when_symlink()
+        shutil.rmtree(self.path, ignore_errors=safe)
+        return True
+
+    def remove_when_symlink(self):
+        if not self.exists: return False
+        os.remove(self.path.rstrip(sep))
+        return True
+
+    def create(self, safe=False, inherit=True):
+        # Create it #
+        if not safe:
+            os.makedirs(self.path)
+            if inherit: os.chmod(self.path, self.directory.permissions.number)
+        if safe:
+            try:
+                os.makedirs(self.path)
+                if inherit: os.chmod(self.path, self.directory.permissions.number)
+            except OSError: pass
+
+    def create_if_not_exists(self):
+        if not self.exists: self.create()
+
+    def move_to(self, path):
+        &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+        # Check #
+        assert not os.path.exists(path)
+        shutil.move(self.path, path)
+        # Update the internal link #
+        self.path = path
+
+    def zip(self, keep_orig=False):
+        &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
+        shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
+        if not keep_orig: self.remove()
+
+    def copy(self, path):
+        assert not os.path.exists(path)
+        shutil.copytree(str(self.path), str(path))
+
+    def glob(self, pattern):
+        &#34;&#34;&#34;Perform a glob search in this directory.&#34;&#34;&#34;
+        files = glob.glob(self.path + pattern)
+        return map(autopaths.file_path.FilePath, files)
+
+    def find(self, pattern):
+        &#34;&#34;&#34;Find a file in this directory.&#34;&#34;&#34;
+        f = glob.glob(self.path + pattern)[0]
+        return autopaths.file_path.FilePath(f)
+
+    def unnest(self):
+        &#34;&#34;&#34;
+        Move all contents (files and directories) of this directory
+        to its parent directory, and remove this directory.
+        &#34;&#34;&#34;
+        for item in self.flat_contents: item.move_to(self.directory)
+        self.remove()
+
+    def zip_to(self, path=None):
+        &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
+        # Case where path is None #
+        if path is None: path = self.directory + self.name + &#34;.zip&#34;
+        # The method adds .zip so let&#39;s remove it #
+        if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
+        else:                     path_no_ext = path
+        # Compress #
+        shutil.make_archive(path_no_ext, &#39;zip&#39;, self.path)
+        # Return #
+        return path_no_ext</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="autopaths.base_path.BasePath" href="base_path.html#autopaths.base_path.BasePath">BasePath</a></li>
+<li>builtins.str</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="autopaths.dir_path.DirectoryPath.absolute_path"><code class="name">var <span class="ident">absolute_path</span></code></dt>
+<dd>
+<div class="desc"><p>The absolute path starting with a <code>/</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def absolute_path(self):
+    &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
+    return os.path.abspath(self.path) + sep</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.contents"><code class="name">var <span class="ident">contents</span></code></dt>
+<dd>
+<div class="desc"><p>The files and directories in this directory, recursively.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def contents(self):
+    &#34;&#34;&#34;The files and directories in this directory, recursively.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path, topdown=False):
+        for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+        for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.directories"><code class="name">var <span class="ident">directories</span></code></dt>
+<dd>
+<div class="desc"><p>The directories in this directory, recursively.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def directories(self):
+    &#34;&#34;&#34;The directories in this directory, recursively.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path, topdown=False):
+        for d in dirs: yield DirectoryPath(os.path.join(root, d))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.directory"><code class="name">var <span class="ident">directory</span></code></dt>
+<dd>
+<div class="desc"><p>The full path of the directory containing this one (parent dir).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def directory(self):
+    &#34;&#34;&#34;The full path of the directory containing this one (parent dir).&#34;&#34;&#34;
+    # The built-in function #
+    directory = os.path.dirname(os.path.dirname(self.path))
+    # Maybe we need to go the absolute path way #
+    if not directory:
+        directory = os.path.dirname(os.path.dirname(self.absolute_path))
+    # Return #
+    return autopaths.dir_path.DirectoryPath(directory)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.empty"><code class="name">var <span class="ident">empty</span></code></dt>
+<dd>
+<div class="desc"><p>Does the directory contain no files?</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def empty(self):
+    &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
+    return len(list(self.flat_contents)) == 0</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.files"><code class="name">var <span class="ident">files</span></code></dt>
+<dd>
+<div class="desc"><p>The files in this directory, recursively.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def files(self):
+    &#34;&#34;&#34;The files in this directory, recursively.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path, topdown=False):
+        for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.flat_contents"><code class="name">var <span class="ident">flat_contents</span></code></dt>
+<dd>
+<div class="desc"><p>The files and directories in this directory non-recursively.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def flat_contents(self):
+    &#34;&#34;&#34;The files and directories in this directory non-recursively.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path):
+        for d in dirs:  yield DirectoryPath(os.path.join(root, d))
+        for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+        break</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.flat_directories"><code class="name">var <span class="ident">flat_directories</span></code></dt>
+<dd>
+<div class="desc"><p>The directories in this directory non-recursively, and sorted.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def flat_directories(self):
+    &#34;&#34;&#34;The directories in this directory non-recursively, and sorted.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path):
+        result = [DirectoryPath(os.path.join(root, d)) for d in dirs]
+        break
+    else:
+        result = []
+    result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+    return result</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.flat_files"><code class="name">var <span class="ident">flat_files</span></code></dt>
+<dd>
+<div class="desc"><p>The files in this directory non-recursively, and sorted.</p>
+<h1 id="todo-check-for-permission-denied-in-directory">TODO: check for permission denied in directory.</h1></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def flat_files(self):
+    &#34;&#34;&#34;The files in this directory non-recursively, and sorted.
+    #TODO: check for permission denied in directory.&#34;&#34;&#34;
+    for root, dirs, files in os.walk(self.path):
+        result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
+        break
+    else:
+        result = []
+    result.sort(key=lambda x: autopaths.common.natural_sort(x.path))
+    return result</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<div class="desc"><p>Just the directory name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self):
+    &#34;&#34;&#34;Just the directory name.&#34;&#34;&#34;
+    return os.path.basename(os.path.dirname(self.path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.p"><code class="name">var <span class="ident">p</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def p(self):
+    if not hasattr(self, &#39;all_paths&#39;):
+        raise Exception(&#34;You need to define &#39;all_paths&#39; to use this function&#34;)
+    return autopaths.auto_paths.AutoPaths(self.path, self.all_paths)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.prefix_path"><code class="name">var <span class="ident">prefix_path</span></code></dt>
+<dd>
+<div class="desc"><p>The full path without the extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def prefix_path(self):
+    &#34;&#34;&#34;The full path without the extension.&#34;&#34;&#34;
+    return os.path.splitext(self.path)[0].rstrip(sep)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.size"><code class="name">var <span class="ident">size</span></code></dt>
+<dd>
+<div class="desc"><p>The total size in bytes of all file contents.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def size(self):
+    &#34;&#34;&#34;The total size in bytes of all file contents.&#34;&#34;&#34;
+    return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.sub_directory"><code class="name">var <span class="ident">sub_directory</span></code></dt>
+<dd>
+<div class="desc"><p>The path to the directory that is contained inside this directory.
+Assuming that the current directory has only one child.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def sub_directory(self):
+    &#34;&#34;&#34;
+    The path to the directory that is contained inside this directory.
+    Assuming that the current directory has only one child.
+    &#34;&#34;&#34;
+    # Check there is only one #
+    assert len(self.flat_directories) == 1
+    # Return #
+    return self.flat_directories[0]</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="autopaths.dir_path.DirectoryPath.copy"><code class="name flex">
+<span>def <span class="ident">copy</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def copy(self, path):
+    assert not os.path.exists(path)
+    shutil.copytree(str(self.path), str(path))</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>self, safe=False, inherit=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create(self, safe=False, inherit=True):
+    # Create it #
+    if not safe:
+        os.makedirs(self.path)
+        if inherit: os.chmod(self.path, self.directory.permissions.number)
+    if safe:
+        try:
+            os.makedirs(self.path)
+            if inherit: os.chmod(self.path, self.directory.permissions.number)
+        except OSError: pass</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.create_if_not_exists"><code class="name flex">
+<span>def <span class="ident">create_if_not_exists</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_if_not_exists(self):
+    if not self.exists: self.create()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.find"><code class="name flex">
+<span>def <span class="ident">find</span></span>(<span>self, pattern)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find a file in this directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find(self, pattern):
+    &#34;&#34;&#34;Find a file in this directory.&#34;&#34;&#34;
+    f = glob.glob(self.path + pattern)[0]
+    return autopaths.file_path.FilePath(f)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.glob"><code class="name flex">
+<span>def <span class="ident">glob</span></span>(<span>self, pattern)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Perform a glob search in this directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def glob(self, pattern):
+    &#34;&#34;&#34;Perform a glob search in this directory.&#34;&#34;&#34;
+    files = glob.glob(self.path + pattern)
+    return map(autopaths.file_path.FilePath, files)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.move_to"><code class="name flex">
+<span>def <span class="ident">move_to</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Move the directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_to(self, path):
+    &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+    # Check #
+    assert not os.path.exists(path)
+    shutil.move(self.path, path)
+    # Update the internal link #
+    self.path = path</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.must_exist"><code class="name flex">
+<span>def <span class="ident">must_exist</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raise an exception if the directory doesn't exist.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def must_exist(self):
+    &#34;&#34;&#34;Raise an exception if the directory doesn&#39;t exist.&#34;&#34;&#34;
+    if not os.path.isdir(self.path):
+        raise Exception(&#34;The directory path &#39;%s&#39; does not exist.&#34; % self.path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, safe=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, safe=True):
+    if not self.exists: return False
+    if self.is_symlink: return self.remove_when_symlink()
+    shutil.rmtree(self.path, ignore_errors=safe)
+    return True</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.remove_when_symlink"><code class="name flex">
+<span>def <span class="ident">remove_when_symlink</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_when_symlink(self):
+    if not self.exists: return False
+    os.remove(self.path.rstrip(sep))
+    return True</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.unnest"><code class="name flex">
+<span>def <span class="ident">unnest</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Move all contents (files and directories) of this directory
+to its parent directory, and remove this directory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unnest(self):
+    &#34;&#34;&#34;
+    Move all contents (files and directories) of this directory
+    to its parent directory, and remove this directory.
+    &#34;&#34;&#34;
+    for item in self.flat_contents: item.move_to(self.directory)
+    self.remove()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.zip"><code class="name flex">
+<span>def <span class="ident">zip</span></span>(<span>self, keep_orig=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a zip archive of the directory</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def zip(self, keep_orig=False):
+    &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
+    shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
+    if not keep_orig: self.remove()</code></pre>
+</details>
+</dd>
+<dt id="autopaths.dir_path.DirectoryPath.zip_to"><code class="name flex">
+<span>def <span class="ident">zip_to</span></span>(<span>self, path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a zipped version of the directory at a given path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def zip_to(self, path=None):
+    &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
+    # Case where path is None #
+    if path is None: path = self.directory + self.name + &#34;.zip&#34;
+    # The method adds .zip so let&#39;s remove it #
+    if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
+    else:                     path_no_ext = path
+    # Compress #
+    shutil.make_archive(path_no_ext, &#39;zip&#39;, self.path)
+    # Return #
+    return path_no_ext</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="autopaths.base_path.BasePath" href="base_path.html#autopaths.base_path.BasePath">BasePath</a></b></code>:
+<ul class="hlist">
+<li><code><a title="autopaths.base_path.BasePath.cdate" href="base_path.html#autopaths.base_path.BasePath.cdate">cdate</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.cdate_iso" href="base_path.html#autopaths.base_path.BasePath.cdate_iso">cdate_iso</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.clean_path" href="base_path.html#autopaths.base_path.BasePath.clean_path">clean_path</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.escaped" href="base_path.html#autopaths.base_path.BasePath.escaped">escaped</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.exists" href="base_path.html#autopaths.base_path.BasePath.exists">exists</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.is_symlink" href="base_path.html#autopaths.base_path.BasePath.is_symlink">is_symlink</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.link_from" href="base_path.html#autopaths.base_path.BasePath.link_from">link_from</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.link_to" href="base_path.html#autopaths.base_path.BasePath.link_to">link_to</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.mdate" href="base_path.html#autopaths.base_path.BasePath.mdate">mdate</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.mdate_iso" href="base_path.html#autopaths.base_path.BasePath.mdate_iso">mdate_iso</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.permissions" href="base_path.html#autopaths.base_path.BasePath.permissions">permissions</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.short_prefix" href="base_path.html#autopaths.base_path.BasePath.short_prefix">short_prefix</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.symlinks_on_windows" href="base_path.html#autopaths.base_path.BasePath.symlinks_on_windows">symlinks_on_windows</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.unix_style" href="base_path.html#autopaths.base_path.BasePath.unix_style">unix_style</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.win_style" href="base_path.html#autopaths.base_path.BasePath.win_style">win_style</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.with_tilda" href="base_path.html#autopaths.base_path.BasePath.with_tilda">with_tilda</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.wsl_style" href="base_path.html#autopaths.base_path.BasePath.wsl_style">wsl_style</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="autopaths" href="index.html">autopaths</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="autopaths.dir_path.DirectoryPath" href="#autopaths.dir_path.DirectoryPath">DirectoryPath</a></code></h4>
+<ul class="">
+<li><code><a title="autopaths.dir_path.DirectoryPath.absolute_path" href="#autopaths.dir_path.DirectoryPath.absolute_path">absolute_path</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.contents" href="#autopaths.dir_path.DirectoryPath.contents">contents</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.copy" href="#autopaths.dir_path.DirectoryPath.copy">copy</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.create" href="#autopaths.dir_path.DirectoryPath.create">create</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.create_if_not_exists" href="#autopaths.dir_path.DirectoryPath.create_if_not_exists">create_if_not_exists</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.directories" href="#autopaths.dir_path.DirectoryPath.directories">directories</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.directory" href="#autopaths.dir_path.DirectoryPath.directory">directory</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.empty" href="#autopaths.dir_path.DirectoryPath.empty">empty</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.files" href="#autopaths.dir_path.DirectoryPath.files">files</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.find" href="#autopaths.dir_path.DirectoryPath.find">find</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.flat_contents" href="#autopaths.dir_path.DirectoryPath.flat_contents">flat_contents</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.flat_directories" href="#autopaths.dir_path.DirectoryPath.flat_directories">flat_directories</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.flat_files" href="#autopaths.dir_path.DirectoryPath.flat_files">flat_files</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.glob" href="#autopaths.dir_path.DirectoryPath.glob">glob</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.move_to" href="#autopaths.dir_path.DirectoryPath.move_to">move_to</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.must_exist" href="#autopaths.dir_path.DirectoryPath.must_exist">must_exist</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.name" href="#autopaths.dir_path.DirectoryPath.name">name</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.p" href="#autopaths.dir_path.DirectoryPath.p">p</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.prefix_path" href="#autopaths.dir_path.DirectoryPath.prefix_path">prefix_path</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.remove" href="#autopaths.dir_path.DirectoryPath.remove">remove</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.remove_when_symlink" href="#autopaths.dir_path.DirectoryPath.remove_when_symlink">remove_when_symlink</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.size" href="#autopaths.dir_path.DirectoryPath.size">size</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.sub_directory" href="#autopaths.dir_path.DirectoryPath.sub_directory">sub_directory</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.unnest" href="#autopaths.dir_path.DirectoryPath.unnest">unnest</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.zip" href="#autopaths.dir_path.DirectoryPath.zip">zip</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.zip_to" href="#autopaths.dir_path.DirectoryPath.zip_to">zip_to</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>
