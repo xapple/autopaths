@@ -8,7 +8,7 @@ It has many convenience methods that apply to directory paths and/or file paths 
 
 ## Prerequisites
 
-Since `autopaths` is written in python it is compatible with all operating systems: Linux, macOS and Windows. The only prerequisite is `python3` (which is often installed by default) along with the `pip3` package manager.
+Since `autopaths` is written in python, it is compatible with all operating systems: Linux, macOS and Windows. The only prerequisite is `python3` (which is often installed by default) along with the `pip3` package manager.
 
 To check if you have `python3` installed, type the following on your terminal:
 
