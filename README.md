@@ -48,7 +48,7 @@ Here are a few example usages of this object:
     print(f.size)
     print(f.contains_binary)
     f.prepend('# This file was backed-up\n')
-    f.gzip_to('backup/old_reads/reads_56.fastq')
+    f.gzip_to('backup/old_reads/reads_56.fastq.gz')
     f.move_to(f.parent)
 
 As you can see, once you have created a FilePath, many useful methods are available. No more need for long `os.path` or `shutil` commands of which you can never remember the syntax.
@@ -84,7 +84,7 @@ You can use this class like this when making pipelines to quickly refer to a pre
         def clean(self):
             shutil.move(self.p.raw_sff, self.p.clean_fastq)
 
-## Extra documentation 
+## Extra documentation
 
 More documentation is available at:
 
