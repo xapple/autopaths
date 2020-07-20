@@ -208,8 +208,11 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def move_to(self, path):
         &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+        # Parse #
+        path = DirectoryPath(path)
         # Check #
-        assert not os.path.exists(path)
+        assert not path.exists
+        # Move #
         shutil.move(self.path, path)
         # Update the internal link #
         self.path = path
@@ -431,8 +434,11 @@ directories.</p></div>
 
     def move_to(self, path):
         &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+        # Parse #
+        path = DirectoryPath(path)
         # Check #
-        assert not os.path.exists(path)
+        assert not path.exists
+        # Move #
         shutil.move(self.path, path)
         # Update the internal link #
         self.path = path
@@ -792,8 +798,11 @@ def sub_directory(self):
 </summary>
 <pre><code class="python">def move_to(self, path):
     &#34;&#34;&#34;Move the directory.&#34;&#34;&#34;
+    # Parse #
+    path = DirectoryPath(path)
     # Check #
-    assert not os.path.exists(path)
+    assert not path.exists
+    # Move #
     shutil.move(self.path, path)
     # Update the internal link #
     self.path = path</code></pre>

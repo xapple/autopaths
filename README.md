@@ -1,6 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/autopaths.svg)](https://badge.fury.io/py/autopaths)
 
-# `autopaths` version 1.4.3
+# `autopaths` version 1.4.4
 
 `autopaths` is a python package for dealing with file paths and automation.
 
