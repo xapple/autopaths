@@ -175,8 +175,11 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def move_to(self, path):
         """Move the directory."""
+        # Parse #
+        path = DirectoryPath(path)
         # Check #
-        assert not os.path.exists(path)
+        assert not path.exists
+        # Move #
         shutil.move(self.path, path)
         # Update the internal link #
         self.path = path
