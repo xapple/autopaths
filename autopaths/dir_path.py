@@ -184,11 +184,6 @@ class DirectoryPath(autopaths.base_path.BasePath):
         # Update the internal link #
         self.path = path
 
-    def zip(self, keep_orig=False):
-        """Make a zip archive of the directory"""
-        shutil.make_archive(self.prefix_path , "zip", self.directory, self.name)
-        if not keep_orig: self.remove()
-
     def copy(self, path):
         assert not os.path.exists(path)
         shutil.copytree(str(self.path), str(path))
@@ -215,6 +210,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
         """Make a zipped version of the directory at a given path."""
         # Case where path is None #
         if path is None: path = self.directory + self.name + ".zip"
+        else: path = autopaths.file_path.FilePath(path)
         # The method adds .zip so let's remove it #
         if path.endswith('.zip'): path_no_ext = path.prefix_path
         else:                     path_no_ext = path
