@@ -217,11 +217,6 @@ class DirectoryPath(autopaths.base_path.BasePath):
         # Update the internal link #
         self.path = path
 
-    def zip(self, keep_orig=False):
-        &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
-        shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
-        if not keep_orig: self.remove()
-
     def copy(self, path):
         assert not os.path.exists(path)
         shutil.copytree(str(self.path), str(path))
@@ -248,6 +243,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
         &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
         # Case where path is None #
         if path is None: path = self.directory + self.name + &#34;.zip&#34;
+        else: path = autopaths.file_path.FilePath(path)
         # The method adds .zip so let&#39;s remove it #
         if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
         else:                     path_no_ext = path
@@ -443,11 +439,6 @@ directories.</p></div>
         # Update the internal link #
         self.path = path
 
-    def zip(self, keep_orig=False):
-        &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
-        shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
-        if not keep_orig: self.remove()
-
     def copy(self, path):
         assert not os.path.exists(path)
         shutil.copytree(str(self.path), str(path))
@@ -474,6 +465,7 @@ directories.</p></div>
         &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
         # Case where path is None #
         if path is None: path = self.directory + self.name + &#34;.zip&#34;
+        else: path = autopaths.file_path.FilePath(path)
         # The method adds .zip so let&#39;s remove it #
         if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
         else:                     path_no_ext = path
@@ -873,21 +865,6 @@ to its parent directory, and remove this directory.</p></div>
     self.remove()</code></pre>
 </details>
 </dd>
-<dt id="autopaths.dir_path.DirectoryPath.zip"><code class="name flex">
-<span>def <span class="ident">zip</span></span>(<span>self, keep_orig=False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Make a zip archive of the directory</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def zip(self, keep_orig=False):
-    &#34;&#34;&#34;Make a zip archive of the directory&#34;&#34;&#34;
-    shutil.make_archive(self.prefix_path , &#34;zip&#34;, self.directory, self.name)
-    if not keep_orig: self.remove()</code></pre>
-</details>
-</dd>
 <dt id="autopaths.dir_path.DirectoryPath.zip_to"><code class="name flex">
 <span>def <span class="ident">zip_to</span></span>(<span>self, path=None)</span>
 </code></dt>
@@ -901,6 +878,7 @@ to its parent directory, and remove this directory.</p></div>
     &#34;&#34;&#34;Make a zipped version of the directory at a given path.&#34;&#34;&#34;
     # Case where path is None #
     if path is None: path = self.directory + self.name + &#34;.zip&#34;
+    else: path = autopaths.file_path.FilePath(path)
     # The method adds .zip so let&#39;s remove it #
     if path.endswith(&#39;.zip&#39;): path_no_ext = path.prefix_path
     else:                     path_no_ext = path
@@ -979,7 +957,6 @@ to its parent directory, and remove this directory.</p></div>
 <li><code><a title="autopaths.dir_path.DirectoryPath.size" href="#autopaths.dir_path.DirectoryPath.size">size</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.sub_directory" href="#autopaths.dir_path.DirectoryPath.sub_directory">sub_directory</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.unnest" href="#autopaths.dir_path.DirectoryPath.unnest">unnest</a></code></li>
-<li><code><a title="autopaths.dir_path.DirectoryPath.zip" href="#autopaths.dir_path.DirectoryPath.zip">zip</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.zip_to" href="#autopaths.dir_path.DirectoryPath.zip_to">zip_to</a></code></li>
 </ul>
 </li>
