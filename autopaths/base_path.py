@@ -72,6 +72,11 @@ class BasePath(str):
         return self.name.split('.')[0]
 
     @property
+    def extension(self):
+        """The extension with the leading period."""
+        return os.path.splitext(self.path)[1]
+
+    @property
     def escaped(self):
         """
         The path with special characters escaped.

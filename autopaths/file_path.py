@@ -99,11 +99,6 @@ class FilePath(autopaths.base_path.BasePath):
         return str(os.path.basename(self.path))
 
     @property
-    def extension(self):
-        """The extension with the leading period."""
-        return os.path.splitext(self.path)[1]
-
-    @property
     def directory(self):
         """The directory containing this file."""
         # The built-in function #
