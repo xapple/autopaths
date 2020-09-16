@@ -42,7 +42,7 @@ class AutoPaths(object):
         # Don't nest Path objects or the like #
         if hasattr(base_dir, 'path'): base_dir = base_dir.path
         # Attributes #
-        self._base_dir  = base_dir
+        self._base_dir  = os.path.expanduser(base_dir)
         self._all_paths = all_paths
         self._tmp_dir   = tempfile.gettempdir() + sep
         # Parse input #
