@@ -473,7 +473,7 @@ class FilePath(autopaths.base_path.BasePath):
         self.remove()
         result_file.move_to(self)
 
-    def replace_line(self, line_to_remove, line_to_insert):
+    def replace_line(self, line_to_remove, line_to_insert, safe=False):
         """
         Search the file for a given line, and if found,
         replace it with another line.
@@ -485,9 +485,15 @@ class FilePath(autopaths.base_path.BasePath):
         result_file = autopaths.tmp_path.new_temp_file()
         # Generate the lines #
         def new_lines():
+            found = False
             for line in self:
-                if line.strip() == line_to_remove: yield line_to_insert + '\n'
-                else:                              yield line
+                if line.strip() == line_to_remove:
+                    yield line_to_insert + '\n'
+                    found = True
+                else: yield line
+            if found is False and safe is False:
+                msg = "The line to replace ('%s') was not found in '%s'"
+                raise Exception(msg % (line_to_remove, self.path))
         # Open input/output files, note: output file's permissions lost #
         result_file.writelines(new_lines())
         # Switch the files around #
