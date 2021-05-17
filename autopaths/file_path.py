@@ -338,7 +338,7 @@ class FilePath(autopaths.base_path.BasePath):
         # Return #
         return FilePath(path)
 
-    def ungzip_to(self, path=None, mode='w'):
+    def ungzip_to(self, path=None, mode='wb'):
         """Make an unzipped version of the file at a given path."""
         # Case where path is not specified #
         if path is None: path = self.path[:-3]
