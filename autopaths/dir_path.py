@@ -121,8 +121,10 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     @property
     def flat_files(self):
-        """The files in this directory non-recursively, and sorted.
-        #TODO: check for permission denied in directory."""
+        """
+        The files in this directory non-recursively, and sorted.
+        #TODO: check for permission denied in directory.
+        """
         for root, dirs, files in os.walk(self.path):
             result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
             break
@@ -177,8 +179,10 @@ class DirectoryPath(autopaths.base_path.BasePath):
         """Move the directory."""
         # Parse #
         path = DirectoryPath(path)
-        # Check #
+        # Check the destination doesn't exist already #
         assert not path.exists
+        # However the parent directory must exist #
+        path.directory.create_if_not_exists()
         # Move #
         shutil.move(self.path, path)
         # Update the internal link #
@@ -191,7 +195,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
     def glob(self, pattern):
         """Perform a glob search in this directory."""
         files = glob.glob(self.path + pattern)
-        return map(autopaths.file_path.FilePath, files)
+        return list(map(autopaths.file_path.FilePath, files))
 
     def find(self, pattern):
         """Find a file in this directory."""
