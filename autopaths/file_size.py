@@ -48,12 +48,13 @@ class FileSize(object):
         if self.size == 0: return '0 bytes'
         if self.size == 1: return '1 byte'
         # Pick the right unit #
-        unit = self.units[min(int(log(self.size, self.chunk)), len(self.units) - 1)]
+        index = min(int(log(self.size, self.chunk)), len(self.units) - 1)
+        unit = self.units[index]
         # Compute #
         exponent  = self.units.index(unit)
         quotient  = float(self.size) / self.chunk**exponent
         precision = self.precisions[exponent]
-        template  = '{:.%sf} {}' % (precision)
+        template  = '{:.%sf} {}' % precision
         string    =  template.format(quotient, unit)
         # Return a string #
         return string

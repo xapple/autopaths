@@ -24,7 +24,8 @@ class BasePath(str):
     and DirectoryPath objects.
     """
 
-    def __repr__(self): return '<%s object "%s">' % (self.__class__.__name__, self.path)
+    def __repr__(self):
+        return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
     @classmethod
     def clean_path(cls, path):
@@ -42,8 +43,10 @@ class BasePath(str):
         # Expand star #
         if "*" in path:
             matches = glob.glob(path)
-            if len(matches) < 1: raise Exception("Found exactly no paths matching '%s'" % path)
-            if len(matches) > 1: raise Exception("Found several paths matching '%s'" % path)
+            if len(matches) < 1:
+                raise Exception("Found exactly no paths matching '%s'" % path)
+            if len(matches) > 1:
+                raise Exception("Found several paths matching '%s'" % path)
             path = matches[0]
         # Our standard is to end with a slash for directories #
         if cls is autopaths.dir_path.DirectoryPath:
@@ -62,8 +65,10 @@ class BasePath(str):
     def __add__(self, other):
         if os.name == "posix": other = other.replace("\\", sep)
         if os.name == "nt":    other = other.replace("/",  sep)
-        if other.endswith(sep): return autopaths.dir_path.DirectoryPath(self.path + other)
-        else:                   return autopaths.file_path.FilePath(self.path + other)
+        if other.endswith(sep):
+            return autopaths.dir_path.DirectoryPath(self.path + other)
+        else:
+            return autopaths.file_path.FilePath(self.path + other)
 
     # ------------------------------ Properties ----------------------------- #
     @property
@@ -101,7 +106,7 @@ class BasePath(str):
     @property
     def wsl_style(self):
         """
-        The path with forward slashes and a windows subsytem
+        The path with forward slashes and a windows subsystem
         for linux style leading disk drive.
         """
         return "/mnt/c" + self.unix_style
@@ -142,6 +147,7 @@ class BasePath(str):
     @property
     def mdate_iso(self):
         """Return the modification date as a datetime iso object."""
+        import datetime
         return datetime.fromtimestamp(self.mdate).isoformat()
 
     @property
@@ -152,6 +158,7 @@ class BasePath(str):
     @property
     def cdate_iso(self):
         """Return the creation date as a datetime iso object."""
+        import datetime
         return datetime.fromtimestamp(self.cdate).isoformat()
 
     #-------------------------------- Methods --------------------------------#
@@ -189,8 +196,10 @@ class BasePath(str):
         source      = source.rstrip(sep)
         destination = destination.rstrip(sep)
         # Windows doesn't have os.symlink #
-        if os.name == "posix": self.symlinks_on_linux(source, destination, safe)
-        if os.name == "nt":    self.symlinks_on_windows(source, destination, safe)
+        if os.name == "posix":
+            self.symlinks_on_linux(source, destination, safe)
+        if os.name == "nt":
+            self.symlinks_on_windows(source, destination, safe)
 
     def symlinks_on_linux(self, source, destination, safe):
         # Do it unsafely #

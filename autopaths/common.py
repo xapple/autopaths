@@ -25,5 +25,7 @@ def natural_sort(item):
 
 ################################################################################
 def pad_extra_whitespace(string, pad):
-    """Given a multiline string, add extra whitespaces to the front of every line."""
+    """
+    Given a multiline string, add extra whitespaces to the front of every line.
+    """
     return '\n'.join(' ' * pad + line for line in string.split('\n'))

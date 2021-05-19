@@ -63,7 +63,7 @@ class FilePath(autopaths.base_path.BasePath):
         """Called when entering the 'with' statement (context manager)."""
         return self
 
-    def __exit__(self, errtype, value, traceback):
+    def __exit__(self, err_type, value, traceback):
         """
         Called when exiting the 'with' statement.
         This enables us to close the file or database properly, even when
@@ -80,12 +80,12 @@ class FilePath(autopaths.base_path.BasePath):
 
     @property
     def prefix_path(self):
-        """The full path without the (last) extension and trailing period."""
+        """The full path without the last extension and trailing period."""
         return str(os.path.splitext(self.path)[0])
 
     @property
     def prefix(self):
-        """Just the filename without the (last) extension and trailing period."""
+        """Just the filename without the last extension and trailing period."""
         return str(os.path.basename(self.prefix_path))
 
     @property
@@ -121,8 +121,10 @@ class FilePath(autopaths.base_path.BasePath):
         if os.name == "posix": import sh
         if os.name == "nt":    import pbs3
         # Count lines #
-        if os.name == "posix": return int(sh.wc('-l', self.path).split()[0])
-        if os.name == "nt":    return int(pbs3.Command("find")('/c', '/v', '""', self.path))
+        if os.name == "posix":
+            return int(sh.wc('-l', self.path).split()[0])
+        if os.name == "nt":
+            return int(pbs3.Command("find")('/c', '/v', '""', self.path))
 
     @property
     def size(self):
@@ -218,13 +220,15 @@ class FilePath(autopaths.base_path.BasePath):
         if encoding is None:
             with open(self.path, mode) as handle: handle.write(content)
         else:
-            with open(self.path, mode, encoding=encoding) as handle: handle.write(content)
+            with open(self.path, mode, encoding=encoding) as handle:
+                handle.write(content)
 
     def writelines(self, content, encoding=None, mode='w'):
         if encoding is None:
             with open(self.path, mode) as handle: handle.writelines(content)
         else:
-            with open(self.path, mode, encoding=encoding) as handle: handle.writelines(content)
+            with open(self.path, mode, encoding=encoding) as handle:
+                handle.writelines(content)
 
     def remove(self):
         if not self.exists: return False
@@ -250,12 +254,16 @@ class FilePath(autopaths.base_path.BasePath):
         return self.prefix_path + "." + string + self.extension
 
     def make_directory(self):
-        """Create the directory the file is supposed to be in if it does not exist."""
+        """
+        Create the directory the file is supposed to be in if it does not
+        exist.
+        """
         if not self.directory.exists: self.directory.create()
 
     def must_exist(self):
         """Raise an exception if the path doesn't exist."""
-        if not self.exists: raise Exception("The file path '%s' does not exist." % self.path)
+        if not self.exists:
+            raise Exception("The file path '%s' does not exist." % self.path)
 
     def head(self, num_lines=20):
         """Yield the first few lines."""
@@ -371,10 +379,13 @@ class FilePath(autopaths.base_path.BasePath):
             tmpdir = tempfile.mkdtemp() + sep
             z.extract(member, tmpdir)
             z.close()
-            if inplace: shutil.move(tmpdir + member.filename, self.directory + member.filename)
-            else:       shutil.move(tmpdir+member.filename, path)
-        # Multifile - no security, dangerous - Will use CWD if dest is None!! #
-        # If a file starts with an absolute path, will overwrite your files anywhere #
+            if inplace: shutil.move(tmpdir + member.filename,
+                                    self.directory + member.filename)
+            else:       shutil.move(tmpdir + member.filename,
+                                    path)
+        # Multifile - no security, dangerous - Will use CWD if dest is None!!
+        # If a file starts with an absolute path, will overwrite your files
+        # anywhere
         if not single:
             z.extractall(path)
             return autopaths.dir_path.DirectoryPath(path)

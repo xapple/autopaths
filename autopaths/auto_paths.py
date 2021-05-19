@@ -18,16 +18,18 @@ if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
 ################################################################################
-class AutoPaths(object):
+class AutoPaths:
     """
     You can use this class like this when making pipelines:
 
         class Sample(object):
+
             all_paths = '''
-                /raw/raw.sff
-                /raw/raw.fastq
-                /clean/trim.fastq
-                /clean/clean.fastq'''
+                        /raw/raw.sff
+                        /raw/raw.fastq
+                        /clean/trim.fastq
+                        /clean/clean.fastq
+                        '''
 
             def __init__(self, base_dir):
                 self.p = AutoPaths(base_dir, self.all_paths)
@@ -36,7 +38,8 @@ class AutoPaths(object):
                 shutil.move(self.p.raw_sff, self.p.clean_fastq)
     """
 
-    def __repr__(self): return '<%s object on "%s">' % (self.__class__.__name__, self._base_dir)
+    def __repr__(self):
+        return '<%s object on "%s">' % (self.__class__.__name__, self._base_dir)
 
     def __init__(self, base_dir, all_paths):
         # Don't nest Path objects or the like #
@@ -55,8 +58,9 @@ class AutoPaths(object):
 
     def __getattr__(self, key):
         # Let built-ins pass through to object #
-        if key.startswith('__') and key.endswith('__'): return object.__getattr__(key)
-        # Special cases that should do to the actual dictionary #
+        if key.startswith('__') and key.endswith('__'):
+            return object.__getattr__(key)
+        # Special cases that should go to the actual dictionary #
         if key.startswith('_'): return self.__dict__[key]
         # Temporary items #
         if key == 'tmp_dir': return self.__dict__['_tmp_dir']
@@ -96,10 +100,6 @@ class AutoPaths(object):
         result = result.pop()
         directory = autopaths.dir_path.DirectoryPath(result.complete_dir)
         if not directory.exists: directory.create(safe=True)
-        # Return different types #
-        from plumbing.csv_tables import CSVTable, TSVTable
-        if result.complete_path.endswith('.tsv'): return TSVTable(result.complete_path)
-        if result.complete_path.endswith('.csv'): return CSVTable(result.complete_path)
         # Return base case #
         return autopaths.file_path.FilePath(result.complete_path)
 
@@ -141,11 +141,13 @@ class AutoPaths(object):
         return self.tmp_dir + 'autopath.tmp'
 
 ################################################################################
-class PathItems(object):
+class PathItems:
+
     delimiters = '_', '.', '/'
     pattern = re.compile('|'.join(map(re.escape, delimiters)))
 
-    def __repr__(self): return '<%s object "%s">' % (self.__class__.__name__, self.path)
+    def __repr__(self):
+        return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
     def __init__(self, path, base_dir):
         self.path           = path
@@ -162,10 +164,12 @@ class PathItems(object):
         return len(self.all_items)
 
     def score_file(self, items):
-        return sum([1.0 if i in self.name_items else 0.5 for i in items if i in self])
+        return sum([1.0 if i in self.name_items else 0.5
+                    for i in items if i in self])
 
     def score_dir(self, items):
-        return sum([1.0 if i in self.dir_items else 0.5 for i in items if i in self])
+        return sum([1.0 if i in self.dir_items else 0.5
+                    for i in items if i in self])
 
     @property
     def complete_path(self):

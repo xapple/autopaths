@@ -28,7 +28,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def __iter__(self): return self.flat_contents
 
-    def __contains__(self, item): return item in [x.name for x in self.flat_contents]
+    def __contains__(self, item):
+        return item in [x.name for x in self.flat_contents]
 
     def __getitem__(self, item):
         for path in self.flat_contents:
@@ -40,7 +41,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
     @property
     def p(self):
         if not hasattr(self, 'all_paths'):
-            raise Exception("You need to define 'all_paths' to use this function")
+            raise Exception("You need to define 'all_paths' to use this"
+                            " function")
         return autopaths.auto_paths.AutoPaths(self.path, self.all_paths)
 
     @property
@@ -88,35 +90,42 @@ class DirectoryPath(autopaths.base_path.BasePath):
     @property
     def size(self):
         """The total size in bytes of all file contents."""
-        return autopaths.file_size.FileSize(sum(f.count_bytes for f in self.files))
+        total = sum(f.count_bytes for f in self.files)
+        return autopaths.file_size.FileSize(total)
 
     #-------------------------- Recursive contents ---------------------------#
     @property
     def contents(self):
         """The files and directories in this directory, recursively."""
         for root, dirs, files in os.walk(self.path, topdown=False):
-            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
-            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+            for d in dirs:
+                yield DirectoryPath(os.path.join(root, d))
+            for f in files:
+                yield autopaths.file_path.FilePath(os.path.join(root, f))
 
     @property
     def files(self):
         """The files in this directory, recursively."""
         for root, dirs, files in os.walk(self.path, topdown=False):
-            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+            for f in files:
+                yield autopaths.file_path.FilePath(os.path.join(root, f))
 
     @property
     def directories(self):
         """The directories in this directory, recursively."""
         for root, dirs, files in os.walk(self.path, topdown=False):
-            for d in dirs: yield DirectoryPath(os.path.join(root, d))
+            for d in dirs:
+                yield DirectoryPath(os.path.join(root, d))
 
     #----------------------------- Flat contents -----------------------------#
     @property
     def flat_contents(self):
         """The files and directories in this directory non-recursively."""
         for root, dirs, files in os.walk(self.path):
-            for d in dirs:  yield DirectoryPath(os.path.join(root, d))
-            for f in files: yield autopaths.file_path.FilePath(os.path.join(root, f))
+            for d in dirs:
+                yield DirectoryPath(os.path.join(root, d))
+            for f in files:
+                yield autopaths.file_path.FilePath(os.path.join(root, f))
             break
 
     @property
@@ -126,7 +135,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
         #TODO: check for permission denied in directory.
         """
         for root, dirs, files in os.walk(self.path):
-            result = [autopaths.file_path.FilePath(os.path.join(root, f)) for f in files]
+            result = [autopaths.file_path.FilePath(os.path.join(root, f))
+                      for f in files]
             break
         else:
             result = []
@@ -148,7 +158,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
     def must_exist(self):
         """Raise an exception if the directory doesn't exist."""
         if not os.path.isdir(self.path):
-            raise Exception("The directory path '%s' does not exist." % self.path)
+            msg = "The directory path '%s' does not exist."
+            raise Exception(msg % self.path)
 
     def remove(self, safe=True):
         if not self.exists: return False
@@ -169,7 +180,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
         if safe:
             try:
                 os.makedirs(self.path)
-                if inherit: os.chmod(self.path, self.directory.permissions.number)
+                if inherit:
+                    os.chmod(self.path, self.directory.permissions.number)
             except OSError: pass
 
     def create_if_not_exists(self):
