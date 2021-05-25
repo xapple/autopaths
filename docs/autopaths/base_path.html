@@ -198,23 +198,23 @@ class BasePath(str):
     def link_from(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Make a link here pointing to another file/directory somewhere else.
-        The destination is hence self.path and the source is *path*.
+        The destination is hence *self* and the source is *path*.
         &#34;&#34;&#34;
         # Get source and destination #
         from autopaths import Path
         source      = Path(path)
-        destination = self.path
+        destination = self
         # Call method #
         self._symlink(source, destination, safe, absolute)
 
     def link_to(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Create a link somewhere else pointing to this file.
-        The destination is hence *path* and the source is self.path.
+        The destination is hence *path* and the source is *self*.
         &#34;&#34;&#34;
         # Get source and destination #
         from autopaths import Path
-        source      = self.path
+        source      = self
         destination = Path(path)
         # Call method #
         self._symlink(source, destination, safe, absolute)
@@ -422,23 +422,23 @@ and DirectoryPath objects.</p></div>
     def link_from(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Make a link here pointing to another file/directory somewhere else.
-        The destination is hence self.path and the source is *path*.
+        The destination is hence *self* and the source is *path*.
         &#34;&#34;&#34;
         # Get source and destination #
         from autopaths import Path
         source      = Path(path)
-        destination = self.path
+        destination = self
         # Call method #
         self._symlink(source, destination, safe, absolute)
 
     def link_to(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Create a link somewhere else pointing to this file.
-        The destination is hence *path* and the source is self.path.
+        The destination is hence *path* and the source is *self*.
         &#34;&#34;&#34;
         # Get source and destination #
         from autopaths import Path
-        source      = self.path
+        source      = self
         destination = Path(path)
         # Call method #
         self._symlink(source, destination, safe, absolute)
@@ -743,7 +743,7 @@ def wsl_style(self):
 </code></dt>
 <dd>
 <div class="desc"><p>Make a link here pointing to another file/directory somewhere else.
-The destination is hence self.path and the source is <em>path</em>.</p></div>
+The destination is hence <em>self</em> and the source is <em>path</em>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -751,12 +751,12 @@ The destination is hence self.path and the source is <em>path</em>.</p></div>
 <pre><code class="python">def link_from(self, path, safe=False, absolute=False):
     &#34;&#34;&#34;
     Make a link here pointing to another file/directory somewhere else.
-    The destination is hence self.path and the source is *path*.
+    The destination is hence *self* and the source is *path*.
     &#34;&#34;&#34;
     # Get source and destination #
     from autopaths import Path
     source      = Path(path)
-    destination = self.path
+    destination = self
     # Call method #
     self._symlink(source, destination, safe, absolute)</code></pre>
 </details>
@@ -766,7 +766,7 @@ The destination is hence self.path and the source is <em>path</em>.</p></div>
 </code></dt>
 <dd>
 <div class="desc"><p>Create a link somewhere else pointing to this file.
-The destination is hence <em>path</em> and the source is self.path.</p></div>
+The destination is hence <em>path</em> and the source is <em>self</em>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -774,11 +774,11 @@ The destination is hence <em>path</em> and the source is self.path.</p></div>
 <pre><code class="python">def link_to(self, path, safe=False, absolute=False):
     &#34;&#34;&#34;
     Create a link somewhere else pointing to this file.
-    The destination is hence *path* and the source is self.path.
+    The destination is hence *path* and the source is *self*.
     &#34;&#34;&#34;
     # Get source and destination #
     from autopaths import Path
-    source      = self.path
+    source      = self
     destination = Path(path)
     # Call method #
     self._symlink(source, destination, safe, absolute)</code></pre>

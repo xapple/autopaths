@@ -50,11 +50,11 @@ import autopaths
 if os.name == &#34;posix&#34;: sep = &#34;/&#34;
 if os.name == &#34;nt&#34;:    sep = &#34;\\&#34;
 
-################################################################################
+###############################################################################
 class DirectoryPath(autopaths.base_path.BasePath):
     &#34;&#34;&#34;
-    Holds a string pointing to a directory path and adds methods to interact with
-    directories.
+    Holds a string pointing to a directory path and adds methods to interact
+    with directories.
     &#34;&#34;&#34;
 
     def __len__(self): return len(list(self.flat_contents))
@@ -70,7 +70,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
                 return path
         raise KeyError(&#34;Couldn&#39;t find &#39;%s&#39; in &#39;%s&#39;&#34; % (item, self.path))
 
-    # ------------------------------ Properties ----------------------------- #
+    #------------------------------- Properties ------------------------------#
     @property
     def p(self):
         if not hasattr(self, &#39;all_paths&#39;):
@@ -249,8 +249,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def unnest(self):
         &#34;&#34;&#34;
-        Move all contents (files and directories) of this directory
-        to its parent directory, and remove this directory.
+        Move all contents (files and directories) of this directory to its
+        parent directory, and remove this directory.
         &#34;&#34;&#34;
         for item in self.flat_contents: item.move_to(self.directory)
         self.remove()
@@ -283,16 +283,16 @@ class DirectoryPath(autopaths.base_path.BasePath):
 <span>(</span><span>path)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Holds a string pointing to a directory path and adds methods to interact with
-directories.</p></div>
+<div class="desc"><p>Holds a string pointing to a directory path and adds methods to interact
+with directories.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class DirectoryPath(autopaths.base_path.BasePath):
     &#34;&#34;&#34;
-    Holds a string pointing to a directory path and adds methods to interact with
-    directories.
+    Holds a string pointing to a directory path and adds methods to interact
+    with directories.
     &#34;&#34;&#34;
 
     def __len__(self): return len(list(self.flat_contents))
@@ -308,7 +308,7 @@ directories.</p></div>
                 return path
         raise KeyError(&#34;Couldn&#39;t find &#39;%s&#39; in &#39;%s&#39;&#34; % (item, self.path))
 
-    # ------------------------------ Properties ----------------------------- #
+    #------------------------------- Properties ------------------------------#
     @property
     def p(self):
         if not hasattr(self, &#39;all_paths&#39;):
@@ -487,8 +487,8 @@ directories.</p></div>
 
     def unnest(self):
         &#34;&#34;&#34;
-        Move all contents (files and directories) of this directory
-        to its parent directory, and remove this directory.
+        Move all contents (files and directories) of this directory to its
+        parent directory, and remove this directory.
         &#34;&#34;&#34;
         for item in self.flat_contents: item.move_to(self.directory)
         self.remove()
@@ -897,16 +897,16 @@ def sub_directory(self):
 <span>def <span class="ident">unnest</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Move all contents (files and directories) of this directory
-to its parent directory, and remove this directory.</p></div>
+<div class="desc"><p>Move all contents (files and directories) of this directory to its
+parent directory, and remove this directory.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def unnest(self):
     &#34;&#34;&#34;
-    Move all contents (files and directories) of this directory
-    to its parent directory, and remove this directory.
+    Move all contents (files and directories) of this directory to its
+    parent directory, and remove this directory.
     &#34;&#34;&#34;
     for item in self.flat_contents: item.move_to(self.directory)
     self.remove()</code></pre>
