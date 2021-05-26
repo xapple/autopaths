@@ -17,11 +17,11 @@ import autopaths
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
-################################################################################
+###############################################################################
 class DirectoryPath(autopaths.base_path.BasePath):
     """
-    Holds a string pointing to a directory path and adds methods to interact with
-    directories.
+    Holds a string pointing to a directory path and adds methods to interact
+    with directories.
     """
 
     def __len__(self): return len(list(self.flat_contents))
@@ -37,7 +37,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
                 return path
         raise KeyError("Couldn't find '%s' in '%s'" % (item, self.path))
 
-    # ------------------------------ Properties ----------------------------- #
+    #------------------------------- Properties ------------------------------#
     @property
     def p(self):
         if not hasattr(self, 'all_paths'):
@@ -216,8 +216,8 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     def unnest(self):
         """
-        Move all contents (files and directories) of this directory
-        to its parent directory, and remove this directory.
+        Move all contents (files and directories) of this directory to its
+        parent directory, and remove this directory.
         """
         for item in self.flat_contents: item.move_to(self.directory)
         self.remove()
