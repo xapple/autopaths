@@ -18,11 +18,6 @@ from autopaths.common import pad_extra_whitespace
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
-# Python 2 compatibility #
-import six
-if six.PY2:
-    from io import open
-
 ################################################################################
 class FilePath(autopaths.base_path.BasePath):
     """
@@ -42,7 +37,6 @@ class FilePath(autopaths.base_path.BasePath):
     """
 
     def __bool__(self): return self.path is not None and self.count_bytes != 0
-    __nonzero__ = __bool__
 
     def __iter__(self):
         with open(self.path, 'r', encoding='utf-8') as handle:
