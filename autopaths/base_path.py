@@ -165,23 +165,23 @@ class BasePath(str):
     def link_from(self, path, safe=False, absolute=False):
         """
         Make a link here pointing to another file/directory somewhere else.
-        The destination is hence self.path and the source is *path*.
+        The destination is hence *self* and the source is *path*.
         """
         # Get source and destination #
         from autopaths import Path
         source      = Path(path)
-        destination = self.path
+        destination = self
         # Call method #
         self._symlink(source, destination, safe, absolute)
 
     def link_to(self, path, safe=False, absolute=False):
         """
         Create a link somewhere else pointing to this file.
-        The destination is hence *path* and the source is self.path.
+        The destination is hence *path* and the source is *self*.
         """
         # Get source and destination #
         from autopaths import Path
-        source      = self.path
+        source      = self
         destination = Path(path)
         # Call method #
         self._symlink(source, destination, safe, absolute)
