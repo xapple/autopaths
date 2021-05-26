@@ -51,11 +51,6 @@ from autopaths.common import pad_extra_whitespace
 if os.name == &#34;posix&#34;: sep = &#34;/&#34;
 if os.name == &#34;nt&#34;:    sep = &#34;\\&#34;
 
-# Python 2 compatibility #
-import six
-if six.PY2:
-    from io import open
-
 ################################################################################
 class FilePath(autopaths.base_path.BasePath):
     &#34;&#34;&#34;
@@ -75,7 +70,6 @@ class FilePath(autopaths.base_path.BasePath):
     &#34;&#34;&#34;
 
     def __bool__(self): return self.path is not None and self.count_bytes != 0
-    __nonzero__ = __bool__
 
     def __iter__(self):
         with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
@@ -619,7 +613,6 @@ Such as: path.make_executable() etc etc.</p></div>
     &#34;&#34;&#34;
 
     def __bool__(self): return self.path is not None and self.count_bytes != 0
-    __nonzero__ = __bool__
 
     def __iter__(self):
         with open(self.path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as handle:
