@@ -492,8 +492,8 @@ class FilePath(autopaths.base_path.BasePath):
         def new_lines():
             found = False
             for line in self:
-                if line.strip() == line_to_remove:
-                    yield line_to_insert + '\n'
+                if line.rstrip() == line_to_remove.rstrip():
+                    yield line_to_insert.rstrip() + '\n'
                     found = True
                 else: yield line
             if found is False and safe is False:
