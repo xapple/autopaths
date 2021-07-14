@@ -83,6 +83,13 @@ class FilePath(autopaths.base_path.BasePath):
         return str(os.path.basename(self.prefix_path))
 
     @property
+    def extension(self):
+        """Just the last extension without the trailing period."""
+        if '.' not in self.filename:
+            raise Exception("The file '%s' has no extension." % self.path)
+        return self.filename.split('.')[-1]
+
+    @property
     def name(self):
         """Shortcut for self.filename."""
         return self.filename
