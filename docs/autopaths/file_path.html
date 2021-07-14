@@ -116,6 +116,13 @@ class FilePath(autopaths.base_path.BasePath):
         return str(os.path.basename(self.prefix_path))
 
     @property
+    def extension(self):
+        &#34;&#34;&#34;Just the last extension without the trailing period.&#34;&#34;&#34;
+        if &#39;.&#39; not in self.filename:
+            raise Exception(&#34;The file &#39;%s&#39; has no extension.&#34; % self.path)
+        return self.filename.split(&#39;.&#39;)[-1]
+
+    @property
     def name(self):
         &#34;&#34;&#34;Shortcut for self.filename.&#34;&#34;&#34;
         return self.filename
@@ -525,8 +532,8 @@ class FilePath(autopaths.base_path.BasePath):
         def new_lines():
             found = False
             for line in self:
-                if line.strip() == line_to_remove:
-                    yield line_to_insert + &#39;\n&#39;
+                if line.rstrip() == line_to_remove.rstrip():
+                    yield line_to_insert.rstrip() + &#39;\n&#39;
                     found = True
                 else: yield line
             if found is False and safe is False:
@@ -659,6 +666,13 @@ Such as: path.make_executable() etc etc.</p></div>
         return str(os.path.basename(self.prefix_path))
 
     @property
+    def extension(self):
+        &#34;&#34;&#34;Just the last extension without the trailing period.&#34;&#34;&#34;
+        if &#39;.&#39; not in self.filename:
+            raise Exception(&#34;The file &#39;%s&#39; has no extension.&#34; % self.path)
+        return self.filename.split(&#39;.&#39;)[-1]
+
+    @property
     def name(self):
         &#34;&#34;&#34;Shortcut for self.filename.&#34;&#34;&#34;
         return self.filename
@@ -1068,8 +1082,8 @@ Such as: path.make_executable() etc etc.</p></div>
         def new_lines():
             found = False
             for line in self:
-                if line.strip() == line_to_remove:
-                    yield line_to_insert + &#39;\n&#39;
+                if line.rstrip() == line_to_remove.rstrip():
+                    yield line_to_insert.rstrip() + &#39;\n&#39;
                     found = True
                 else: yield line
             if found is False and safe is False:
@@ -1218,6 +1232,21 @@ def directory(self):
     if not directory: directory = os.path.dirname(self.absolute_path)
     # Return #
     return autopaths.dir_path.DirectoryPath(directory)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.file_path.FilePath.extension"><code class="name">var <span class="ident">extension</span></code></dt>
+<dd>
+<div class="desc"><p>Just the last extension without the trailing period.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def extension(self):
+    &#34;&#34;&#34;Just the last extension without the trailing period.&#34;&#34;&#34;
+    if &#39;.&#39; not in self.filename:
+        raise Exception(&#34;The file &#39;%s&#39; has no extension.&#34; % self.path)
+    return self.filename.split(&#39;.&#39;)[-1]</code></pre>
 </details>
 </dd>
 <dt id="autopaths.file_path.FilePath.filename"><code class="name">var <span class="ident">filename</span></code></dt>
@@ -1805,8 +1834,8 @@ replace it with another line.</p></div>
     def new_lines():
         found = False
         for line in self:
-            if line.strip() == line_to_remove:
-                yield line_to_insert + &#39;\n&#39;
+            if line.rstrip() == line_to_remove.rstrip():
+                yield line_to_insert.rstrip() + &#39;\n&#39;
                 found = True
             else: yield line
         if found is False and safe is False:
@@ -2117,7 +2146,6 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <li><code><a title="autopaths.base_path.BasePath.clean_path" href="base_path.html#autopaths.base_path.BasePath.clean_path">clean_path</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.escaped" href="base_path.html#autopaths.base_path.BasePath.escaped">escaped</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.exists" href="base_path.html#autopaths.base_path.BasePath.exists">exists</a></code></li>
-<li><code><a title="autopaths.base_path.BasePath.extension" href="base_path.html#autopaths.base_path.BasePath.extension">extension</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.is_symlink" href="base_path.html#autopaths.base_path.BasePath.is_symlink">is_symlink</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.link_from" href="base_path.html#autopaths.base_path.BasePath.link_from">link_from</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.link_to" href="base_path.html#autopaths.base_path.BasePath.link_to">link_to</a></code></li>
@@ -2166,6 +2194,7 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <li><code><a title="autopaths.file_path.FilePath.create" href="#autopaths.file_path.FilePath.create">create</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.directory" href="#autopaths.file_path.FilePath.directory">directory</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.execute" href="#autopaths.file_path.FilePath.execute">execute</a></code></li>
+<li><code><a title="autopaths.file_path.FilePath.extension" href="#autopaths.file_path.FilePath.extension">extension</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.filename" href="#autopaths.file_path.FilePath.filename">filename</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.first" href="#autopaths.file_path.FilePath.first">first</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.gzip_to" href="#autopaths.file_path.FilePath.gzip_to">gzip_to</a></code></li>
