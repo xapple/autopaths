@@ -143,25 +143,6 @@ class FilePath(autopaths.base_path.BasePath):
         with open(self.path, encoding='utf8') as handle:return handle.read()
 
     @property
-    def absolute_path(self):
-        """The absolute path starting with a `/`."""
-        return FilePath(os.path.abspath(self.path))
-
-    @property
-    def physical_path(self):
-        """The physical path like in `pwd -P`."""
-        return FilePath(os.path.realpath(self.path))
-
-    @property
-    def relative_path(self):
-        """The relative path when compared with current directory."""
-        return FilePath(os.path.relpath(self.physical_path))
-
-    def rel_path_from(self, path):
-        """The relative path when compared to the given path."""
-        return FilePath(os.path.relpath(self.path, path))
-
-    @property
     def md5(self):
         """Compute the md5 of a file. Pretty fast."""
         md5 = hashlib.md5()

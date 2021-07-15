@@ -90,11 +90,37 @@ class BasePath(str):
         return self.path.replace("\\", "\\\\")
 
     @property
+    def absolute_path(self):
+        """The absolute path starting with a `/`."""
+        return self.__class__(os.path.abspath(self.path))
+
+    @property
+    def physical_path(self):
+        """The physical path like in `pwd -P`."""
+        return self.__class__(os.path.realpath(self.path))
+
+    @property
     def with_tilda(self):
-        """The path with the home directory substituted with a tilda."""
+        """
+        The absolute path starting with a '~' if it's in the home.
+        Returns a string, not an autopaths object.
+        """
+        # Get variables #
         home = os.path.expanduser('~')
-        if self.path.startswith(home): return self.path.replace(home, '~', 1)
-        return self.path
+        path = self.absolute_path
+        # Check we are in the home #
+        if not path.startswith(home): return path
+        # Replace #
+        return path.replace(home, '~', 1)
+
+    @property
+    def relative_path(self):
+        """The relative path when compared with current directory."""
+        return self.__class__(os.path.relpath(self.physical_path))
+
+    def rel_path_from(self, path):
+        """The relative path when compared to the given path."""
+        return self.__class__(os.path.relpath(self.path, path))
 
     @property
     def unix_style(self):
