@@ -103,7 +103,8 @@ class BasePath(str):
     def with_tilda(self):
         """
         The absolute path starting with a '~' if it's in the home.
-        Returns a string, not an autopaths object.
+        Returns a string, not an autopaths object, since autopaths can't
+        be encoded with a tilda.
         """
         # Get variables #
         home = os.path.expanduser('~')
