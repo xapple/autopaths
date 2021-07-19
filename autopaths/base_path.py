@@ -231,7 +231,8 @@ class BasePath(str):
     def symlinks_on_linux(self, source, destination, safe):
         # Do it unsafely #
         if not safe:
-            if os.path.exists(destination): os.remove(destination)
+            if os.path.exists(destination) or os.path.islink(destination):
+                os.remove(destination)
             os.symlink(source, destination)
         # Do it safely #
         if safe:
@@ -241,7 +242,7 @@ class BasePath(str):
             except OSError: pass
 
     def symlinks_on_windows(self, source, destination, safe):
-        """Yes, source and destination need to be in the reverse order"""
+        """Yes, source and destination need to be in the reverse order."""
         import win32file
         if os.path.isdir(source):
             return win32file.CreateSymbolicLink(destination, source, 1)
