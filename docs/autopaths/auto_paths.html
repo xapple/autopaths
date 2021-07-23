@@ -206,11 +206,11 @@ class PathItems:
 
     @property
     def complete_path(self):
-        return sep + os.path.relpath(self.base_dir + self.path, sep)
+        return os.path.abspath(self.base_dir + self.path)
 
     @property
     def complete_dir(self):
-        return sep + os.path.relpath(self.base_dir + self.dir, sep) + sep</code></pre>
+        return os.path.abspath(self.base_dir + self.dir) + sep</code></pre>
 </details>
 </section>
 <section>
@@ -528,11 +528,11 @@ def tmp_dir(self):
 
     @property
     def complete_path(self):
-        return sep + os.path.relpath(self.base_dir + self.path, sep)
+        return os.path.abspath(self.base_dir + self.path)
 
     @property
     def complete_dir(self):
-        return sep + os.path.relpath(self.base_dir + self.dir, sep) + sep</code></pre>
+        return os.path.abspath(self.base_dir + self.dir) + sep</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -556,7 +556,7 @@ def tmp_dir(self):
 </summary>
 <pre><code class="python">@property
 def complete_dir(self):
-    return sep + os.path.relpath(self.base_dir + self.dir, sep) + sep</code></pre>
+    return os.path.abspath(self.base_dir + self.dir) + sep</code></pre>
 </details>
 </dd>
 <dt id="autopaths.auto_paths.PathItems.complete_path"><code class="name">var <span class="ident">complete_path</span></code></dt>
@@ -568,7 +568,7 @@ def complete_dir(self):
 </summary>
 <pre><code class="python">@property
 def complete_path(self):
-    return sep + os.path.relpath(self.base_dir + self.path, sep)</code></pre>
+    return os.path.abspath(self.base_dir + self.path)</code></pre>
 </details>
 </dd>
 </dl>

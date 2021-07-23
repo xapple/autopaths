@@ -176,25 +176,6 @@ class FilePath(autopaths.base_path.BasePath):
         with open(self.path, encoding=&#39;utf8&#39;) as handle:return handle.read()
 
     @property
-    def absolute_path(self):
-        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
-        return FilePath(os.path.abspath(self.path))
-
-    @property
-    def physical_path(self):
-        &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
-        return FilePath(os.path.realpath(self.path))
-
-    @property
-    def relative_path(self):
-        &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
-        return FilePath(os.path.relpath(self.physical_path))
-
-    def rel_path_from(self, path):
-        &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
-        return FilePath(os.path.relpath(self.path, path))
-
-    @property
     def md5(self):
         &#34;&#34;&#34;Compute the md5 of a file. Pretty fast.&#34;&#34;&#34;
         md5 = hashlib.md5()
@@ -726,25 +707,6 @@ Such as: path.make_executable() etc etc.</p></div>
         with open(self.path, encoding=&#39;utf8&#39;) as handle:return handle.read()
 
     @property
-    def absolute_path(self):
-        &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
-        return FilePath(os.path.abspath(self.path))
-
-    @property
-    def physical_path(self):
-        &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
-        return FilePath(os.path.realpath(self.path))
-
-    @property
-    def relative_path(self):
-        &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
-        return FilePath(os.path.relpath(self.physical_path))
-
-    def rel_path_from(self, path):
-        &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
-        return FilePath(os.path.relpath(self.path, path))
-
-    @property
     def md5(self):
         &#34;&#34;&#34;Compute the md5 of a file. Pretty fast.&#34;&#34;&#34;
         md5 = hashlib.md5()
@@ -1129,19 +1091,6 @@ Such as: path.make_executable() etc etc.</p></div>
 </ul>
 <h3>Instance variables</h3>
 <dl>
-<dt id="autopaths.file_path.FilePath.absolute_path"><code class="name">var <span class="ident">absolute_path</span></code></dt>
-<dd>
-<div class="desc"><p>The absolute path starting with a <code>/</code>.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def absolute_path(self):
-    &#34;&#34;&#34;The absolute path starting with a `/`.&#34;&#34;&#34;
-    return FilePath(os.path.abspath(self.path))</code></pre>
-</details>
-</dd>
 <dt id="autopaths.file_path.FilePath.contains_binary"><code class="name">var <span class="ident">contains_binary</span></code></dt>
 <dd>
 <div class="desc"><p>Return True if the file contains binary characters.</p></div>
@@ -1348,19 +1297,6 @@ def name(self):
     return self.filename</code></pre>
 </details>
 </dd>
-<dt id="autopaths.file_path.FilePath.physical_path"><code class="name">var <span class="ident">physical_path</span></code></dt>
-<dd>
-<div class="desc"><p>The physical path like in <code>pwd -P</code>.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def physical_path(self):
-    &#34;&#34;&#34;The physical path like in `pwd -P`.&#34;&#34;&#34;
-    return FilePath(os.path.realpath(self.path))</code></pre>
-</details>
-</dd>
 <dt id="autopaths.file_path.FilePath.prefix"><code class="name">var <span class="ident">prefix</span></code></dt>
 <dd>
 <div class="desc"><p>Just the filename without the last extension and trailing period.</p></div>
@@ -1409,19 +1345,6 @@ def pretty_head(self):
 <pre><code class="python">@property
 def pretty_tail(self):
     return &#34;\n&#34; + pad_extra_whitespace(&#34;\n&#34;.join(self.tail()), 4) + &#34;\n&#34;</code></pre>
-</details>
-</dd>
-<dt id="autopaths.file_path.FilePath.relative_path"><code class="name">var <span class="ident">relative_path</span></code></dt>
-<dd>
-<div class="desc"><p>The relative path when compared with current directory.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def relative_path(self):
-    &#34;&#34;&#34;The relative path when compared with current directory.&#34;&#34;&#34;
-    return FilePath(os.path.relpath(self.physical_path))</code></pre>
 </details>
 </dd>
 <dt id="autopaths.file_path.FilePath.size"><code class="name">var <span class="ident">size</span></code></dt>
@@ -1698,20 +1621,6 @@ TODO:
 <pre><code class="python">def read(self, encoding=None):
     with open(self.path, &#39;r&#39;, encoding) as handle: content = handle.read()
     return content</code></pre>
-</details>
-</dd>
-<dt id="autopaths.file_path.FilePath.rel_path_from"><code class="name flex">
-<span>def <span class="ident">rel_path_from</span></span>(<span>self, path)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>The relative path when compared to the given path.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def rel_path_from(self, path):
-    &#34;&#34;&#34;The relative path when compared to the given path.&#34;&#34;&#34;
-    return FilePath(os.path.relpath(self.path, path))</code></pre>
 </details>
 </dd>
 <dt id="autopaths.file_path.FilePath.remove"><code class="name flex">
@@ -2141,6 +2050,7 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <ul class="hlist">
 <li><code><b><a title="autopaths.base_path.BasePath" href="base_path.html#autopaths.base_path.BasePath">BasePath</a></b></code>:
 <ul class="hlist">
+<li><code><a title="autopaths.base_path.BasePath.absolute_path" href="base_path.html#autopaths.base_path.BasePath.absolute_path">absolute_path</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.cdate" href="base_path.html#autopaths.base_path.BasePath.cdate">cdate</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.cdate_iso" href="base_path.html#autopaths.base_path.BasePath.cdate_iso">cdate_iso</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.clean_path" href="base_path.html#autopaths.base_path.BasePath.clean_path">clean_path</a></code></li>
@@ -2152,6 +2062,9 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <li><code><a title="autopaths.base_path.BasePath.mdate" href="base_path.html#autopaths.base_path.BasePath.mdate">mdate</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.mdate_iso" href="base_path.html#autopaths.base_path.BasePath.mdate_iso">mdate_iso</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.permissions" href="base_path.html#autopaths.base_path.BasePath.permissions">permissions</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.physical_path" href="base_path.html#autopaths.base_path.BasePath.physical_path">physical_path</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.rel_path_from" href="base_path.html#autopaths.base_path.BasePath.rel_path_from">rel_path_from</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.relative_path" href="base_path.html#autopaths.base_path.BasePath.relative_path">relative_path</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.short_prefix" href="base_path.html#autopaths.base_path.BasePath.short_prefix">short_prefix</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.symlinks_on_windows" href="base_path.html#autopaths.base_path.BasePath.symlinks_on_windows">symlinks_on_windows</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.unix_style" href="base_path.html#autopaths.base_path.BasePath.unix_style">unix_style</a></code></li>
@@ -2181,7 +2094,6 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <li>
 <h4><code><a title="autopaths.file_path.FilePath" href="#autopaths.file_path.FilePath">FilePath</a></code></h4>
 <ul class="two-column">
-<li><code><a title="autopaths.file_path.FilePath.absolute_path" href="#autopaths.file_path.FilePath.absolute_path">absolute_path</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.add_str" href="#autopaths.file_path.FilePath.add_str">add_str</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.append" href="#autopaths.file_path.FilePath.append">append</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.close" href="#autopaths.file_path.FilePath.close">close</a></code></li>
@@ -2209,15 +2121,12 @@ uncompressed file, or just set inplace=True to delete the original.</p></div>
 <li><code><a title="autopaths.file_path.FilePath.name" href="#autopaths.file_path.FilePath.name">name</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.new_name_insert" href="#autopaths.file_path.FilePath.new_name_insert">new_name_insert</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.open" href="#autopaths.file_path.FilePath.open">open</a></code></li>
-<li><code><a title="autopaths.file_path.FilePath.physical_path" href="#autopaths.file_path.FilePath.physical_path">physical_path</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.prefix" href="#autopaths.file_path.FilePath.prefix">prefix</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.prefix_path" href="#autopaths.file_path.FilePath.prefix_path">prefix_path</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.prepend" href="#autopaths.file_path.FilePath.prepend">prepend</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.pretty_head" href="#autopaths.file_path.FilePath.pretty_head">pretty_head</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.pretty_tail" href="#autopaths.file_path.FilePath.pretty_tail">pretty_tail</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.read" href="#autopaths.file_path.FilePath.read">read</a></code></li>
-<li><code><a title="autopaths.file_path.FilePath.rel_path_from" href="#autopaths.file_path.FilePath.rel_path_from">rel_path_from</a></code></li>
-<li><code><a title="autopaths.file_path.FilePath.relative_path" href="#autopaths.file_path.FilePath.relative_path">relative_path</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.remove" href="#autopaths.file_path.FilePath.remove">remove</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.remove_first_line" href="#autopaths.file_path.FilePath.remove_first_line">remove_first_line</a></code></li>
 <li><code><a title="autopaths.file_path.FilePath.remove_line" href="#autopaths.file_path.FilePath.remove_line">remove_line</a></code></li>
