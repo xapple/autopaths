@@ -173,8 +173,8 @@ class PathItems:
 
     @property
     def complete_path(self):
-        return sep + os.path.relpath(self.base_dir + self.path, sep)
+        return os.path.abspath(self.base_dir + self.path)
 
     @property
     def complete_dir(self):
-        return sep + os.path.relpath(self.base_dir + self.dir, sep) + sep
+        return os.path.abspath(self.base_dir + self.dir) + sep
