@@ -55,7 +55,7 @@ class FilePath(autopaths.base_path.BasePath):
 
     def __enter__(self):
         """Called when entering the 'with' statement (context manager)."""
-        return self
+        return self.open()
 
     def __exit__(self, err_type, value, traceback):
         """
