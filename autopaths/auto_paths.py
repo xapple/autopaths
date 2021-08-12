@@ -178,3 +178,7 @@ class PathItems:
     @property
     def complete_dir(self):
         return os.path.abspath(self.base_dir + self.dir) + sep
+
+    @property
+    def path_obj(self):
+        return autopaths.Path(self.complete_path)
