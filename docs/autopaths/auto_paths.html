@@ -210,7 +210,11 @@ class PathItems:
 
     @property
     def complete_dir(self):
-        return os.path.abspath(self.base_dir + self.dir) + sep</code></pre>
+        return os.path.abspath(self.base_dir + self.dir) + sep
+
+    @property
+    def path_obj(self):
+        return autopaths.Path(self.complete_path)</code></pre>
 </details>
 </section>
 <section>
@@ -532,7 +536,11 @@ def tmp_dir(self):
 
     @property
     def complete_dir(self):
-        return os.path.abspath(self.base_dir + self.dir) + sep</code></pre>
+        return os.path.abspath(self.base_dir + self.dir) + sep
+
+    @property
+    def path_obj(self):
+        return autopaths.Path(self.complete_path)</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -569,6 +577,18 @@ def complete_dir(self):
 <pre><code class="python">@property
 def complete_path(self):
     return os.path.abspath(self.base_dir + self.path)</code></pre>
+</details>
+</dd>
+<dt id="autopaths.auto_paths.PathItems.path_obj"><code class="name">var <span class="ident">path_obj</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def path_obj(self):
+    return autopaths.Path(self.complete_path)</code></pre>
 </details>
 </dd>
 </dl>
@@ -636,6 +656,7 @@ def complete_path(self):
 <li><code><a title="autopaths.auto_paths.PathItems.complete_dir" href="#autopaths.auto_paths.PathItems.complete_dir">complete_dir</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.complete_path" href="#autopaths.auto_paths.PathItems.complete_path">complete_path</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.delimiters" href="#autopaths.auto_paths.PathItems.delimiters">delimiters</a></code></li>
+<li><code><a title="autopaths.auto_paths.PathItems.path_obj" href="#autopaths.auto_paths.PathItems.path_obj">path_obj</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.pattern" href="#autopaths.auto_paths.PathItems.pattern">pattern</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.score_dir" href="#autopaths.auto_paths.PathItems.score_dir">score_dir</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.score_file" href="#autopaths.auto_paths.PathItems.score_file">score_file</a></code></li>

@@ -88,7 +88,7 @@ class FilePath(autopaths.base_path.BasePath):
 
     def __enter__(self):
         &#34;&#34;&#34;Called when entering the &#39;with&#39; statement (context manager).&#34;&#34;&#34;
-        return self
+        return self.open()
 
     def __exit__(self, err_type, value, traceback):
         &#34;&#34;&#34;
@@ -619,7 +619,7 @@ Such as: path.make_executable() etc etc.</p></div>
 
     def __enter__(self):
         &#34;&#34;&#34;Called when entering the &#39;with&#39; statement (context manager).&#34;&#34;&#34;
-        return self
+        return self.open()
 
     def __exit__(self, err_type, value, traceback):
         &#34;&#34;&#34;
