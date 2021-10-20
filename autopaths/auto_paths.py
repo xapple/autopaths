@@ -17,7 +17,7 @@ import autopaths
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
-################################################################################
+###############################################################################
 class AutoPaths:
     """
     You can use this class like this when making pipelines:
@@ -28,7 +28,7 @@ class AutoPaths:
                         /raw/raw.sff
                         /raw/raw.fastq
                         /clean/trim.fastq
-                        /clean/clean.fastq
+                        /clean/clean.fastq   # Use this file for run step
                         '''
 
             def __init__(self, base_dir):
@@ -39,7 +39,8 @@ class AutoPaths:
     """
 
     def __repr__(self):
-        return '<%s object on "%s">' % (self.__class__.__name__, self._base_dir)
+        return '<%s object on "%s">' % (self.__class__.__name__,
+                                        self._base_dir)
 
     def __init__(self, base_dir, all_paths):
         # Don't nest Path objects or the like #
@@ -140,7 +141,7 @@ class AutoPaths:
     def tmp(self):
         return self.tmp_dir + 'autopath.tmp'
 
-################################################################################
+###############################################################################
 class PathItems:
 
     delimiters = '_', '.', '/'
@@ -150,12 +151,18 @@ class PathItems:
         return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
     def __init__(self, path, base_dir):
-        self.path           = path
-        self.base_dir       = base_dir
+        # The parameters passed #
+        self.path     = path
+        self.base_dir = base_dir
+        # Remove any comments #
+        if '#' in self.path: self.path = self.path[:self.path.index('#')]
+        # Split the file name and the directory #
         self.dir, self.name = os.path.split(path)
-        self.name_items     = self.pattern.split(self.name) if self.name else []
-        self.dir_items      = self.pattern.split(self.dir)  if self.dir  else []
-        self.all_items      = self.name_items + self.dir_items
+        # Split every item based on our separators #
+        self.name_items = self.pattern.split(self.name) if self.name else []
+        self.dir_items  = self.pattern.split(self.dir)  if self.dir  else []
+        # Combine items from name and directory #
+        self.all_items  = self.name_items + self.dir_items
 
     def __contains__(self, i):
         return i in self.all_items
