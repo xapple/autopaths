@@ -50,6 +50,10 @@ import autopaths
 if os.name == &#34;posix&#34;: sep = &#34;/&#34;
 if os.name == &#34;nt&#34;:    sep = &#34;\\&#34;
 
+# Delimiters #
+delimiters = (&#39;_&#39;, &#39;.&#39;, &#39;/&#39;)
+pattern = re.compile(&#39;|&#39;.join(map(re.escape, delimiters)))
+
 ###############################################################################
 class AutoPaths:
     &#34;&#34;&#34;
@@ -100,7 +104,7 @@ class AutoPaths:
         if key == &#39;tmp_dir&#39;: return self.__dict__[&#39;_tmp_dir&#39;]
         if key == &#39;tmp&#39;:     return self.__dict__[&#39;tmp&#39;]
         # Search #
-        items = key.split(&#39;_&#39;)
+        items = pattern.split(key)
         # Is it a directory ? #
         if items[-1] == &#39;dir&#39;:
             items.pop(-1)
@@ -177,9 +181,6 @@ class AutoPaths:
 ###############################################################################
 class PathItems:
 
-    delimiters = &#39;_&#39;, &#39;.&#39;, &#39;/&#39;
-    pattern = re.compile(&#39;|&#39;.join(map(re.escape, delimiters)))
-
     def __repr__(self):
         return &#39;&lt;%s object &#34;%s&#34;&gt;&#39; % (self.__class__.__name__, self.path)
 
@@ -192,8 +193,8 @@ class PathItems:
         # Split the file name and the directory #
         self.dir, self.name = os.path.split(path)
         # Split every item based on our separators #
-        self.name_items = self.pattern.split(self.name) if self.name else []
-        self.dir_items  = self.pattern.split(self.dir)  if self.dir  else []
+        self.name_items = pattern.split(self.name) if self.name else []
+        self.dir_items  = pattern.split(self.dir)  if self.dir  else []
         # Combine items from name and directory #
         self.all_items  = self.name_items + self.dir_items
 
@@ -307,7 +308,7 @@ class PathItems:
         if key == &#39;tmp_dir&#39;: return self.__dict__[&#39;_tmp_dir&#39;]
         if key == &#39;tmp&#39;:     return self.__dict__[&#39;tmp&#39;]
         # Search #
-        items = key.split(&#39;_&#39;)
+        items = pattern.split(key)
         # Is it a directory ? #
         if items[-1] == &#39;dir&#39;:
             items.pop(-1)
@@ -510,9 +511,6 @@ def tmp_dir(self):
 </summary>
 <pre><code class="python">class PathItems:
 
-    delimiters = &#39;_&#39;, &#39;.&#39;, &#39;/&#39;
-    pattern = re.compile(&#39;|&#39;.join(map(re.escape, delimiters)))
-
     def __repr__(self):
         return &#39;&lt;%s object &#34;%s&#34;&gt;&#39; % (self.__class__.__name__, self.path)
 
@@ -525,8 +523,8 @@ def tmp_dir(self):
         # Split the file name and the directory #
         self.dir, self.name = os.path.split(path)
         # Split every item based on our separators #
-        self.name_items = self.pattern.split(self.name) if self.name else []
-        self.dir_items  = self.pattern.split(self.dir)  if self.dir  else []
+        self.name_items = pattern.split(self.name) if self.name else []
+        self.dir_items  = pattern.split(self.dir)  if self.dir  else []
         # Combine items from name and directory #
         self.all_items  = self.name_items + self.dir_items
 
@@ -556,17 +554,6 @@ def tmp_dir(self):
     def path_obj(self):
         return autopaths.Path(self.complete_path)</code></pre>
 </details>
-<h3>Class variables</h3>
-<dl>
-<dt id="autopaths.auto_paths.PathItems.delimiters"><code class="name">var <span class="ident">delimiters</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="autopaths.auto_paths.PathItems.pattern"><code class="name">var <span class="ident">pattern</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
 <h3>Instance variables</h3>
 <dl>
 <dt id="autopaths.auto_paths.PathItems.complete_dir"><code class="name">var <span class="ident">complete_dir</span></code></dt>
@@ -666,12 +653,10 @@ def path_obj(self):
 </li>
 <li>
 <h4><code><a title="autopaths.auto_paths.PathItems" href="#autopaths.auto_paths.PathItems">PathItems</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="autopaths.auto_paths.PathItems.complete_dir" href="#autopaths.auto_paths.PathItems.complete_dir">complete_dir</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.complete_path" href="#autopaths.auto_paths.PathItems.complete_path">complete_path</a></code></li>
-<li><code><a title="autopaths.auto_paths.PathItems.delimiters" href="#autopaths.auto_paths.PathItems.delimiters">delimiters</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.path_obj" href="#autopaths.auto_paths.PathItems.path_obj">path_obj</a></code></li>
-<li><code><a title="autopaths.auto_paths.PathItems.pattern" href="#autopaths.auto_paths.PathItems.pattern">pattern</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.score_dir" href="#autopaths.auto_paths.PathItems.score_dir">score_dir</a></code></li>
 <li><code><a title="autopaths.auto_paths.PathItems.score_file" href="#autopaths.auto_paths.PathItems.score_file">score_file</a></code></li>
 </ul>

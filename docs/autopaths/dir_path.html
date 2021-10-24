@@ -266,7 +266,16 @@ class DirectoryPath(autopaths.base_path.BasePath):
         # Compress #
         shutil.make_archive(path_no_ext, &#39;zip&#39;, self.path)
         # Return #
-        return path_no_ext</code></pre>
+        return path_no_ext
+
+    def remove_empty_dirs(self):
+        &#34;&#34;&#34;
+        Find all empty directories within this directory recursively,
+        and remove them.
+        &#34;&#34;&#34;
+        for directory in self.directories:
+            if directory.empty:
+                directory.remove()</code></pre>
 </details>
 </section>
 <section>
@@ -504,7 +513,16 @@ with directories.</p></div>
         # Compress #
         shutil.make_archive(path_no_ext, &#39;zip&#39;, self.path)
         # Return #
-        return path_no_ext</code></pre>
+        return path_no_ext
+
+    def remove_empty_dirs(self):
+        &#34;&#34;&#34;
+        Find all empty directories within this directory recursively,
+        and remove them.
+        &#34;&#34;&#34;
+        for directory in self.directories:
+            if directory.empty:
+                directory.remove()</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -865,6 +883,26 @@ def sub_directory(self):
     return True</code></pre>
 </details>
 </dd>
+<dt id="autopaths.dir_path.DirectoryPath.remove_empty_dirs"><code class="name flex">
+<span>def <span class="ident">remove_empty_dirs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find all empty directories within this directory recursively,
+and remove them.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_empty_dirs(self):
+    &#34;&#34;&#34;
+    Find all empty directories within this directory recursively,
+    and remove them.
+    &#34;&#34;&#34;
+    for directory in self.directories:
+        if directory.empty:
+            directory.remove()</code></pre>
+</details>
+</dd>
 <dt id="autopaths.dir_path.DirectoryPath.remove_when_symlink"><code class="name flex">
 <span>def <span class="ident">remove_when_symlink</span></span>(<span>self)</span>
 </code></dt>
@@ -991,6 +1029,7 @@ parent directory, and remove this directory.</p></div>
 <li><code><a title="autopaths.dir_path.DirectoryPath.p" href="#autopaths.dir_path.DirectoryPath.p">p</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.prefix_path" href="#autopaths.dir_path.DirectoryPath.prefix_path">prefix_path</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.remove" href="#autopaths.dir_path.DirectoryPath.remove">remove</a></code></li>
+<li><code><a title="autopaths.dir_path.DirectoryPath.remove_empty_dirs" href="#autopaths.dir_path.DirectoryPath.remove_empty_dirs">remove_empty_dirs</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.remove_when_symlink" href="#autopaths.dir_path.DirectoryPath.remove_when_symlink">remove_when_symlink</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.size" href="#autopaths.dir_path.DirectoryPath.size">size</a></code></li>
 <li><code><a title="autopaths.dir_path.DirectoryPath.sub_directory" href="#autopaths.dir_path.DirectoryPath.sub_directory">sub_directory</a></code></li>
