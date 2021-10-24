@@ -234,3 +234,12 @@ class DirectoryPath(autopaths.base_path.BasePath):
         shutil.make_archive(path_no_ext, 'zip', self.path)
         # Return #
         return path_no_ext
+
+    def remove_empty_dirs(self):
+        """
+        Find all empty directories within this directory recursively,
+        and remove them.
+        """
+        for directory in self.directories:
+            if directory.empty:
+                directory.remove()

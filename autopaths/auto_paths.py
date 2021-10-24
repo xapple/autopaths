@@ -17,6 +17,10 @@ import autopaths
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
+# Delimiters #
+delimiters = ('_', '.', '/')
+pattern = re.compile('|'.join(map(re.escape, delimiters)))
+
 ###############################################################################
 class AutoPaths:
     """
@@ -67,7 +71,7 @@ class AutoPaths:
         if key == 'tmp_dir': return self.__dict__['_tmp_dir']
         if key == 'tmp':     return self.__dict__['tmp']
         # Search #
-        items = key.split('_')
+        items = pattern.split(key)
         # Is it a directory ? #
         if items[-1] == 'dir':
             items.pop(-1)
@@ -144,9 +148,6 @@ class AutoPaths:
 ###############################################################################
 class PathItems:
 
-    delimiters = '_', '.', '/'
-    pattern = re.compile('|'.join(map(re.escape, delimiters)))
-
     def __repr__(self):
         return '<%s object "%s">' % (self.__class__.__name__, self.path)
 
@@ -159,8 +160,8 @@ class PathItems:
         # Split the file name and the directory #
         self.dir, self.name = os.path.split(path)
         # Split every item based on our separators #
-        self.name_items = self.pattern.split(self.name) if self.name else []
-        self.dir_items  = self.pattern.split(self.dir)  if self.dir  else []
+        self.name_items = pattern.split(self.name) if self.name else []
+        self.dir_items  = pattern.split(self.dir)  if self.dir  else []
         # Combine items from name and directory #
         self.all_items  = self.name_items + self.dir_items
 
