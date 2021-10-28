@@ -84,8 +84,14 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     @property
     def empty(self):
-        """Does the directory contain no files?"""
-        return len(list(self.flat_contents)) == 0
+        """
+        Return True if the directory contains no files or other directories.
+        Will ignore items named `.DS_Store` and consider the directory empty.
+        """
+        for entry in self.flat_contents:
+            if entry.name != '.DS_Store': break
+        else: return True
+        return False
 
     @property
     def size(self):
