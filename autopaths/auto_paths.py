@@ -157,6 +157,8 @@ class PathItems:
         self.base_dir = base_dir
         # Remove any comments #
         if '#' in self.path: self.path = self.path[:self.path.index('#')]
+        # Remove any whitespace #
+        self.path = self.path.strip(' ')
         # Split the file name and the directory #
         self.dir, self.name = os.path.split(path)
         # Split every item based on our separators #
