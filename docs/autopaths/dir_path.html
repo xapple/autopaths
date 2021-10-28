@@ -117,8 +117,14 @@ class DirectoryPath(autopaths.base_path.BasePath):
 
     @property
     def empty(self):
-        &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
-        return len(list(self.flat_contents)) == 0
+        &#34;&#34;&#34;
+        Return True if the directory contains no files or other directories.
+        Will ignore items named `.DS_Store` and consider the directory empty.
+        &#34;&#34;&#34;
+        for entry in self.flat_contents:
+            if entry.name != &#39;.DS_Store&#39;: break
+        else: return True
+        return False
 
     @property
     def size(self):
@@ -364,8 +370,14 @@ with directories.</p></div>
 
     @property
     def empty(self):
-        &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
-        return len(list(self.flat_contents)) == 0
+        &#34;&#34;&#34;
+        Return True if the directory contains no files or other directories.
+        Will ignore items named `.DS_Store` and consider the directory empty.
+        &#34;&#34;&#34;
+        for entry in self.flat_contents:
+            if entry.name != &#39;.DS_Store&#39;: break
+        else: return True
+        return False
 
     @property
     def size(self):
@@ -584,15 +596,22 @@ def directory(self):
 </dd>
 <dt id="autopaths.dir_path.DirectoryPath.empty"><code class="name">var <span class="ident">empty</span></code></dt>
 <dd>
-<div class="desc"><p>Does the directory contain no files?</p></div>
+<div class="desc"><p>Return True if the directory contains no files or other directories.
+Will ignore items named <code>.DS_Store</code> and consider the directory empty.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
 def empty(self):
-    &#34;&#34;&#34;Does the directory contain no files?&#34;&#34;&#34;
-    return len(list(self.flat_contents)) == 0</code></pre>
+    &#34;&#34;&#34;
+    Return True if the directory contains no files or other directories.
+    Will ignore items named `.DS_Store` and consider the directory empty.
+    &#34;&#34;&#34;
+    for entry in self.flat_contents:
+        if entry.name != &#39;.DS_Store&#39;: break
+    else: return True
+    return False</code></pre>
 </details>
 </dd>
 <dt id="autopaths.dir_path.DirectoryPath.files"><code class="name">var <span class="ident">files</span></code></dt>

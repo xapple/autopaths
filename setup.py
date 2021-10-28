@@ -19,7 +19,7 @@ with open(readme_path, encoding='utf-8') as handle: readme = handle.read()
 # Call setup #
 setup(
         name             = 'autopaths',
-        version          = '1.5.8',
+        version          = '1.5.9',
         description      = 'autopaths is a python package for dealing with file'
                            ' paths and automation.',
         license          = 'MIT',
