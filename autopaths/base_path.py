@@ -188,7 +188,7 @@ class BasePath(str):
         import datetime
         return datetime.fromtimestamp(self.cdate).isoformat()
 
-    #-------------------------------- Methods --------------------------------#
+    #------------------------------ Soft links -------------------------------#
     def link_from(self, path, safe=False, absolute=False):
         """
         Make a link here pointing to another file/directory somewhere else.
@@ -250,3 +250,15 @@ class BasePath(str):
             return win32file.CreateSymbolicLink(destination, source, 1)
         else:
             return win32file.CreateSymbolicLink(destination, source, 0)
+
+    #------------------------------ Hard links -------------------------------#
+    def hard_link_win_to(self, path):
+        """
+        In the case of Windows
+        """
+        # Get source and destination #
+        from autopaths import Path
+        source      = self
+        destination = Path(path)
+        # Call method #
+        os.link(source, destination)
