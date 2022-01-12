@@ -221,7 +221,7 @@ class BasePath(str):
         import datetime
         return datetime.fromtimestamp(self.cdate).isoformat()
 
-    #-------------------------------- Methods --------------------------------#
+    #------------------------------ Soft links -------------------------------#
     def link_from(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Make a link here pointing to another file/directory somewhere else.
@@ -282,7 +282,19 @@ class BasePath(str):
         if os.path.isdir(source):
             return win32file.CreateSymbolicLink(destination, source, 1)
         else:
-            return win32file.CreateSymbolicLink(destination, source, 0)</code></pre>
+            return win32file.CreateSymbolicLink(destination, source, 0)
+
+    #------------------------------ Hard links -------------------------------#
+    def hard_link_win_to(self, path):
+        &#34;&#34;&#34;
+        In the case of Windows
+        &#34;&#34;&#34;
+        # Get source and destination #
+        from autopaths import Path
+        source      = self
+        destination = Path(path)
+        # Call method #
+        os.link(source, destination)</code></pre>
 </details>
 </section>
 <section>
@@ -475,7 +487,7 @@ and DirectoryPath objects.</p></div>
         import datetime
         return datetime.fromtimestamp(self.cdate).isoformat()
 
-    #-------------------------------- Methods --------------------------------#
+    #------------------------------ Soft links -------------------------------#
     def link_from(self, path, safe=False, absolute=False):
         &#34;&#34;&#34;
         Make a link here pointing to another file/directory somewhere else.
@@ -536,7 +548,19 @@ and DirectoryPath objects.</p></div>
         if os.path.isdir(source):
             return win32file.CreateSymbolicLink(destination, source, 1)
         else:
-            return win32file.CreateSymbolicLink(destination, source, 0)</code></pre>
+            return win32file.CreateSymbolicLink(destination, source, 0)
+
+    #------------------------------ Hard links -------------------------------#
+    def hard_link_win_to(self, path):
+        &#34;&#34;&#34;
+        In the case of Windows
+        &#34;&#34;&#34;
+        # Get source and destination #
+        from autopaths import Path
+        source      = self
+        destination = Path(path)
+        # Call method #
+        os.link(source, destination)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -890,6 +914,27 @@ def wsl_style(self):
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="autopaths.base_path.BasePath.hard_link_win_to"><code class="name flex">
+<span>def <span class="ident">hard_link_win_to</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>In the case of Windows</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hard_link_win_to(self, path):
+    &#34;&#34;&#34;
+    In the case of Windows
+    &#34;&#34;&#34;
+    # Get source and destination #
+    from autopaths import Path
+    source      = self
+    destination = Path(path)
+    # Call method #
+    os.link(source, destination)</code></pre>
+</details>
+</dd>
 <dt id="autopaths.base_path.BasePath.link_from"><code class="name flex">
 <span>def <span class="ident">link_from</span></span>(<span>self, path, safe=False, absolute=False)</span>
 </code></dt>
@@ -978,6 +1023,7 @@ The destination is hence <em>path</em> and the source is <em>self</em>.</p></div
 <li><code><a title="autopaths.base_path.BasePath.escaped" href="#autopaths.base_path.BasePath.escaped">escaped</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.exists" href="#autopaths.base_path.BasePath.exists">exists</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.extension" href="#autopaths.base_path.BasePath.extension">extension</a></code></li>
+<li><code><a title="autopaths.base_path.BasePath.hard_link_win_to" href="#autopaths.base_path.BasePath.hard_link_win_to">hard_link_win_to</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.is_symlink" href="#autopaths.base_path.BasePath.is_symlink">is_symlink</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.link_from" href="#autopaths.base_path.BasePath.link_from">link_from</a></code></li>
 <li><code><a title="autopaths.base_path.BasePath.link_to" href="#autopaths.base_path.BasePath.link_to">link_to</a></code></li>
