@@ -94,7 +94,7 @@ class AutoPaths:
         if len(result) > 1:
             best_score = max([p.score_file(items) for p in result])
             result = [p for p in result if p.score_file(items) >= best_score]
-        # Multiple matches, take the one with less parts #
+        # Multiple matches, take the one with lesser parts #
         if len(result) > 1:
             shortest = min([len(p) for p in result])
             result = [p for p in result if len(p) <= shortest]
@@ -157,10 +157,11 @@ class PathItems:
         self.base_dir = base_dir
         # Remove any comments #
         if '#' in self.path: self.path = self.path[:self.path.index('#')]
+        assert '#' not in self.path
         # Remove any whitespace #
         self.path = self.path.strip(' ')
         # Split the file name and the directory #
-        self.dir, self.name = os.path.split(path)
+        self.dir, self.name = os.path.split(self.path)
         # Split every item based on our separators #
         self.name_items = pattern.split(self.name) if self.name else []
         self.dir_items  = pattern.split(self.dir)  if self.dir  else []
