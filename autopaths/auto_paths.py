@@ -59,7 +59,12 @@ class AutoPaths:
 
     def __call__(self, key):    return self.__getattr__(key)
     def __getitem__(self, key): return self.__getattr__(key)
-    def get(self, key):         return self.__getattr__(key)
+
+    def get(self, key, default=None):
+        try:
+            return self.__getattr__(key)
+        except PathNotFound:
+            return default
 
     def __getattr__(self, key):
         # Let built-ins pass through to object #
@@ -89,7 +94,7 @@ class AutoPaths:
         result = set.intersection(*matches)
         # No matches #
         if len(result) == 0:
-            raise Exception("Could not find any path matching '%s'" % key)
+            raise PathNotFound("Could not find any path matching '%s'" % key)
         # Multiple matches, advantage file name #
         if len(result) > 1:
             best_score = max([p.score_file(items) for p in result])
@@ -100,7 +105,7 @@ class AutoPaths:
             result = [p for p in result if len(p) <= shortest]
         # Multiple matches, error #
         if len(result) > 1:
-            raise Exception("Found several paths matching '%s'" % key)
+            raise PathNotFound("Found several paths matching '%s'" % key)
         # Make the directory #
         result = result.pop()
         directory = autopaths.dir_path.DirectoryPath(result.complete_dir)
@@ -119,7 +124,7 @@ class AutoPaths:
         if len(result) > 1:
             best_score = max([p.score_dir(items) for p in result])
             result = [p for p in result if p.score_dir(items) >= best_score]
-        # Multiple matches, take the one with less parts #
+        # Multiple matches, take the one with fewer parts #
         if len(result) > 1:
             shortest = min([len(p) for p in result])
             result = [p for p in result if len(p) <= shortest]
@@ -193,3 +198,8 @@ class PathItems:
     @property
     def path_obj(self):
         return autopaths.Path(self.complete_path)
+
+###############################################################################
+class PathNotFound(ValueError):
+    """Exception raised when a path cannot be determined by AutoPaths."""
+    pass

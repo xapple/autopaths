@@ -13,6 +13,7 @@ import os, tempfile, subprocess, shutil, gzip, zipfile, hashlib
 # Internal modules #
 import autopaths
 from autopaths.common import pad_extra_whitespace
+from autopaths.tmp_path import new_temp_file, new_temp_path
 
 # Constants #
 if os.name == "posix": sep = "/"
@@ -83,13 +84,6 @@ class FilePath(autopaths.base_path.BasePath):
         return str(os.path.basename(self.prefix_path))
 
     @property
-    def extension(self):
-        """Just the last extension without the trailing period."""
-        if '.' not in self.filename:
-            raise Exception("The file '%s' has no extension." % self.path)
-        return self.filename.split('.')[-1]
-
-    @property
     def name(self):
         """Shortcut for self.filename."""
         return self.filename
@@ -129,7 +123,7 @@ class FilePath(autopaths.base_path.BasePath):
 
     @property
     def size(self):
-        """Human readable file size."""
+        """Human-readable file size."""
         return autopaths.file_size.FileSize(self.count_bytes)
 
     @property
@@ -316,17 +310,82 @@ class FilePath(autopaths.base_path.BasePath):
         # Update the internal link #
         self.path = path
 
-    #------------------------------ Compression ------------------------------#
-    def gzip_to(self, path=None):
-        """Make a gzipped version of the file at a given path."""
-        # Case where path is not specified #
-        if path is None: path = self.path + ".gz"
-        # Do it #
-        with open(self.path, 'rb') as orig_file:
-            with gzip.open(path, 'wb') as new_file:
-                new_file.writelines(orig_file)
+    #---------------------------- GZIP compression ---------------------------#
+    def gzip_to(self, new_path=None, remove_orig=False, method='prll'):
+        """
+        Make a gzipped version of the file at a given path.
+        If the path already contains `.gz` and you want to compress inplace,
+        just specify `new_path=False`.
+        """
+        # Case where the path is not specified #
+        if new_path is None:
+            new_path = self.path + '.gz'
+        # In case we want to do it in place #
+        if new_path is False:
+            remove_orig = True
+            in_place = True
+            new_path = new_temp_file(prefix='gzip_to-')
+        # Do it the fast way or the slow way #
+        if method == 'ext':  self.gzip_external(new_path)
+        if method == 'pigz': self.gzip_pigz(new_path)
+        else:                self.gzip_internal(new_path)
+        # Move the temporary file back #
+        if in_place:
+            new_path.move_to(self.path, overwrite=True)
+        # Optionally remove the original uncompressed file #
+        elif remove_orig:
+            self.remove()
+        # Update the internal path #
+        else: self.path = new_path
         # Return #
-        return FilePath(path)
+        return self.path
+
+    def gzip_internal(self, new_path):
+        """
+        Do the compression internally with python buffers and no exteral
+        process.
+        """
+        with gzip.open(new_path, 'wb') as handle:
+            shutil.copyfileobj(self.open('rb'), handle)
+
+    def gzip_external(self, new_path):
+        """Do the compression with an external shell command call."""
+        # We don't want python to be buffering the text for speed #
+        from shell_command import shell_output
+        cmd = 'gzip --stdout %s > %s' % (self.path, new_path)
+        return shell_output(cmd)
+
+    def gzip_pigz(self, new_path):
+        """
+        Do the compression with multiple threads. Possible projects:
+        * https://github.com/madler/pigz (we choose this one)
+        * https://github.com/klauspost/pgzip
+        """
+        # Check we have the tool installed #
+        from plumbing.check_cmd_found import check_cmd
+        check_cmd('pigz')
+        # Get the command #
+        import sh
+        pigz = sh.Command("pigz")
+        # Command line options #
+        options = {'keep': True}
+        # It will refuse to compress files ending in '.gz' #
+        if self.path.endswith('.gz'):
+            working_path = self + '.pigz'
+            shutil.move(self, working_path)
+        else:
+            working_path = self
+        # Run it #
+        pigz(working_path, **options)
+        # Restore the original file if the '.pigz' extension was added
+        # to it earlier.
+        if self.path.endswith('.gz'):
+            shutil.move(working_path, self)
+        # You can't specify the output path of pigz, it's always this #
+        out_path = working_path + '.gz'
+        # Move the file to the destination the user wants #
+        if out_path != new_path:
+            out_path.move_to(new_path, overwrite=True)
 
     def ungzip_to(self, path=None, mode='wb'):
         """Make an unzipped version of the file at a given path."""
@@ -339,6 +398,7 @@ class FilePath(autopaths.base_path.BasePath):
         # Return #
         return FilePath(path)
 
+    #--------------------------- Other compressions --------------------------#
     def zip_to(self, path=None):
         """Make a zipped version of the file at a given path."""
         pass

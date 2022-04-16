@@ -78,8 +78,10 @@ class BasePath(str):
 
     @property
     def extension(self):
-        """The extension with the leading period."""
-        return os.path.splitext(self.path)[1]
+        """Just the last extension without the trailing period."""
+        if '.' not in self.filename:
+            raise Exception("The file '%s' has no extension." % self.path)
+        return self.filename.split('.')[-1]
 
     @property
     def escaped(self):
@@ -100,21 +102,6 @@ class BasePath(str):
         return self.__class__(os.path.realpath(self.path))
 
     @property
-    def with_tilda(self):
-        """
-        The absolute path starting with a '~' if it's in the home.
-        Returns a string, not an autopaths object, since autopaths can't
-        be encoded with a tilda.
-        """
-        # Get variables #
-        home = os.path.expanduser('~')
-        path = self.absolute_path
-        # Check we are in the home #
-        if not path.startswith(home): return path
-        # Replace #
-        return path.replace(home, '~', 1)
-
-    @property
     def relative_path(self):
         """The relative path when compared with current directory."""
         return self.__class__(os.path.relpath(self.physical_path))
@@ -122,26 +109,6 @@ class BasePath(str):
     def rel_path_from(self, path):
         """The relative path when compared to the given path."""
         return self.__class__(os.path.relpath(self.path, path))
-
-    @property
-    def unix_style(self):
-        """The path with forward slashes and no disk drive."""
-        if self.path[1] == ':': path = self.path[2:]
-        else:                   path = self.path
-        return path.replace("\\", "/")
-
-    @property
-    def wsl_style(self):
-        """
-        The path with forward slashes and a windows subsystem
-        for linux style leading disk drive.
-        """
-        return "/mnt/c" + self.unix_style
-
-    @property
-    def win_style(self):
-        """The path with backward slashes."""
-        return self.path.replace("/", "\\")
 
     @property
     def exists(self):
@@ -187,6 +154,53 @@ class BasePath(str):
         """Return the creation date as a datetime iso object."""
         import datetime
         return datetime.fromtimestamp(self.cdate).isoformat()
+
+    #------------------------------ As strings -------------------------------#
+    @property
+    def unix_style(self):
+        """The path with forward slashes and no disk drive prefix."""
+        if self.path[1] == ':': path = self.path[2:]
+        else:                   path = self.path
+        return path.replace("\\", "/")
+
+    @property
+    def wsl_style(self):
+        """
+        The path with forward slashes and a Windows subsystem for linux style
+        leading disk drive prefix.
+        """
+        return "/mnt/c" + self.unix_style
+
+    @property
+    def win_style(self):
+        """The path with backward slashes."""
+        return self.path.replace("/", "\\")
+
+    @property
+    def with_tilda(self):
+        """
+        The absolute path starting with a '~' if it's in the home.
+        Returns a string, not an autopaths object, since autopaths can't
+        be encoded with a tilda.
+        """
+        # Get variables #
+        home = os.path.expanduser('~')
+        path = self.absolute_path
+        # Check we are in the home #
+        if not path.startswith(home): return path
+        # Replace #
+        return path.replace(home, '~', 1)
+
+    @property
+    def with_home(self):
+        """The absolute path starting with a '$HOME' if it's in the home."""
+        # Get variables #
+        home = os.path.expanduser('~')
+        path = self.absolute_path
+        # Check we are in the home #
+        if not path.startswith(home): return path
+        # Replace #
+        return path.replace(home, '$HOME', 1)
 
     #------------------------------ Soft links -------------------------------#
     def link_from(self, path, safe=False, absolute=False):
