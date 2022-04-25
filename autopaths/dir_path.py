@@ -199,7 +199,7 @@ class DirectoryPath(autopaths.base_path.BasePath):
         path = DirectoryPath(path)
         # Check the destination doesn't exist already #
         assert not path.exists
-        # However the parent directory must exist #
+        # However, the parent directory must exist #
         path.directory.create_if_not_exists()
         # Move #
         shutil.move(self.path, path)

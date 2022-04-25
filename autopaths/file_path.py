@@ -13,7 +13,7 @@ import os, tempfile, subprocess, shutil, gzip, zipfile, hashlib
 # Internal modules #
 import autopaths
 from autopaths.common import pad_extra_whitespace
-from autopaths.tmp_path import new_temp_file, new_temp_path
+from autopaths.tmp_path import new_temp_file
 
 # Constants #
 if os.name == "posix": sep = "/"
@@ -25,16 +25,16 @@ class FilePath(autopaths.base_path.BasePath):
     Holds a string pointing to a file path and adds methods to interact with
     files on disk.
 
-    I can never remember all those darn `os.path` commands, so I made a class
+    I can never remember all those `os.path` commands, so I made a class
     that wraps them with an easier and more pythonic syntax.
 
-        path = FilePath('/home/root/text.txt')
-        print path.extension
-        print path.directory
-        print path.filename
+        >>> path = FilePath('/home/root/text.txt')
+        >>> print(path.extension)
+        >>> print(path.directory)
+        >>> print(path.filename)
 
     You can find lots of the common things you would need to do with file paths.
-    Such as: path.make_executable() etc etc.
+    Such as: `path.make_executable()` etc.
     """
 
     def __bool__(self): return self.path is not None and self.count_bytes != 0
