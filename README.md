@@ -4,11 +4,11 @@
 
 `autopaths` is a python package for dealing with file paths and automation.
 
-It has many convenience methods that apply to directory paths and/or file paths and contains several submodules that are useful when building pipelines. See below for examples and documentation.
+It has many convenience methods that apply to directory paths and/or file paths. The package contains several submodules that are useful when building pipelines. See below for examples and documentation.
 
 ## Prerequisites
 
-Since `autopaths` is written in python, it is compatible with all operating systems: Linux, macOS and Windows. The only prerequisite is `python3` (which is often installed by default) along with the `pip3` package manager.
+Since `autopaths` is written in python, it is compatible with all operating systems: Linux, macOS and Windows. The only prerequisite is `python3` (which is often installed by default) along with the `pip3` package manager (or any other package manager).
 
 To check if you have `python3` installed, type the following on your terminal:
 
@@ -36,7 +36,6 @@ Alternatively, if you want to install it for all users of the system:
 
 Bellow are some examples to illustrate the various ways there are to use this package.
 
-
 ### `FilePath` object
 
 Here are a few example usages of this object:
@@ -60,14 +59,14 @@ To see the complete list of utility methods and properties, look at the source c
 Similar to a file path object. Here is an example usage of this object:
 
     from autopaths.dir_path import DirectoryPath
-    d = DirectoryPath("cleaned/reads/")
-    print(d.mod_time)
-    d.create_if_not_exists()
-    f = d + 'new.fastq'
+    my_dir = DirectoryPath("cleaned/reads/")
+    print(my_dir.mod_time)
+    my_dir.create_if_not_exists()
+    fastq = my_dir + 'new.fastq'
 
 ### `AutoPaths` object
 
-You can use this class like this when making pipelines to quickly refer to a predefined file path with a simple attribute lookup. This example explains it:
+You can use this class when making pipelines to quickly refer to a predefined file path with a simple attribute lookup. This example explains it:
 
     class Sample(object):
         all_paths = """
@@ -92,4 +91,4 @@ More documentation is available at:
 
 This documentation is simply generated with:
 
-    $ pdoc --html --output-dir docs --force autopaths
+    $ pdoc --output-dir docs autopaths
