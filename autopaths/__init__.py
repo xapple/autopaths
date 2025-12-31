@@ -8,7 +8,7 @@ Contact at www.sinclair.bio
 """
 
 # Special variables #
-__version__ = '1.6.1'
+__version__ = '1.6.2'
 
 # Built in modules #
 import os
