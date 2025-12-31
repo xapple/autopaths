@@ -2,7 +2,7 @@
 
 Most modern operating systems, to the exception of Windows, come with `python3` preinstalled.
 
-If you are using Windows, you can try [this method](https://lmgtfy.com/?q=install+python3+on+windows).
+If you are using Windows, you can try [this method](https://github.com/pyenv-win/pyenv-win).
 
 Otherwise if you are using Linux or macOS, you can simply install your own version of python in your home directory without administrator privileges. To do this we suggest using this excellent project: https://github.com/yyuu/pyenv
 
@@ -22,8 +22,8 @@ Then these lines go into your ``.bash_profile``:
 
 Finally, relaunch your shell for changes to take effect and type these commands to get the right version of python:
 
-    $ pyenv install 3.8.2
-    $ pyenv global 3.8.2
+    $ pyenv install 3.13.11
+    $ pyenv global 3.13.11
     $ pyenv rehash
 
 ## Obtaining `pip3`
@@ -42,4 +42,3 @@ If you still did not succeed, check that you have the following required package
 
     $ sudo apt-get update
     $ sudo apt-get install python3-distutils
-    
