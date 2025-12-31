@@ -17,7 +17,7 @@ import autopaths
 if os.name == "posix": sep = "/"
 if os.name == "nt":    sep = "\\"
 
-################################################################################
+###############################################################################
 class BasePath(str):
     """
     This object contains methods that are common to both FilePath objects
@@ -70,7 +70,7 @@ class BasePath(str):
         else:
             return autopaths.file_path.FilePath(self.path + other)
 
-    # ------------------------------ Properties ----------------------------- #
+    #------------------------------- Properties ------------------------------#
     @property
     def short_prefix(self):
         """Just the filename without any extension or periods."""

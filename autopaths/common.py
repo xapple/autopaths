@@ -23,7 +23,7 @@ def natural_sort(item):
     dre = re.compile(r'(\d+)')
     return [int(s) if s.isdigit() else s.lower() for s in re.split(dre, item)]
 
-################################################################################
+###############################################################################
 def pad_extra_whitespace(string, pad):
     """
     Given a multiline string, add extra whitespaces to the front of every line.
