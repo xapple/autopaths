@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
+Written by Lucas Sinclair.
+MIT Licensed.
+Contact at www.sinclair.bio
+
 Some simple tests for the autopaths package.
 
 You can run this file like this:
@@ -12,7 +16,7 @@ You can run this file like this:
 # Built-in modules #
 import os, inspect
 
-# Get current directory (works always) #
+# Get the current directory #
 file_name = os.path.abspath((inspect.stack()[0])[1])
 this_dir  = os.path.dirname(os.path.abspath(file_name)) + '/'
 
