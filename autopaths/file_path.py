@@ -66,7 +66,7 @@ class FilePath(autopaths.base_path.BasePath):
         """
         self.close()
 
-    # ------------------------------ Properties ----------------------------- #
+    #------------------------------- Properties ------------------------------#
     @property
     def first(self):
         """Just the first line. Don't try this on binary files."""
@@ -342,18 +342,20 @@ class FilePath(autopaths.base_path.BasePath):
 
     def gzip_internal(self, new_path):
         """
-        Do the compression internally with python buffers and no exteral
+        Do the compression internally with python buffers and no external
         process.
         """
         with gzip.open(new_path, 'wb') as handle:
             shutil.copyfileobj(self.open('rb'), handle)
 
     def gzip_external(self, new_path):
-        """Do the compression with an external shell command call."""
-        # We don't want python to be buffering the text for speed #
-        from shell_command import shell_output
+        """
+        Do the compression with an external shell command call.
+        We don't want python to be buffering the text for speed.
+        """
         cmd = 'gzip --stdout %s > %s' % (self.path, new_path)
-        return shell_output(cmd)
+        result = subprocess.check_output(cmd, shell=True)
+        return result
 
     def gzip_pigz(self, new_path):
         """
@@ -361,9 +363,6 @@ class FilePath(autopaths.base_path.BasePath):
         * https://github.com/madler/pigz (we choose this one)
         * https://github.com/klauspost/pgzip
         """
-        # Check we have the tool installed #
-        from plumbing.check_cmd_found import check_cmd
-        check_cmd('pigz')
         # Get the command #
         import sh
         pigz = sh.Command("pigz")
@@ -387,18 +386,27 @@ class FilePath(autopaths.base_path.BasePath):
         if out_path != new_path:
             out_path.move_to(new_path, overwrite=True)
 
-    def ungzip_to(self, path=None, mode='wb'):
-        """Make an unzipped version of the file at a given path."""
+    def ungzip_to(self, path=None, mode='wb', method='ext'):
+        """Make an ungzipped version of the file at a given path."""
         # Case where path is not specified #
         if path is None: path = self.path[:-3]
-        # Do it #
-        with gzip.open(self, 'rb') as orig_file:
-            with open(path, mode) as new_file:
-                new_file.writelines(orig_file)
+        # Do it the fast way or the slow way #
+        if method == 'ext': self.ungzip_external(path)
+        else:               self.ungzip_internal(path, mode)
         # Return #
         return FilePath(path)
 
-    #--------------------------- Other compressions --------------------------#
+    def ungzip_internal(self, path, mode):
+        with gzip.open(self, 'rb') as orig_file:
+            with open(path, mode) as new_file:
+                new_file.writelines(orig_file)
+
+    def ungzip_external(self, path):
+        cmd = 'gunzip --stdout %s > %s' % (self.path, path)
+        result = subprocess.check_output(cmd, shell=True)
+        return result
+
+    #---------------------------- ZIP compression ----------------------------#
     def zip_to(self, path=None):
         """Make a zipped version of the file at a given path."""
         pass
@@ -434,45 +442,54 @@ class FilePath(autopaths.base_path.BasePath):
         # Return #
         return FilePath(path)
 
-    def targz_to(self, path=None):
-        """Make a targzipped version of the file at a given path."""
-        pass
+    #---------------------------- TAR compression ----------------------------#
+    def untar_to(self, path=None):
+        """Make an untared version of the file at a given path."""
+        return self.untargz_to(path, 'r', 'internal')
 
-    def untargz_to(self, path=None):
+    def untargz_to(self, path=None, mode='r:gz', method='ext'):
         """Make an untargzipped version of the file at a given path."""
         # Case where path is not specified #
         if path is None:
             if   self.path.endswith('.tgz'):    path = self.path[:-4]
             elif self.path.endswith('.tar.gz'): path = self.path[:-7]
             else: path = self.path + '.untargz'
-        # Do it #
-        import tarfile
-        with tarfile.open(self.path, 'r:gz') as archive:
-            archive.extractall(path)
+        # Do it the fast way or the slow way #
+        if method == 'ext': self.untargz_to_external(path)
+        else:               self.untargz_to_internal(path, mode)
         # Return #
         return autopaths.dir_path.DirectoryPath(path + '/')
 
-    def tar_to(self, path=None):
-        """Make a tared version of the file at a given path."""
-        pass
-
-    def untar_to(self, path=None):
-        """Make an untared version of the file at a given path."""
-        # Case where path is not specified #
-        if path is None:
-            if   self.path.endswith('.tgz'):    path = self.path[:-4]
-            elif self.path.endswith('.tar.gz'): path = self.path[:-7]
-            else: path = self.path + '.untargz'
-        # Do it #
+    def untargz_to_internal(self, path, mode):
         import tarfile
-        with tarfile.open(self.path) as archive:
+        with tarfile.open(self.path, mode) as archive:
             archive.extractall(path)
-        # Return #
-        return autopaths.dir_path.DirectoryPath(path + '/')
+
+    def untargz_to_external(self, path):
+        # Create the directory #
+        if path.endswith('/'): path.create_if_not_exists()
+        # Make the command #
+        cmd = 'tar xzf %s -C %s' % (self.path, path)
+        result = subprocess.check_output(cmd, shell=True)
+        return result
+
+    @property
+    def tar_members(self):
+        import tarfile
+        with tarfile.open(self.path, "r:gz") as tar:
+            return tar.getmembers()
+
+    @property
+    def tar_top_dirs(self):
+        """List all the top-level directories in the tar file."""
+        import subprocess
+        command = 'tar --exclude="*/*" -tf %s' % self.path
+        result = subprocess.check_output(command, shell=True)
+        return result.decode().splitlines()
 
     #-------------------------------- Modify ---------------------------------#
     def append(self, data):
-        """Append some text or an other file to the current file."""
+        """Append some text or another file to the current file."""
         if isinstance(data, FilePath): data = data.contents
         with open(self.path, "a") as handle: handle.write(data)
 
