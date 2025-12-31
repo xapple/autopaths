@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autopaths"
+version = "1.6.1"
+
+description = "A python package for dealing with file paths and automation."
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE.txt" }
+requires-python = ">=3.8"
+
+authors = [
+  { name = "Lucas Sinclair", email = "lucas.sinclair@me.com" },
+]
+
+keywords = ["paths", "filesystem", "automation"]
+
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+binary = ["binaryornot"]
+external = ["pbs3", "sh"]
+
+[project.urls]
+Homepage = "https://github.com/xapple/autopaths/"
+
+[tool.setuptools.packages.find]
+exclude = ["testing"]
