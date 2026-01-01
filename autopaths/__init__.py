@@ -10,7 +10,7 @@ Contact at www.sinclair.bio
 # Special variables #
 __version__ = '1.6.2'
 
-# Built in modules #
+# Built-in modules #
 import os
 
 # This is done to avoid circular import errors #
