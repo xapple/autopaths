@@ -79,9 +79,9 @@ class BasePath(str):
     @property
     def extension(self):
         """Just the last extension without the trailing period."""
-        if '.' not in self.filename:
-            raise Exception("The file '%s' has no extension." % self.path)
-        return self.filename.split('.')[-1]
+        if '.' not in self.name:
+            raise Exception("The path '%s' has no extension." % self.path)
+        return self.name.split('.')[-1]
 
     @property
     def escaped(self):
